@@ -24,23 +24,6 @@ void 	print_matrice(t_map *map)
 	}
 }
 
-int	hook_manager(int keycode, t_general *general)
-{
-	if (keycode == L_ARW || keycode == A_KEY)
-		ft_putstr_fd("left\n", 1);
-	else if (keycode == R_ARW || keycode == D_KEY)
-		ft_putstr_fd("right\n", 1);
-	else if (keycode == UP_ARW || keycode == W_KEY)
-		ft_putstr_fd("up\n", 1);
-	else if (keycode == DOWN_ARW || keycode == S_KEY)
-		ft_putstr_fd("down\n", 1);
-	else if (keycode == ESC)
-		ft_putstr_fd("exit\n", 1);
-	if (!print_map(general))
-		return (0);
-	return (0);
-}
-
 int main(int argc, char **argv)
 {
 	t_general general;
@@ -52,9 +35,7 @@ int main(int argc, char **argv)
 			return (1);
 		print_map(&general);
 		print_matrice(general.map);
-		mlx_key_hook(general.mlx.win, hook_manager, &general);
-		//mlx_hook(general.mlx.win, 17, 0, &ft_close, &general);
-		mlx_loop(general.mlx.ptr);
+		hook(&general);
 	}
 	return (0);
 }

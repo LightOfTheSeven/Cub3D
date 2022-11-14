@@ -21,7 +21,7 @@ static void print_player(t_general *general, int col, int row)
 	y = floor(general->map->pos_y) * WIDTH_TILE;
 	x += (general->map->pos_x - floor(general->map->pos_x)) * HEIGHT_TILE - 4; // 4 = moitie du personnage pour centrer sur sa position
 	y += (general->map->pos_y - floor(general->map->pos_y)) * HEIGHT_TILE - 4;
-	printf("%d, %d\n", x, y);
+	//printf("%d, %d\n", x, y);
 	mlx_put_image_to_window(general->mlx.ptr, general->mlx.win, \
 			general->spts[FLOOR].ptr, col, row);
 	mlx_put_image_to_window(general->mlx.ptr, general->mlx.win, \
@@ -35,7 +35,7 @@ static void	print_tile(char tile, t_general *general, int x, int y)
 	else if (tile == '0')
 		mlx_put_image_to_window(general->mlx.ptr, general->mlx.win, \
 			general->spts[FLOOR].ptr, x, y);
-	else if (tile == 'P')
+	else if (is_direction(tile))
 		print_player(general, x, y);
 }
 

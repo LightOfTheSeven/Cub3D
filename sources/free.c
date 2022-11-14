@@ -27,3 +27,10 @@ int	free_img(char *err, t_general *general)
 	free(general->mlx.ptr);
 	return (ft_putstr_fd(err, 2), 1);
 }
+
+int free_general(t_general *general)
+{
+	free(general->map->matrice);
+	free(general->map);
+	return 0;
+}

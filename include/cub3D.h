@@ -63,6 +63,10 @@ int	init_struct(t_general *general, char **argv);
 int	init_map(t_general *general, char *file_name);
 int	free_img(char *err, t_general *general);
 int	print_map(t_general *general);
-
+int exit_mlx(t_general *general);
+int free_general(t_general *general);
+void hook(t_general *general);
+int	hook_manager(int keycode, t_general *general);
+int is_direction(char c);
 
 #endif

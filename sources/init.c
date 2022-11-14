@@ -17,8 +17,8 @@ static int	init_struct_mlx(t_mlx *mlx)
 	mlx->ptr = mlx_init();
 	if (!mlx->ptr)
 		return (1);
-	mlx->win_height = 1080;
-	mlx->win_width = 1920;
+	mlx->win_height = 500;
+	mlx->win_width = 1000;
 	mlx->win = mlx_new_window(mlx->ptr, mlx->win_width, mlx->win_height, "Cub3D");
 	mlx->img = mlx_new_image(mlx->ptr, mlx->win_width, mlx->win_height);
 	return (0);
@@ -46,6 +46,19 @@ static int	init_struct_img(t_general *general)
 	return (0);
 }
 
+static float	init_cam(char direction)
+{
+	if (direction == 'N')
+		return 90;
+	else if (direction == 'O')
+		return 180;
+	else if (direction == 'E')
+		return 0;
+	else if (direction == 'S')
+		return 270;
+	return 90;
+}
+
 static int	init_pos_player(t_general *general)
 {
 	int	x;
@@ -57,10 +70,14 @@ static int	init_pos_player(t_general *general)
 		x = 0;
 		while (general->map->matrice[y][x])
 		{
-			if (general->map->matrice[y][x] == 'P')
+			if (is_direction(general->map->matrice[y][x]))
 			{
 				general->map->pos_x = (float) x + 0.5;
+				printf("x = %f\n", general->map->pos_x);
 				general->map->pos_y = (float) y + 0.5;
+				printf("y = %f\n", general->map->pos_y);
+				general->map->angle_cam = init_cam(general->map->matrice[y][x]);
+				printf("angle = %f\n", general->map->angle_cam);
 				return (0);
 			}
 			x++;

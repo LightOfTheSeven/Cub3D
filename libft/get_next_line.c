@@ -86,7 +86,7 @@ char	*ft_saveline(char *str)
 
 char	*get_next_line(int fd)
 {
-	char static		*save;
+	static char		*save;
 	char			*line_ret;
 	char			buff[BUFFER_SIZE + 1];
 	int				end_buffer;	
