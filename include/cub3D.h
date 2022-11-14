@@ -20,6 +20,15 @@ typedef struct s_mlx {
 	struct s_img 	*img;
 }				t_mlx;
 
+typedef struct s_img {
+	char	*floor_path;
+	char	*player_path;
+	char	*wall_path;
+	void	*floor_ptr;
+	void	*player_ptr;
+	void	*wall_ptr;
+}				t_img;
+
 typedef struct s_map {
 	char	**matrice;
 	float	pos_x;
