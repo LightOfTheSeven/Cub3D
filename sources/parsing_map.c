@@ -6,7 +6,7 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 10:09:07 by gbertin           #+#    #+#             */
-/*   Updated: 2022/11/14 10:33:14 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/11/14 12:27:42 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,6 @@ int	init_map(t_general *general, char *file_name)
 	int		nb_line;
 	t_map	  *map;
 	
-	printf("init map\n");
 	map = (t_map *) malloc(sizeof(t_map));
 	ft_memset(map, 0, sizeof(t_map));
 	nb_line = count_line(file_name);
