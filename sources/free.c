@@ -1,39 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/09 11:04:02 by gbertin           #+#    #+#             */
-/*   Updated: 2022/11/14 10:07:06 by gbertin          ###   ########.fr       */
+/*   Created: 2022/11/14 09:19:55 by gbertin           #+#    #+#             */
+/*   Updated: 2022/11/14 09:58:10 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3D.h"
 
-void 	print_map(t_map *map)
+int	free_img(char *err, t_general *general)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	while (map->matrice[i])
+	while (i < NB_SPRITE)
 	{
-		printf("%s", map->matrice[i]);
+		if (general->spts[i].ptr != NULL)
+			mlx_destroy_image(general->mlx->ptr, general->spts[i].ptr);
 		i++;
 	}
-}
-
-int main(int argc, char **argv)
-{
-	t_general general;
-	
-	if (argc == 2)
-	{
-		ft_memset(&general, 0, sizeof(t_general));
-		if (init_struct(&general, argv))
-			return (1);
-		print_map(general.map);
-	}
-	return (0);
+	mlx_destroy_display(general->mlx->ptr);
+	free(general->mlx->ptr);
+	return (ft_putstr_fd(err, 2), 1);
 }
