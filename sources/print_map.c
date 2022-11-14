@@ -6,7 +6,7 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 12:00:56 by gbertin           #+#    #+#             */
-/*   Updated: 2022/11/14 14:55:02 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/11/14 15:11:30 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,9 @@ static void print_player(t_general *general, int col, int row)
 
 	x = floor(general->map->pos_x) * HEIGHT_TILE;
 	y = floor(general->map->pos_y) * WIDTH_TILE;
-	x += (int)(general->map->pos_x - floor(general->map->pos_x)) * HEIGHT_TILE;
-	y += (int)(general->map->pos_y - floor(general->map->pos_y)) * HEIGHT_TILE;
+	x += (general->map->pos_x - floor(general->map->pos_x)) * HEIGHT_TILE - 4; // 4 = moitie du personnage pour centrer sur sa position
+	y += (general->map->pos_y - floor(general->map->pos_y)) * HEIGHT_TILE - 4;
+	printf("%d, %d\n", x, y);
 	mlx_put_image_to_window(general->mlx.ptr, general->mlx.win, \
 			general->spts[FLOOR].ptr, col, row);
 	mlx_put_image_to_window(general->mlx.ptr, general->mlx.win, \

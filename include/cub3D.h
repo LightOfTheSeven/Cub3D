@@ -46,6 +46,7 @@ typedef struct s_spt {
 
 typedef struct s_map {
 	char	**matrice;
+	char	**mini_map;
 	float	pos_x;
 	float	pos_y;
 	float	angle_cam; // entre 0 et 360, 45 degres de chaque cote
