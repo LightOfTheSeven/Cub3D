@@ -40,6 +40,11 @@ typedef struct s_mlx {
 	int				win_height;
 	int				win_width;
 	struct s_img 	*img;
+	int				len;
+	int				bpp;
+	int				endian;
+	char			*addr;
+
 }				t_mlx;
 
 typedef struct s_spt {
@@ -71,5 +76,6 @@ int free_general(t_general *general);
 void hook(t_general *general);
 int	hook_manager(int keycode, t_general *general);
 int is_direction(char c);
+void print_rayon_face_joueur(t_general *general);
 
 #endif

@@ -17,6 +17,7 @@ SRCS 	=	free.c \
 			exit.c \
 			loop.c \
 			utils.c \
+			raycasting.c \
 			main.c \
 
 all: bonus $(NAME)

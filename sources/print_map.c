@@ -15,7 +15,7 @@
 /* Matrice de rotation: x' = cos(alpha).x - sin(alpha).y et 
 y' = sin(alpha).x + cos(alpha).y */
 
-static void	print_ray(t_general *general)
+/*static void	print_ray(t_general *general)
 {
 	double	vec_dir[2];
 	int		n_pixels;
@@ -38,7 +38,7 @@ static void	print_ray(t_general *general)
 		y += vec_dir[V_Y];
 		n_pixels++;
 	}
-}
+}*/
 
 static void print_player(t_general *general)
 {
@@ -89,6 +89,7 @@ int	print_map(t_general *general)
 		row++;
 	}
 	print_player(general);
-	print_ray(general);
+	//print_ray(general);
+	print_rayon_face_joueur(general);
 	return (0);
 }
