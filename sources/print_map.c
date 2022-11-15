@@ -6,7 +6,7 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 12:00:56 by gbertin           #+#    #+#             */
-/*   Updated: 2022/11/15 13:48:29 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/11/15 20:44:24 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,13 @@
 /* Matrice de rotation: x' = cos(alpha).x - sin(alpha).y et 
 y' = sin(alpha).x + cos(alpha).y */
 
-/*static void	print_ray(t_general *general)
+float conversion_radian(float f)
+{
+    f = f * (3.1415 / 180);
+    return f;
+}
+
+static void	print_ray(t_general *general)
 {
 	double	vec_dir[2];
 	int		n_pixels;
@@ -24,8 +30,10 @@ y' = sin(alpha).x + cos(alpha).y */
 	
 	n_pixels = 0;
 	printf("%f %f\n", general->map->vector_dir[V_X], general->map->vector_dir[V_Y]);
-	vec_dir[V_X] = cos(general->map->angle_cam) * general->map->vector_dir[V_X] - sin(general->map->angle_cam) * general->map->vector_dir[V_Y];
-    vec_dir[V_Y] = sin(general->map->angle_cam) * general->map->vector_dir[V_X] + cos(general->map->angle_cam) * general->map->vector_dir[V_Y];
+	vec_dir[V_X] = cos(conversion_radian(360 - general->map->angle_cam));
+	vec_dir[V_Y] = cos(conversion_radian(general->map->angle_cam - 270));
+	//vec_dir[V_X] = cos(general->map->angle_cam) * general->map->vector_dir[V_X] - sin(general->map->angle_cam) * general->map->vector_dir[V_Y];
+    //vec_dir[V_Y] = sin(general->map->angle_cam) * general->map->vector_dir[V_X] + cos(general->map->angle_cam) * general->map->vector_dir[V_Y];
 	x = floor(general->map->pos_x) * HEIGHT_TILE;
 	y = floor(general->map->pos_y) * WIDTH_TILE;
 	x += (general->map->pos_x - floor(general->map->pos_x)) * HEIGHT_TILE + 4;
@@ -38,7 +46,7 @@ y' = sin(alpha).x + cos(alpha).y */
 		y += vec_dir[V_Y];
 		n_pixels++;
 	}
-}*/
+}
 
 static void print_player(t_general *general)
 {
@@ -89,7 +97,7 @@ int	print_map(t_general *general)
 		row++;
 	}
 	print_player(general);
-	//print_ray(general);
-	print_rayon_face_joueur(general);
+	print_ray(general);
+	//print_rayon_face_joueur(general);
 	return (0);
 }
