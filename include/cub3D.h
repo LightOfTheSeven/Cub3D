@@ -14,6 +14,9 @@
 
 #define DEBUG 0
 #define NB_SPRITE 3
+#define FOV 90
+#define V_X 0
+#define V_Y 1
 
 #define WIDTH_TILE 64
 #define HEIGHT_TILE 64
@@ -50,7 +53,7 @@ typedef struct s_map {
 	float	pos_x;
 	float	pos_y;
 	float	angle_cam; // entre 0 et 360, 45 degres de chaque cote
-	
+	double	vector_dir[2];
 }				t_map;
 
 typedef struct s_general {

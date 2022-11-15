@@ -6,7 +6,7 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 09:19:55 by gbertin           #+#    #+#             */
-/*   Updated: 2022/11/15 08:10:06 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/11/15 08:22:43 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ int	free_img(char *err, t_general *general)
 			mlx_destroy_image(general->mlx.ptr, general->spts[i].ptr);
 		i++;
 	}
-	free (general->mlx.img);
 	if (general->mlx.win)
 		mlx_destroy_window(general->mlx.ptr, general->mlx.win);
 	mlx_destroy_display(general->mlx.ptr);

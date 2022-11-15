@@ -6,7 +6,7 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 10:09:07 by gbertin           #+#    #+#             */
-/*   Updated: 2022/11/14 12:27:42 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/11/15 13:42:57 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,8 @@ int	init_map(t_general *general, char *file_name)
 		return (1);
 	if (fill_map(file_name, nb_line, map))
 		return (1);
+	map->vector_dir[V_X] = 1;
+	map->vector_dir[V_Y] = 0.5;
 	general->map = map;
 	return (0);
 }
