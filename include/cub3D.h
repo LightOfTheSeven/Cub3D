@@ -56,7 +56,7 @@ typedef struct s_map {
 typedef struct s_general {
 	t_mlx	mlx;
 	t_map	*map;
-	t_spt	spts[4]; // spt = sprite
+	t_spt	spts[3]; // spt = sprite
 }				t_general;
 
 int	init_struct(t_general *general, char **argv);

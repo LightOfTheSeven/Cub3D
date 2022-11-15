@@ -6,7 +6,7 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 08:56:31 by gbertin           #+#    #+#             */
-/*   Updated: 2022/11/14 14:47:11 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/11/15 08:11:34 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ static int	init_struct_mlx(t_mlx *mlx)
 	mlx->win_height = 500;
 	mlx->win_width = 1000;
 	mlx->win = mlx_new_window(mlx->ptr, mlx->win_width, mlx->win_height, "Cub3D");
-	mlx->img = mlx_new_image(mlx->ptr, mlx->win_width, mlx->win_height);
 	return (0);
 }
 
@@ -89,7 +88,7 @@ static int	init_pos_player(t_general *general)
 
 int	init_struct(t_general *general, char **argv)
 {
-	ft_memset(general->spts, 0, sizeof(t_spt) * 4);
+	ft_memset(general->spts, 0, sizeof(t_spt) * NB_SPRITE);
 	if (init_struct_mlx(&(general->mlx)))
 		return (1);
 	if (init_struct_img(general))
