@@ -63,13 +63,13 @@ typedef struct s_map {
 	float	pos_y;
 	int		ray_length;
 	float	angle_cam; // entre 0 et 360, 45 degres de chaque cote
-	double	vector_dir[2];
 }				t_map;
 
 typedef struct s_general {
 	t_mlx	mlx;
 	t_map	*map;
 	t_spt	spts[3]; // spt = sprite
+	
 }				t_general;
 
 int		init_struct(t_general *general, char **argv);

@@ -48,7 +48,7 @@ static void	print_raycasting(double origin_x, double origin_y, double v_angle[2]
 		x = origin_x;
 		y = origin_y;
 		v_dir[V_X] = cos(conversion_radian(v_angle[ANGLE_MIN]));
-		v_dir[V_Y] = sin(conversion_radian(v_angle[ANGLE_MIN]));
+		v_dir[V_Y] = sin(conversion_radian(v_angle[ANGLE_MIN] * -1));
 		while (i < general->map->ray_length)
 		{
 			mlx_pixel_put(general->mlx.ptr, general->mlx.win, (int)x, (int)y, 0x00FF00);
@@ -85,6 +85,6 @@ void	init_raycasting(t_general *general)
 		v_angle[ANGLE_MIN] = v_angle[ANGLE_MAX];
 		v_angle[ANGLE_MAX] = tmp;
 	}
-	printf("ANGLE : %f %f\n", v_angle[ANGLE_MIN], v_angle[ANGLE_MAX]);
+	//printf("ANGLE : %f %f\n", v_angle[ANGLE_MIN], v_angle[ANGLE_MAX]);
 	print_raycasting(x, y, v_angle, general);
 }
