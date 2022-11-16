@@ -36,7 +36,7 @@ $(OBJ)/%.o: $(SRC)/%.c $(INCS)
 
 clean:
 	rm -rf $(OBJ)
-	make -C $(LIBFT) clean
+	make -C $(LIBFT) fclean
 	make -C $(LIBMLX) clean
 
 fclean: clean

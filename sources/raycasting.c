@@ -20,29 +20,17 @@ float conversion_radian(float f)
 
 double get_ray_min(double angle)
 {
-	double	rest;
 	int half_fov;
 	
 	half_fov = FOV / 2;
-	if ((angle - half_fov) < 0)
-	{
-		rest = (half_fov) - angle;
-		return (360 - rest);
-	}
 	return (angle - half_fov);
 }
 
 double get_ray_max(double angle)
 {
-	double	rest;
 	int half_fov;
 	
 	half_fov = FOV / 2;
-	if ((angle + half_fov) > 360)
-	{
-		rest = (half_fov + angle) - 360;
-		return (0 + rest);
-	}
 	return (angle + half_fov);
 }
 
@@ -55,11 +43,12 @@ static void	print_raycasting(double origin_x, double origin_y, double v_angle[2]
 
 	while (v_angle[ANGLE_MIN] <= v_angle[ANGLE_MAX])
 	{
+		//printf("OK");
 		i = 0;
 		x = origin_x;
 		y = origin_y;
-		v_dir[V_X] = cos(conversion_radian(360 - v_angle[ANGLE_MIN]));
-		v_dir[V_Y] = cos(conversion_radian(v_angle[ANGLE_MIN] - 270));
+		v_dir[V_X] = cos(conversion_radian(v_angle[ANGLE_MIN]));
+		v_dir[V_Y] = sin(conversion_radian(v_angle[ANGLE_MIN]));
 		while (i < general->map->ray_length)
 		{
 			mlx_pixel_put(general->mlx.ptr, general->mlx.win, (int)x, (int)y, 0x00FF00);
