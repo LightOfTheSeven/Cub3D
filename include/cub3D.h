@@ -17,9 +17,13 @@
 #define FOV 90
 #define V_X 0
 #define V_Y 1
+#define ANGLE_MIN 0
+#define ANGLE_MAX 1
 
 #define WIDTH_TILE 64
 #define HEIGHT_TILE 64
+#define WIDTH_MINIMAP 9
+#define HEIGHT_MINIMAP 5
 
 # define L_ARW					65361
 # define R_ARW					65363
@@ -54,9 +58,10 @@ typedef struct s_spt {
 
 typedef struct s_map {
 	char	**matrice;
-	char	**mini_map;
+	char	**minimap;
 	float	pos_x;
 	float	pos_y;
+	int		ray_length;
 	float	angle_cam; // entre 0 et 360, 45 degres de chaque cote
 	double	vector_dir[2];
 }				t_map;
@@ -67,15 +72,23 @@ typedef struct s_general {
 	t_spt	spts[3]; // spt = sprite
 }				t_general;
 
-int	init_struct(t_general *general, char **argv);
-int	init_map(t_general *general, char *file_name);
-int	free_img(char *err, t_general *general);
-int	print_map(t_general *general);
-int exit_mlx(t_general *general);
-int free_general(t_general *general);
-void hook(t_general *general);
-int	hook_manager(int keycode, t_general *general);
-int is_direction(char c);
-void print_rayon_face_joueur(t_general *general);
+int		init_struct(t_general *general, char **argv);
+int		init_map(t_general *general, char *file_name);
+int		free_img(char *err, t_general *general);
+int		print_map(t_general *general);
+int 	exit_mlx(t_general *general);
+int 	free_general(t_general *general);
+void 	hook(t_general *general);
+int		hook_manager(int keycode, t_general *general);
+int 	is_direction(char c);
+void	init_raycasting(t_general *general);
+
+// BONUS
+int		init_minimap(t_map *map);
+void	change_minimap(t_map *map);
+
+
+// UTILS
+void 	print_matrice(t_map *map);
 
 #endif

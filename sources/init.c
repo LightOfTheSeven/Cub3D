@@ -6,7 +6,7 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 08:56:31 by gbertin           #+#    #+#             */
-/*   Updated: 2022/11/15 08:11:34 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/11/16 12:03:33 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ static int	init_struct_mlx(t_mlx *mlx)
 	mlx->ptr = mlx_init();
 	if (!mlx->ptr)
 		return (1);
-	mlx->win_height = 500;
-	mlx->win_width = 1000;
+	mlx->win_height = HEIGHT_MINIMAP * HEIGHT_TILE;
+	mlx->win_width = WIDTH_MINIMAP * WIDTH_TILE;
 	mlx->win = mlx_new_window(mlx->ptr, mlx->win_width, mlx->win_height, "Cub3D");
 	return (0);
 }

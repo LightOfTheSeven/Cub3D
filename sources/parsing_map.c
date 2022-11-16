@@ -6,7 +6,7 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 10:09:07 by gbertin           #+#    #+#             */
-/*   Updated: 2022/11/15 13:42:57 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/11/16 12:02:44 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,10 @@ static int fill_map(char *file_name, int nb_line, t_map *map)
 			return (1);
 		i++;
 	}
+	if ((size_t)nb_line > ft_strlen(map->matrice[0]))
+		map->ray_length = nb_line * WIDTH_TILE;
+	else
+		map->ray_length = ft_strlen(map->matrice[0]) * WIDTH_TILE;
 	map->matrice[nb_line] = NULL;
 	return (0);
 }
@@ -77,6 +81,8 @@ int	init_map(t_general *general, char *file_name)
 		return (1);
 	if (fill_map(file_name, nb_line, map))
 		return (1);
+	init_minimap(map);
+	//calcul selon la position de depart du joueur N S W E
 	map->vector_dir[V_X] = 1;
 	map->vector_dir[V_Y] = 0.5;
 	general->map = map;

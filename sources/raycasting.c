@@ -1,48 +1,101 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   raycasting.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/11/16 08:52:48 by gbertin           #+#    #+#             */
+/*   Updated: 2022/11/16 14:28:37 by gbertin          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/cub3D.h"
 
 float conversion_radian(float f)
 {
     f = f * (3.1415 / 180);
-    return f;
+    return (f);
 }
 
-void pixel_draw(t_mlx *temp, int x, int y, int color)
+double get_ray_min(double angle)
 {
-    char	*dst;
-
-	dst = temp->addr + (y * temp->len + x * (temp->bpp / 8));
-	*(unsigned int *)dst = color;
+	double	rest;
+	int half_fov;
+	
+	half_fov = FOV / 2;
+	if ((angle - half_fov) < 0)
+	{
+		rest = (half_fov) - angle;
+		return (360 - rest);
+	}
+	return (angle - half_fov);
 }
 
-void print_rayon_face_joueur(t_general *general)
+double get_ray_max(double angle)
 {
-    float dir_x;
-    float dir_y;
+	double	rest;
+	int half_fov;
+	
+	half_fov = FOV / 2;
+	if ((angle + half_fov) > 360)
+	{
+		rest = (half_fov + angle) - 360;
+		return (0 + rest);
+	}
+	return (angle + half_fov);
+}
 
-    if (general->map->angle_cam < 0)
-        general->map->angle_cam = general->map->angle_cam + 360;
-    if (general->map->angle_cam > 360)
-        general->map->angle_cam = general->map->angle_cam - 360;
-    //printf("angle = %f\n", general->map->angle_cam);
-    dir_x = cos(conversion_radian(360 - general->map->angle_cam));
-    dir_y = cos(conversion_radian(general->map->angle_cam - 270));
-    //printf("dir_x = %f dir_y = %f\n", dir_x, dir_y);
-    int i = 0;
-    struct s_mlx temp;
-    int color = 88888;
+static void	print_raycasting(double origin_x, double origin_y, double v_angle[2], t_general *general)
+{
+	double	v_dir[2];
+	int		i;
+	double	x;
+	double	y;
 
-    float x = (general->map->pos_x) * HEIGHT_TILE;
-    float y = (general->map->pos_y) * WIDTH_TILE;
+	while (v_angle[ANGLE_MIN] <= v_angle[ANGLE_MAX])
+	{
+		i = 0;
+		x = origin_x;
+		y = origin_y;
+		v_dir[V_X] = cos(conversion_radian(360 - v_angle[ANGLE_MIN]));
+		v_dir[V_Y] = cos(conversion_radian(v_angle[ANGLE_MIN] - 270));
+		while (i < general->map->ray_length)
+		{
+			mlx_pixel_put(general->mlx.ptr, general->mlx.win, (int)x, (int)y, 0x00FF00);
+			x += v_dir[V_X];
+			y += v_dir[V_Y];
+			i++;
+		}
+		v_angle[ANGLE_MIN] += 1;
+	}
+}
 
-    temp.img = mlx_new_image(general->mlx.ptr, general->mlx.win_width, general->mlx.win_height);
-    temp.addr = mlx_get_data_addr(temp.img, &temp.bpp, &temp.len, &temp.endian);
-    while (i < 70)
-    {
-        x = x + dir_x;
-        y = y + dir_y;
-        pixel_draw(&temp, x, y, color);
-        i++;
-    }
-    general->mlx.img = temp.img;
-    mlx_put_image_to_window(general->mlx.ptr, general->mlx.win, general->mlx.img, 0, 0); 
+
+void	init_raycasting(t_general *general)
+{
+
+	double	v_angle[2];
+	double	x;
+	double	y;
+	double tmp;
+	
+	// init position x et y
+	x = floor(general->map->pos_x) * HEIGHT_TILE;
+	y = floor(general->map->pos_y) * WIDTH_TILE;
+	x += (general->map->pos_x - floor(general->map->pos_x)) * HEIGHT_TILE + 4;
+	y += (general->map->pos_y - floor(general->map->pos_y)) * WIDTH_TILE + 4;
+	// init angle min et angle max du FOV
+	v_angle[ANGLE_MIN] = get_ray_min(general->map->angle_cam);
+	v_angle[ANGLE_MAX] = get_ray_max(general->map->angle_cam);
+	// SI angle_cam + 45 est superieur a 360 alors ANGLE MAX devient plus petit que ANGLE MIN
+	// OU SI angle_cam - 45 est inferieur a 0 alors ANGLE MIN devient plus grand que ANGLE MIN
+	if (v_angle[ANGLE_MIN] > v_angle[ANGLE_MAX])
+	{
+		tmp = v_angle[ANGLE_MIN];
+		v_angle[ANGLE_MIN] = v_angle[ANGLE_MAX];
+		v_angle[ANGLE_MAX] = tmp;
+	}
+	printf("ANGLE : %f %f\n", v_angle[ANGLE_MIN], v_angle[ANGLE_MAX]);
+	print_raycasting(x, y, v_angle, general);
 }

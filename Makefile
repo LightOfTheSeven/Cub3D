@@ -19,6 +19,7 @@ SRCS 	=	free.c \
 			utils.c \
 			raycasting.c \
 			main.c \
+			init_minimap_bonus.c
 
 all: bonus $(NAME)
 
