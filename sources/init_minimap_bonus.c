@@ -6,7 +6,7 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 11:38:57 by gbertin           #+#    #+#             */
-/*   Updated: 2022/11/17 09:22:39 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/11/17 13:29:59 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,39 +16,44 @@ static void	change_tile_minimap(int y, int x, t_map *map)
 {
 	int y_map;
 	int x_map;
+	int y_mid_mini;
+	int x_mid_mini;
 
-	if (y <= (HEIGHT_MINIMAP / 2 + 1)) // HEIGHT_MINIMAP / 2 + 1 = milieu de la map en y
-		y_map = map->pos_y - ((HEIGHT_MINIMAP / 2 + 1) - y); // check si hors de la map
+	y_mid_mini = HEIGHT_MINIMAP / 2 + 1; // = 3
+	x_mid_mini = WIDTH_MINIMAP / 2 + 1; // = 5
+	if (y <= y_mid_mini)
+		y_map = ceil(map->pos_y) - (y_mid_mini - y); // check si hors de la map
 	else 
-		y_map = map->pos_y + ((HEIGHT_MINIMAP / 2 + 1) - y);
+		y_map = ceil(map->pos_y) + (y - y_mid_mini);
 
 		
-	if (x <= (HEIGHT_MINIMAP / 2 + 1)) // HEIGHT_MINIMAP / 2 + 1 = milieu de la map en y
-		x_map = map->pos_x - ((WIDTH_MINIMAP / 2 + 1) - x); // check si hors de la map
+	if (x <= x_mid_mini) // WIDTH_MINIMAP / 2 + 1 = milieu de la map en y
+		x_map = ceil(map->pos_x) - (x_mid_mini - x); // check si hors de la map
 	else 
-		x_map = map->pos_x + ((WIDTH_MINIMAP / 2 + 1) - x);
-
-		
-	map->minimap[y][x] = map->matrice[(int)map->pos_y - y_map][(int)map->pos_x - x_map];
-	printf("x = %d y = %d x_map %d y_map %d pos x = %d pos y = %d pos_jx = %f pos_jy = %f\n",x, y, x_map, y_map, (int)map->pos_x + x_map, (int)map->pos_y + y_map, map->pos_x, map->pos_y);
+		x_map = ceil(map->pos_x) + (x - x_mid_mini);
+	if (y_map < 0 || y_map > (HEIGHT_MINIMAP - 1) || x_map < 0 || x_map > WIDTH_MINIMAP - 1)
+		map->minimap[y][x] = '3';
+	else
+		map->minimap[y][x] = map->matrice[y_map][x_map];
+	printf("x = %d y = %d//position minimap\nx_map %d y_map %d//calcul\n\n\n", x, y, x_map, y_map);
 }
 
 void	change_minimap(t_map *map)
 {
-	int	i;
+	int	x;
 	int y;
 
-	i = 0;
-	while (i < HEIGHT_MINIMAP)
+	y = 0;
+	while (y < HEIGHT_MINIMAP)
 	{
-		y = 0;
-		while (y < WIDTH_MINIMAP)
+		x = 0;
+		while (x < WIDTH_MINIMAP)
 		{
-			change_tile_minimap(i, y, map);
-			y++;
+			change_tile_minimap(y, x, map);
+			x++;
 		}
 		print_matrice(map);
-		i++;
+		y++;
 	}
 }
 

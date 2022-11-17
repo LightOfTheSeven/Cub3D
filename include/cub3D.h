@@ -13,7 +13,7 @@
 #include "../libmlx/mlx.h"
 
 #define DEBUG 0
-#define NB_SPRITE 3
+#define NB_SPRITE 4
 #define FOV 90
 #define V_X 0
 #define V_Y 1
@@ -36,7 +36,7 @@
 # define ESC					65307
 
 // permet de connaitre l'emplacement de chaque element
-enum sprite {WALL, PLAYER, FLOOR}; // Ajouter N S W E
+enum sprite {WALL, PLAYER, FLOOR, VOID}; // Ajouter N S W E
 
 typedef struct s_mlx {
 	void			*ptr;
@@ -68,7 +68,7 @@ typedef struct s_map {
 typedef struct s_general {
 	t_mlx	mlx;
 	t_map	*map;
-	t_spt	spts[3]; // spt = sprite
+	t_spt	spts[NB_SPRITE]; // spt = sprite
 	
 }				t_general;
 

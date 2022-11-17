@@ -6,7 +6,7 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 08:56:31 by gbertin           #+#    #+#             */
-/*   Updated: 2022/11/17 09:22:28 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/11/17 13:30:58 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ static int	init_struct_img(t_general *general)
 	general->spts[PLAYER].path = "spt/player.xpm";
 	general->spts[WALL].path = "spt/wall.xpm";
 	general->spts[FLOOR].path = "spt/floor.xpm";
+	general->spts[VOID].path = "spt/void.xpm";
 	while (i < NB_SPRITE)
 	{
 		general->spts[i].ptr = mlx_xpm_file_to_image(general->mlx.ptr, \

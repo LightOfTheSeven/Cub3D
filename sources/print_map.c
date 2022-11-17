@@ -6,7 +6,7 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 12:00:56 by gbertin           #+#    #+#             */
-/*   Updated: 2022/11/16 09:23:56 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/11/17 13:32:42 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,9 @@ static void	print_tile(char tile, t_general *general, int x, int y)
 	else if (is_direction(tile))
 		mlx_put_image_to_window(general->mlx.ptr, general->mlx.win, \
 			general->spts[FLOOR].ptr, x, y);
+	else if (tile == '3')
+		mlx_put_image_to_window(general->mlx.ptr, general->mlx.win, \
+			general->spts[VOID].ptr, x, y);
 }
 
 int	print_map(t_general *general)
@@ -47,13 +50,13 @@ int	print_map(t_general *general)
 
 	y = 0;
 	row = 0;
-	while (general->map->matrice[row])
+	while (general->map->minimap[row])
 	{
 		col = 0;
 		x = 0;
-		while (general->map->matrice[row][col])
+		while (general->map->minimap[row][col])
 		{
-			print_tile(general->map->matrice[row][col], general, x, y);
+			print_tile(general->map->minimap[row][col], general, x, y);
 			col++;
 			x += WIDTH_TILE;
 		}
