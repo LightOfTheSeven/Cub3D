@@ -1,24 +1,30 @@
 #include "../include/cub3D.h"
 
-static void handle_mouvement(int keycode, t_general *general)
+static int handle_mouvement(int keycode, t_general *general)
 {
-	double	new_y;
-	double	new_x;
+	float	new_y;
+	float	new_x;
+	double	speed;
 
 	new_x = general->map->pos_x;
 	new_y = general->map->pos_y;
+	speed = 0.05;
 	if (keycode == A_KEY)
-    	new_x -= SPEED / 100;
+    	new_x -= speed;
 	else if (keycode == D_KEY)
-       new_x += SPEED / 100;
+       new_x += speed;
 	else if (keycode == W_KEY)
-		new_y -= SPEED / 100;
+		new_y -= speed;
 	else if (keycode == S_KEY)
-        new_y += SPEED / 100;
-	if (general->map->matrice[(int)ceil(new_y)][(int)ceil(general->map->pos_x)] == '1')
-		return ;
+        new_y += speed;
+	printf("new x %d new y %d\n", (int)floor(new_y), (int)floor(new_x));
+	printf("%c\n", general->map->matrice[(int)ceil(new_y)][(int)floor(new_x)]);
+	if (general->map->matrice[(int)floor(new_y)][(int)floor(new_x)] == '1')
+		return (1);
 	general->map->pos_x = new_x;
 	general->map->pos_y = new_y;
+	printf("END handle mouve \n");
+	return (0);
 }
 
 static void	handle_rotate_cam(int keycode, t_general *general)
@@ -40,8 +46,9 @@ static int	key_hook(int keycode, t_general *general)
 	new_win = 0;
 	if (keycode == A_KEY || keycode == D_KEY || keycode == W_KEY || keycode == S_KEY)
 	{
-		handle_mouvement(keycode, general);
-		new_win = 1;
+		printf("in handle mouve\n");
+		if (!handle_mouvement(keycode, general))
+			new_win = 1;
 	}
     else if (keycode == R_ARW || keycode == L_ARW)
 	{
