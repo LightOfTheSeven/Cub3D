@@ -6,7 +6,7 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 10:09:07 by gbertin           #+#    #+#             */
-/*   Updated: 2022/11/17 08:55:46 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/11/17 09:21:06 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,6 @@ int	init_map(t_general *general, char *file_name)
 		return (1);
 	if (fill_map(nb_line, map, file_name))
 		return (1);
-	init_minimap(map);
 	general->map = map;
 	return (0);
 }

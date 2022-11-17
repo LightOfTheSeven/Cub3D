@@ -6,7 +6,7 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 11:38:57 by gbertin           #+#    #+#             */
-/*   Updated: 2022/11/17 08:54:47 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/11/17 09:22:39 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,16 @@ static void	change_tile_minimap(int y, int x, t_map *map)
 		y_map = map->pos_y - ((HEIGHT_MINIMAP / 2 + 1) - y); // check si hors de la map
 	else 
 		y_map = map->pos_y + ((HEIGHT_MINIMAP / 2 + 1) - y);
+
+		
 	if (x <= (HEIGHT_MINIMAP / 2 + 1)) // HEIGHT_MINIMAP / 2 + 1 = milieu de la map en y
-		x_map = map->pos_x - ((WIDTH_MINIMAP / 2 + 1) - x - 1); // check si hors de la map
+		x_map = map->pos_x - ((WIDTH_MINIMAP / 2 + 1) - x); // check si hors de la map
 	else 
-		x_map = map->pos_x + ((WIDTH_MINIMAP / 2 + 1) - x -1);
+		x_map = map->pos_x + ((WIDTH_MINIMAP / 2 + 1) - x);
+
+		
 	map->minimap[y][x] = map->matrice[(int)map->pos_y - y_map][(int)map->pos_x - x_map];
-	printf("pos x = %d pos y = %d\n", (int)map->pos_x - x_map, (int)map->pos_y - y_map);
+	printf("x = %d y = %d x_map %d y_map %d pos x = %d pos y = %d pos_jx = %f pos_jy = %f\n",x, y, x_map, y_map, (int)map->pos_x + x_map, (int)map->pos_y + y_map, map->pos_x, map->pos_y);
 }
 
 void	change_minimap(t_map *map)

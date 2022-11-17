@@ -6,7 +6,7 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 08:56:31 by gbertin           #+#    #+#             */
-/*   Updated: 2022/11/16 12:03:33 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/11/17 09:22:28 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,8 @@ int	init_struct(t_general *general, char **argv)
 	if (init_map(general, argv[1]))
 		return (1);
 	if (init_pos_player(general))
+		return (1);
+	if (init_minimap(general->map))
 		return (1);
 	return (0);
 }
