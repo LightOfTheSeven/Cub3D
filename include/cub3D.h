@@ -19,6 +19,7 @@
 #define V_Y 1
 #define ANGLE_MIN 0
 #define ANGLE_MAX 1
+#define SPEED 5
 
 #define WIDTH_TILE 64
 #define HEIGHT_TILE 64

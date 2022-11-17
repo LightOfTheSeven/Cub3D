@@ -1,58 +1,29 @@
 #include "../include/cub3D.h"
 
-static void	up(t_general *general)
+static void handle_mouvement(int keycode, t_general *general)
 {
-	// double	old_y;
-	// //check wall
-	// old_y = general->map->pos_y;
-	general->map->pos_y -= 0.04;
-	// if (floor(old_y) != floor(general->map->pos_y))
-	// 	change_minimap(general->map);
-}
+	double	new_y;
+	double	new_x;
 
-static void down(t_general *general)
-{
-	// double	old_y;
-	// //check wall
-	// old_y = general->map->pos_y;
-	general->map->pos_y += 0.04;
-	// if (floor(old_y) != floor(general->map->pos_y))
-	// 	change_minimap(general->map);
-}
-
-static void left(t_general *general)
-{
-	// double	old_x;
-	// //check wall
-	// old_x = general->map->pos_x;
-	general->map->pos_x -= 0.04;
-	// if (floor(old_x) != floor(general->map->pos_x))
-	// 	change_minimap(general->map);
-}
-
-static void right(t_general *general)
-{
-	// double	old_x;
-	// //check wall
-	// old_x = general->map->pos_x;
-	general->map->pos_x += 0.04;
-	// if (floor(old_x) != floor(general->map->pos_x))
-	// 	change_minimap(general->map);
-}
-
-static int	key_hook(int keycode, t_general *general)
-{
-    if (keycode == A_KEY)
-       left(general);
+	new_x = general->map->pos_x;
+	new_y = general->map->pos_y;
+	if (keycode == A_KEY)
+    	new_x -= SPEED / 100;
 	else if (keycode == D_KEY)
-       right(general);
+       new_x += SPEED / 100;
 	else if (keycode == W_KEY)
-		up(general);
+		new_y -= SPEED / 100;
 	else if (keycode == S_KEY)
-        down(general);
-    else if (keycode == R_ARW || keycode == L_ARW)
-    {
-		if (keycode == R_ARW)
+        new_y += SPEED / 100;
+	if (general->map->matrice[(int)ceil(new_y)][(int)ceil(general->map->pos_x)] == '1')
+		return ;
+	general->map->pos_x = new_x;
+	general->map->pos_y = new_y;
+}
+
+static void	handle_rotate_cam(int keycode, t_general *general)
+{
+	if (keycode == R_ARW)
 			general->map->angle_cam -= 1;
 		else
 			 general->map->angle_cam += 1;
@@ -60,11 +31,30 @@ static int	key_hook(int keycode, t_general *general)
             general->map->angle_cam = general->map->angle_cam + 360;
         if (general->map->angle_cam > 360)
             general->map->angle_cam = general->map->angle_cam - 360;
-    }
+}
+
+static int	key_hook(int keycode, t_general *general)
+{
+	int new_win;
+
+	new_win = 0;
+	if (keycode == A_KEY || keycode == D_KEY || keycode == W_KEY || keycode == S_KEY)
+	{
+		handle_mouvement(keycode, general);
+		new_win = 1;
+	}
+    else if (keycode == R_ARW || keycode == L_ARW)
+	{
+		handle_rotate_cam(keycode, general);
+		new_win = 1;
+	}
 	else if (keycode == ESC)
-		exit_mlx(general); 
-	if (!print_map(general))
-		return (1);
+		exit_mlx(general);
+	if (new_win)
+	{
+		if (!print_map(general))
+			return (1);
+	}
 	return (0);
 }
 
