@@ -84,8 +84,8 @@ int 	is_direction(char c);
 void	init_raycasting(t_general *general);
 
 // BONUS
-// int		init_minimap(t_map *map);
-// void	change_minimap(t_map *map);
+int		init_minimap(t_map *map);
+void	change_minimap(t_map *map);
 
 
 // UTILS
