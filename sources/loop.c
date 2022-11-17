@@ -6,7 +6,7 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 08:53:36 by gbertin           #+#    #+#             */
-/*   Updated: 2022/11/17 08:54:23 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/11/17 15:22:48 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static void	up(t_general *general)
 	double	old_y;
 	//check wall
 	old_y = general->map->pos_y;
-	general->map->pos_y -= 0.04;
+	general->map->pos_y -= SPEED;
 	if (floor(old_y) != floor(general->map->pos_y))
 		change_minimap(general->map);
 }
@@ -27,7 +27,7 @@ static void down(t_general *general)
 	double	old_y;
 	//check wall
 	old_y = general->map->pos_y;
-	general->map->pos_y += 0.04;
+	general->map->pos_y += SPEED;
 	if (floor(old_y) != floor(general->map->pos_y))
 		change_minimap(general->map);
 }
@@ -37,7 +37,7 @@ static void left(t_general *general)
 	double	old_x;
 	//check wall
 	old_x = general->map->pos_x;
-	general->map->pos_x -= 0.04;
+	general->map->pos_x -= SPEED;
 	if (floor(old_x) != floor(general->map->pos_x))
 		change_minimap(general->map);
 }
@@ -47,7 +47,7 @@ static void right(t_general *general)
 	double	old_x;
 	//check wall
 	old_x = general->map->pos_x;
-	general->map->pos_x += 0.04;
+	general->map->pos_x += SPEED;
 	if (floor(old_x) != floor(general->map->pos_x))
 		change_minimap(general->map);
 }

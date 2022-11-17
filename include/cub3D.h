@@ -25,6 +25,8 @@
 #define WIDTH_MINIMAP 9
 #define HEIGHT_MINIMAP 5
 
+#define SPEED 0.05
+
 # define L_ARW					65361
 # define R_ARW					65363
 # define UP_ARW					65362
