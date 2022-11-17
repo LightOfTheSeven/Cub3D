@@ -6,7 +6,7 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 11:04:02 by gbertin           #+#    #+#             */
-/*   Updated: 2022/11/16 20:41:20 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/11/17 08:57:45 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,15 @@
 void 	print_matrice(t_map *map)
 {
 	(void)map;
-	// int i;
+	int i;
 
-	// i = 0;
-	// while (map->minimap[i])
-	// {
+	i = 0;
+	while (map->minimap[i])
+	{
 		
-	// 	printf("%sC\n", map->minimap[i]);
-	// 	i++;
-	// }
+		printf("%sC\n", map->minimap[i]);
+		i++;
+	}
 }
 
 int main(int argc, char **argv)
