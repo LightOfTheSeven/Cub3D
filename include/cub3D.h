@@ -72,6 +72,12 @@ typedef struct s_general {
 	
 }				t_general;
 
+typedef struct s_dir {
+	float x;
+	float y;
+	float hypo;
+}				t_dir;
+
 int		init_struct(t_general *general, char **argv);
 int		init_map(t_general *general, char *file_name);
 int		free_img(char *err, t_general *general);
