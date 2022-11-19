@@ -84,7 +84,7 @@ t_dir	next_horizon_wall(float pos_x, float pos_y, double angle)
 	A = pos_x - (pos_x - horiz.x);
 	B = pos_y - (pos_y + horiz.y);
 	horiz.hypo = sqrt(A*A + B*B);
-	printf("calcul horizon x = %f, y = %f, hypo = %f\n", horiz.x, horiz.y, horiz.hypo);
+	//printf("calcul horizon x = %f, y = %f, hypo = %f\n", horiz.x, horiz.y, horiz.hypo);
 	return (horiz);
 }
 
@@ -101,23 +101,24 @@ t_dir	next_vertical_wall(float pos_x, float pos_y, double angle)
 	verti.y = tan(conversion_radian(angle));
 	A = pos_x - (pos_x + verti.x);
 	B = pos_y - (pos_y - verti.y);
-	//printf("A = %f, B = %f, pos_y = %f, verti.y = %f\n", A, B, pos_y, verti.y);
 	verti.hypo = sqrt(A*A + B*B);
-	printf("calcul vertical x = %f, y = %f, hypo = %f\n", verti.x, verti.y, verti.hypo);
+	//printf("calcul vertical x = %f, y = %f, hypo = %f\n", verti.x, verti.y, verti.hypo);
 	return (verti);
 }
 
-static void print_collision(t_general *general, float pos_x, float pos_y, float angle)
+static float print_collision(t_general *general, float pos_x, float pos_y, float angle)
 {
 	t_dir horiz;
 	t_dir verti;
 	int remember; //1 = horiz, 2 = verti;
+	float distance = 0;
 
 	verti = first_vertical_wall(pos_x, pos_y, angle);
 	horiz = first_horizon_wall(pos_x, pos_y, angle);
 	if (horiz.hypo < verti.hypo)
 	{
 		remember = 1;
+		distance += horiz.hypo;
 		pos_x = pos_x - horiz.x;
 		pos_y = pos_y + horiz.y;
 		verti = first_vertical_wall(pos_x, pos_y, angle);
@@ -126,21 +127,21 @@ static void print_collision(t_general *general, float pos_x, float pos_y, float 
 	else
 	{
 		remember = 2;
+		distance += verti.hypo;
 		pos_x = pos_x + verti.x;
 		pos_y = pos_y - verti.y;
 		horiz = first_horizon_wall(pos_x, pos_y, angle);
 		verti = next_vertical_wall(pos_x, pos_y, angle);
 	}
-	/*mlx_put_image_to_window(general->mlx.ptr, general->mlx.win, \
-		general->spts[PLAYER].ptr, pos_x * 64, pos_y * 64);*/
-	printf("new pos x = %f, new pos y = %f\n", pos_x, pos_y);
-	while (general->map->matrice[(int)floor(pos_y)][(int)ceil(pos_x)+1] != '1')
+	//printf("new pos x = %f, new pos y = %f\n", pos_x, pos_y);
+	while (general->map->matrice[(int)floor(pos_y)][(int)ceil(pos_x)] != '1')
 	{
-		mlx_put_image_to_window(general->mlx.ptr, general->mlx.win, \
-		general->spts[PLAYER].ptr, pos_x * 64, pos_y * 64);
+		/*mlx_put_image_to_window(general->mlx.ptr, general->mlx.win, \
+		general->spts[PLAYER].ptr, pos_x * 64, pos_y * 64);*/
 		if (horiz.hypo < verti.hypo)
 		{
-			printf("COUCOU\n");
+			//printf("COUCOU\n");
+			distance += horiz.hypo;
 			if (remember == 1)
 			{
 				pos_x = pos_x + (-horiz.y * horiz.x);
@@ -157,7 +158,8 @@ static void print_collision(t_general *general, float pos_x, float pos_y, float 
 		}
 		else
 		{
-			printf("LALALLALA\n");
+			//printf("LALALLALA\n");
+			distance += verti.hypo;
 			if (remember == 2)
 			{
 				pos_y = pos_y - (verti.x * verti.y);
@@ -172,10 +174,11 @@ static void print_collision(t_general *general, float pos_x, float pos_y, float 
 			horiz = first_horizon_wall(pos_x, pos_y, angle);
 			verti = next_vertical_wall(pos_x, pos_y, angle);
 		}
-		printf("new pos x = %f, new pos y = %f\n", pos_x, pos_y);
-		printf("hypo horiz = %f, hypo verti = %f\n", horiz.hypo, verti.hypo);
-		printf("WHILE X = %d , Y = %d\n", (int)floor(pos_y), (int)floor(pos_x)-1);
+		//printf("new pos x = %f, new pos y = %f\n", pos_x, pos_y);
+		//printf("hypo horiz = %f, hypo verti = %f\n", horiz.hypo, verti.hypo);
+		//printf("WHILE X = %d , Y = %d\n", (int)floor(pos_y), (int)floor(pos_x)-1);
 	}
+	return (distance);
 }
 
 static void	print_raycasting(float origin_x, float origin_y, float v_angle[2], t_general *general)
@@ -184,6 +187,7 @@ static void	print_raycasting(float origin_x, float origin_y, float v_angle[2], t
 	int		i;
 	float	x;
 	float	y;
+	float distance;
 
 	while (v_angle[ANGLE_MIN] <= v_angle[ANGLE_MAX])
 	{
@@ -193,8 +197,8 @@ static void	print_raycasting(float origin_x, float origin_y, float v_angle[2], t
 		y = origin_y * 64;
 		v_dir[V_X] = cos(conversion_radian(v_angle[ANGLE_MIN]));
 		v_dir[V_Y] = sin(conversion_radian(v_angle[ANGLE_MIN] * -1));
-		print_collision(general, origin_x, origin_y, v_angle[ANGLE_MIN]);
-		while (i < general->map->ray_length)
+		distance = print_collision(general, origin_x, origin_y, v_angle[ANGLE_MIN]);
+		while (i < distance * 64)
 		{
 			mlx_pixel_put(general->mlx.ptr, general->mlx.win, (int)x, (int)y, 0x00FF00);
 			x += v_dir[V_X];
@@ -224,8 +228,8 @@ void	init_raycasting(t_general *general)
 	//v_angle[ANGLE_MAX] = get_ray_max(general->map->angle_cam);
 	// SI angle_cam + 45 est superieur a 360 alors ANGLE MAX devient plus petit que ANGLE MIN
 	// OU SI angle_cam - 45 est inferieur a 0 alors ANGLE MIN devient plus grand que ANGLE MIN
-	v_angle[ANGLE_MIN] = general->map->angle_cam;
-	v_angle[ANGLE_MAX] = general->map->angle_cam;
+	v_angle[ANGLE_MIN] = general->map->angle_cam - 45;
+	v_angle[ANGLE_MAX] = general->map->angle_cam + 45;
 	if (v_angle[ANGLE_MIN] > v_angle[ANGLE_MAX])
 	{
 		tmp = v_angle[ANGLE_MIN];
