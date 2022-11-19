@@ -34,138 +34,147 @@ double get_ray_max(double angle)
 	return (angle + half_fov);
 }
 
-t_dir	first_horizon_wall(float pos_y, double angle)
+t_dir	first_horizon_wall(float pos_x, float pos_y, double angle)
 {
 	t_dir horiz;
+	float A;
+	float B;
 
 	if (angle < 180)
 		horiz.y = floor(pos_y) - pos_y;
 	else
 		horiz.y = ceil(pos_y) - pos_y;
 	horiz.x = (horiz.y)/tan(conversion_radian(angle));
-	printf("calcul horizon x = %f, y = %f\n", horiz.x, horiz.y);
+	A = pos_x - (pos_x - horiz.x);
+	B = pos_y - (pos_y + horiz.y);
+	horiz.hypo = sqrt(A*A + B*B);
+	printf("calcul horizon x = %f, y = %f\n, hypo = %f\n", horiz.x, horiz.y, horiz.hypo);
 	return (horiz);
 }
 
-t_dir	first_vertical_wall(float pos_x, double angle)
+t_dir	first_vertical_wall(float pos_x, float pos_y, double angle)
 {
 	t_dir verti;
+	float A;
+	float B;
 
 	if (angle > 90 && angle < 270)
 		verti.x = floor(pos_x) - pos_x;
 	else
 		verti.x = ceil(pos_x) - pos_x;
 	verti.y = (verti.x) * tan(conversion_radian(angle));
-	printf("calcul vertical x = %f, y = %f\n", verti.x, verti.y);
-	return (verti);
-}
-
-t_dir calcul_first_collision(float pos_x, float pos_y, float angle)
-{
-	t_dir horiz;
-	t_dir verti;
-	float A;
-	float B;
-
-	printf("position de base x = %f et y = %f\n", pos_x, pos_y);
-	horiz = first_horizon_wall(pos_y, angle);
-	verti = first_vertical_wall(pos_x, angle);
-	A = pos_x - (pos_x - horiz.x);
-	B = pos_y - (pos_y + horiz.y);
-	horiz.hypo = sqrt(A*A + B*B);
 	A = pos_x - (pos_x + verti.x);
 	B = pos_y - (pos_y - verti.y);
 	verti.hypo = sqrt(A*A + B*B);
-	printf("hypo horiz = %f, hypo verti = %f\n", horiz.hypo, verti.hypo);
-	if (horiz.hypo < verti.hypo)
-	{
-		horiz.x = pos_x - horiz.x;
-		horiz.y = pos_y + horiz.y;
-		return (horiz);
-	}
-	else
-	{
-		verti.x = pos_x + verti.x;
-		verti.y = pos_y - verti.y;
-		return (verti);
-	}
+	printf("calcul vertical x = %f, y = %f, hypo = %f\n", verti.x, verti.y, verti.hypo);
+	return (verti);
 }
 
-t_dir	next_horizon_wall(float pos_y, double angle)
+t_dir	next_horizon_wall(float pos_x, float pos_y, double angle)
 {
 	t_dir horiz;
-	(void)pos_y;
+	float A;
+	float B;
 
 	if (angle < 180)
 		horiz.y = -1;
 	else
 		horiz.y = 1;
 	horiz.x = 1/tan(conversion_radian(angle));
-	printf("calcul horizon x = %f, y = %f\n", horiz.x, horiz.y);
+	A = pos_x - (pos_x - horiz.x);
+	B = pos_y - (pos_y + horiz.y);
+	horiz.hypo = sqrt(A*A + B*B);
+	printf("calcul horizon x = %f, y = %f, hypo = %f\n", horiz.x, horiz.y, horiz.hypo);
 	return (horiz);
 }
 
-t_dir	next_vertical_wall(float pos_x, double angle)
+t_dir	next_vertical_wall(float pos_x, float pos_y, double angle)
 {
 	t_dir verti;
-	(void)pos_x;
+	float A;
+	float B;
 
 	if (angle > 90 && angle < 270)
 		verti.x = -1;
 	else
 		verti.x = 1;
 	verti.y = tan(conversion_radian(angle));
-	printf("calcul vertical x = %f, y = %f\n", verti.x, verti.y);
-	return (verti);
-}
-
-t_dir calcul_next_collision(float pos_x, float pos_y, float angle)
-{
-	t_dir horiz;
-	t_dir verti;
-	float A;
-	float B;
-
-	horiz = next_horizon_wall(pos_y, angle);
-	verti = next_vertical_wall(pos_x, angle);
-	A = pos_x - (pos_x - horiz.x);
-	B = pos_y - (pos_y + horiz.y);
-	horiz.hypo = sqrt(A*A + B*B);
 	A = pos_x - (pos_x + verti.x);
 	B = pos_y - (pos_y - verti.y);
+	//printf("A = %f, B = %f, pos_y = %f, verti.y = %f\n", A, B, pos_y, verti.y);
 	verti.hypo = sqrt(A*A + B*B);
-	printf("hypo horiz = %f, hypo verti = %f\n", horiz.hypo, verti.hypo);
-	if (horiz.hypo < verti.hypo)
-	{
-		horiz.x = pos_x + (-horiz.y * horiz.x);
-		horiz.y = pos_y + horiz.y;
-		return (horiz);
-	}
-	else
-	{
-		verti.y = pos_y - (verti.x * verti.y);
-		verti.x = pos_x + verti.x;
-		return (verti);
-	}
+	printf("calcul vertical x = %f, y = %f, hypo = %f\n", verti.x, verti.y, verti.hypo);
+	return (verti);
 }
 
 static void print_collision(t_general *general, float pos_x, float pos_y, float angle)
 {
-	t_dir pos;
+	t_dir horiz;
+	t_dir verti;
+	int remember; //1 = horiz, 2 = verti;
 
-	pos = calcul_first_collision(pos_x, pos_y, angle);
-	pos_x = pos.x;
-	pos_y = pos.y;
-	mlx_put_image_to_window(general->mlx.ptr, general->mlx.win, \
-		general->spts[PLAYER].ptr, pos_x * 64, pos_y * 64);
-	while (general->map->matrice[(int)floor(pos_y)][(int)floor(pos_x)-1] != '1')
+	verti = first_vertical_wall(pos_x, pos_y, angle);
+	horiz = first_horizon_wall(pos_x, pos_y, angle);
+	if (horiz.hypo < verti.hypo)
 	{
-		printf("pos x = %f, new pos y = %f\n", pos_x, pos_y);
-		pos = calcul_next_collision(pos_x, pos_y, angle);
-		pos_x = pos.x;
-		pos_y = pos.y;
+		remember = 1;
+		pos_x = pos_x - horiz.x;
+		pos_y = pos_y + horiz.y;
+		verti = first_vertical_wall(pos_x, pos_y, angle);
+		horiz = next_horizon_wall(pos_x, pos_y, angle);
+	}
+	else
+	{
+		remember = 2;
+		pos_x = pos_x + verti.x;
+		pos_y = pos_y - verti.y;
+		horiz = first_horizon_wall(pos_x, pos_y, angle);
+		verti = next_vertical_wall(pos_x, pos_y, angle);
+	}
+	/*mlx_put_image_to_window(general->mlx.ptr, general->mlx.win, \
+		general->spts[PLAYER].ptr, pos_x * 64, pos_y * 64);*/
+	printf("new pos x = %f, new pos y = %f\n", pos_x, pos_y);
+	while (general->map->matrice[(int)floor(pos_y)][(int)ceil(pos_x)+1] != '1')
+	{
 		mlx_put_image_to_window(general->mlx.ptr, general->mlx.win, \
 		general->spts[PLAYER].ptr, pos_x * 64, pos_y * 64);
+		if (horiz.hypo < verti.hypo)
+		{
+			printf("COUCOU\n");
+			if (remember == 1)
+			{
+				pos_x = pos_x + (-horiz.y * horiz.x);
+				pos_y = pos_y + horiz.y;
+			}
+			else
+			{
+				pos_x = pos_x - horiz.x;
+				pos_y = pos_y + horiz.y;
+			}
+			remember = 1;
+			verti = first_vertical_wall(pos_x, pos_y, angle);
+			horiz = next_horizon_wall(pos_x, pos_y, angle);
+		}
+		else
+		{
+			printf("LALALLALA\n");
+			if (remember == 2)
+			{
+				pos_y = pos_y - (verti.x * verti.y);
+				pos_x = pos_x + verti.x;
+			}
+			else 
+			{
+				pos_x = pos_x + verti.x;
+				pos_y = pos_y - verti.y;
+			}
+			remember = 2;
+			horiz = first_horizon_wall(pos_x, pos_y, angle);
+			verti = next_vertical_wall(pos_x, pos_y, angle);
+		}
+		printf("new pos x = %f, new pos y = %f\n", pos_x, pos_y);
+		printf("hypo horiz = %f, hypo verti = %f\n", horiz.hypo, verti.hypo);
+		printf("WHILE X = %d , Y = %d\n", (int)floor(pos_y), (int)floor(pos_x)-1);
 	}
 }
 
