@@ -22,8 +22,8 @@
 
 #define WIDTH_TILE 64
 #define HEIGHT_TILE 64
-#define WIDTH_MINIMAP 9
-#define HEIGHT_MINIMAP 5
+#define WIDTH_MINIMAP 14
+#define HEIGHT_MINIMAP 8
 
 # define L_ARW					65361
 # define R_ARW					65363

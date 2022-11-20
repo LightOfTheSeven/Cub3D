@@ -48,7 +48,7 @@ t_dir	first_horizon_wall(float pos_x, float pos_y, double angle)
 	A = pos_x - (pos_x - horiz.x);
 	B = pos_y - (pos_y + horiz.y);
 	horiz.hypo = sqrt(A*A + B*B);
-	printf("calcul horizon x = %f, y = %f\n, hypo = %f\n", horiz.x, horiz.y, horiz.hypo);
+	//printf("calcul horizon x = %f, y = %f\n, hypo = %f\n", horiz.x, horiz.y, horiz.hypo);
 	return (horiz);
 }
 
@@ -66,7 +66,7 @@ t_dir	first_vertical_wall(float pos_x, float pos_y, double angle)
 	A = pos_x - (pos_x + verti.x);
 	B = pos_y - (pos_y - verti.y);
 	verti.hypo = sqrt(A*A + B*B);
-	printf("calcul vertical x = %f, y = %f, hypo = %f\n", verti.x, verti.y, verti.hypo);
+	//printf("calcul vertical x = %f, y = %f, hypo = %f\n", verti.x, verti.y, verti.hypo);
 	return (verti);
 }
 
@@ -136,8 +136,10 @@ static float print_collision(t_general *general, float pos_x, float pos_y, float
 	//printf("new pos x = %f, new pos y = %f\n", pos_x, pos_y);
 	while (!is_wall(pos_x, pos_y, angle, general))
 	{
+		printf("AHAHAHAHAHAHHAHAH angle = %f, mid angle = %f\n", angle, general->map->angle_cam);
 		/*mlx_put_image_to_window(general->mlx.ptr, general->mlx.win, \
 		general->spts[PLAYER].ptr, pos_x * 64, pos_y * 64);*/
+		printf("hypo horiz : %f, hypo verti : %f\n", horiz.hypo, verti.hypo);
 		if (horiz.hypo < verti.hypo)
 		{
 			//printf("COUCOU\n");
@@ -195,9 +197,11 @@ static void	print_raycasting(float origin_x, float origin_y, float v_angle[2], t
 	{
 		if (v_angle[ANGLE_MIN] < 0)
 			angle = v_angle[ANGLE_MIN] + 360;
+		else if (v_angle[ANGLE_MIN] > 360)
+			angle = v_angle[ANGLE_MIN] - 360;
 		else
 			angle = v_angle[ANGLE_MIN];
-		printf("\nv_angle = %d\n", angle);
+		//printf("\nv_angle = %d\n", angle);
 		i = 0;
 		x = origin_x * 64;
 		y = origin_y * 64;
@@ -234,8 +238,8 @@ void	init_raycasting(t_general *general)
 	//v_angle[ANGLE_MAX] = get_ray_max(general->map->angle_cam);
 	// SI angle_cam + 45 est superieur a 360 alors ANGLE MAX devient plus petit que ANGLE MIN
 	// OU SI angle_cam - 45 est inferieur a 0 alors ANGLE MIN devient plus grand que ANGLE MIN
-	v_angle[ANGLE_MIN] = general->map->angle_cam - 45;
-	v_angle[ANGLE_MAX] = general->map->angle_cam + 45;
+	v_angle[ANGLE_MIN] = general->map->angle_cam - FOV/2;
+	v_angle[ANGLE_MAX] = general->map->angle_cam + FOV/2;
 	/*if (v_angle[ANGLE_MAX] < 0)
 		v_angle[ANGLE_MAX] += 360;
 	if (v_angle[ANGLE_MIN] < 0)
