@@ -6,7 +6,7 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 10:09:07 by gbertin           #+#    #+#             */
-/*   Updated: 2022/11/16 20:40:47 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/11/20 09:07:13 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,24 @@ static int	fill_matrice(int nb_line, t_map *map, int fd)
 	return (0);
 }
 
+static int	ft_check_namefile(char *name)
+{
+	int		i;
+	char	*ber;
+
+	i = 0;
+	ber = ".ber";
+	while (name[i])
+		i++;
+	while (name[i] != '.' && i > 0)
+		i--;
+	if (ft_strncmp(&name[i], ber, 4))
+		return (1);
+	if (name[i + 4] != '\0')
+		return (1);
+	return (0);
+}
+
 static int fill_map(int nb_line, t_map *map, char *filename)
 {
 	int fd;
@@ -82,6 +100,8 @@ int	init_map(t_general *general, char *file_name)
 	int			nb_line;
 	t_map	  	*map;
 	
+	if (ft_check_namefile(file_name))
+		return (1);
 	map = (t_map *) malloc(sizeof(t_map));
 	if (!map)
 		return (1);
