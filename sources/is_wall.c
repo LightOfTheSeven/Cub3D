@@ -17,7 +17,6 @@ static int  check_vertical_wall(double pos_x, double pos_y, double angle, t_map 
     printf("ENTER IN CHECK VERTICAL\n");
     if (angle > 90 && angle < 270)
         pos_x--;
-    printf("pos_y : %d, pos_x : %d\n", (int)floor(pos_y), (int)floor(pos_x));
     if (map->matrice[(int)floor(pos_y)][(int)floor(pos_x)] == '1')
         return (1);
     return (0);
@@ -28,7 +27,6 @@ static int  check_horizontal_wall(double pos_x, double pos_y, double angle, t_ma
      printf("ENTER IN CHECK HORIZONTAL\n");
     if (angle < 180 && angle > 0)
         pos_y--;
-    printf("pos_y : %d, pos_x : %d\n", (int)floor(pos_y), (int)floor(pos_x));
     if (map->matrice[(int)floor(pos_y)][(int)floor(pos_x)] == '1')
         return (1);
     return (0);

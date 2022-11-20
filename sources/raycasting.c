@@ -133,16 +133,10 @@ static float print_collision(t_general *general, float pos_x, float pos_y, float
 		horiz = first_horizon_wall(pos_x, pos_y, angle);
 		verti = next_vertical_wall(pos_x, pos_y, angle);
 	}
-	//printf("new pos x = %f, new pos y = %f\n", pos_x, pos_y);
 	while (!is_wall(pos_x, pos_y, angle, general))
 	{
-		printf("AHAHAHAHAHAHHAHAH angle = %f, mid angle = %f\n", angle, general->map->angle_cam);
-		/*mlx_put_image_to_window(general->mlx.ptr, general->mlx.win, \
-		general->spts[PLAYER].ptr, pos_x * 64, pos_y * 64);*/
-		printf("hypo horiz : %f, hypo verti : %f\n", horiz.hypo, verti.hypo);
 		if (horiz.hypo < verti.hypo)
 		{
-			//printf("COUCOU\n");
 			distance += horiz.hypo;
 			if (remember == 1)
 			{
@@ -160,7 +154,6 @@ static float print_collision(t_general *general, float pos_x, float pos_y, float
 		}
 		else
 		{
-			//printf("LALALLALA\n");
 			distance += verti.hypo;
 			if (remember == 2)
 			{
@@ -176,9 +169,6 @@ static float print_collision(t_general *general, float pos_x, float pos_y, float
 			horiz = first_horizon_wall(pos_x, pos_y, angle);
 			verti = next_vertical_wall(pos_x, pos_y, angle);
 		}
-		//printf("new pos x = %f, new pos y = %f\n", pos_x, pos_y);
-		//printf("hypo horiz = %f, hypo verti = %f\n", horiz.hypo, verti.hypo);
-		//printf("WHILE X = %d , Y = %d\n", (int)floor(pos_y), (int)floor(pos_x)-1);
 	}
 	return (distance);
 }
