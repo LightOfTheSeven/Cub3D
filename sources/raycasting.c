@@ -6,7 +6,7 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 08:52:48 by gbertin           #+#    #+#             */
-/*   Updated: 2022/11/16 14:28:37 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/11/20 08:25:31 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,7 @@ static float print_collision(t_general *general, float pos_x, float pos_y, float
 		verti = next_vertical_wall(pos_x, pos_y, angle);
 	}
 	//printf("new pos x = %f, new pos y = %f\n", pos_x, pos_y);
-	while (general->map->matrice[(int)floor(pos_y)][(int)ceil(pos_x)] != '1')
+	while (!is_wall(pos_x, pos_y, angle, general))
 	{
 		/*mlx_put_image_to_window(general->mlx.ptr, general->mlx.win, \
 		general->spts[PLAYER].ptr, pos_x * 64, pos_y * 64);*/

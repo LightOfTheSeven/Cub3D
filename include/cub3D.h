@@ -88,6 +88,7 @@ void 	hook(t_general *general);
 int		hook_manager(int keycode, t_general *general);
 int 	is_direction(char c);
 void	init_raycasting(t_general *general);
+int 	is_wall(double pos_x, double pos_y, double angle, t_general *general);
 
 // BONUS
 // int		init_minimap(t_map *map);
