@@ -6,7 +6,7 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 08:56:31 by gbertin           #+#    #+#             */
-/*   Updated: 2022/11/16 12:03:33 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/11/22 11:16:18 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,10 @@ static int	init_pos_player(t_general *general)
 {
 	int	x;
 	int	y;
+	int	have_player;
 
 	y = 0;
+	have_player = 1;
 	while (general->map->matrice[y])
 	{
 		x = 0;
@@ -71,19 +73,24 @@ static int	init_pos_player(t_general *general)
 		{
 			if (is_direction(general->map->matrice[y][x]))
 			{
-				general->map->pos_x = (float) x + 0.5;
-				printf("x = %f\n", general->map->pos_x);
-				general->map->pos_y = (float) y + 0.5;
-				printf("y = %f\n", general->map->pos_y);
-				general->map->angle_cam = init_cam(general->map->matrice[y][x]);
-				printf("angle = %f\n", general->map->angle_cam);
-				return (0);
+				if (have_player)
+				{
+					general->map->pos_x = (float) x + 0.5;
+					general->map->pos_y = (float) y + 0.5;
+					general->map->angle_cam = init_cam(general->map->matrice[y][x]);
+					have_player = 0;
+				}
+				else
+				{
+					write(2, "Error : Too many players\n", 26);
+					return (1);
+				}
 			}
 			x++;
 		}
 		y++;
 	}
-	return (1);
+	return (0);
 }
 
 int	init_struct(t_general *general, char **argv)
