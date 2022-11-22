@@ -22,8 +22,8 @@
 
 #define WIDTH_TILE 64
 #define HEIGHT_TILE 64
-#define WIDTH_MINIMAP 9
-#define HEIGHT_MINIMAP 5
+#define WIDTH_MINIMAP 14
+#define HEIGHT_MINIMAP 8
 
 # define L_ARW					65361
 # define R_ARW					65363
@@ -72,6 +72,12 @@ typedef struct s_general {
 	
 }				t_general;
 
+typedef struct s_dir {
+	float x;
+	float y;
+	float hypo;
+}				t_dir;
+
 int		init_struct(t_general *general, char **argv);
 int		init_map(t_general *general, char *file_name);
 int		free_img(char *err, t_general *general);
@@ -82,6 +88,7 @@ void 	hook(t_general *general);
 int		hook_manager(int keycode, t_general *general);
 int 	is_direction(char c);
 void	init_raycasting(t_general *general);
+int 	is_wall(double pos_x, double pos_y, double angle, t_general *general);
 
 // BONUS
 // int		init_minimap(t_map *map);
