@@ -6,7 +6,7 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 08:56:31 by gbertin           #+#    #+#             */
-/*   Updated: 2022/11/22 11:16:18 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/11/23 12:00:27 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,6 @@ static int	init_struct_img(t_general *general)
 
 	i = 0;
 	// Take path in map file
-	general->spts[PLAYER].path = "spt/player.xpm";
-	general->spts[WALL].path = "spt/wall.xpm";
-	general->spts[FLOOR].path = "spt/floor.xpm";
 	while (i < NB_SPRITE)
 	{
 		general->spts[i].ptr = mlx_xpm_file_to_image(general->mlx.ptr, \
@@ -98,9 +95,9 @@ int	init_struct(t_general *general, char **argv)
 	ft_memset(general->spts, 0, sizeof(t_spt) * NB_SPRITE);
 	if (init_struct_mlx(&(general->mlx)))
 		return (1);
-	if (init_struct_img(general))
-		return (1);
 	if (init_map(general, argv[1]))
+		return (1);
+	if (init_struct_img(general))
 		return (1);
 	if (init_pos_player(general))
 		return (1);

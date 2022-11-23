@@ -13,7 +13,7 @@
 #include "../libmlx/mlx.h"
 
 #define DEBUG 0
-#define NB_SPRITE 3
+#define NB_SPRITE 5
 #define FOV 90
 #define V_X 0
 #define V_Y 1
@@ -36,7 +36,7 @@
 # define ESC					65307
 
 // permet de connaitre l'emplacement de chaque element
-enum sprite {WALL, PLAYER, FLOOR}; // Ajouter N S W E
+enum sprite {PLAYER, NORD, SUD, WEST, EAST}; // Ajouter N S W E
 enum position {NO, SO, WE, EA};
 
 typedef struct s_mlx {
@@ -65,10 +65,16 @@ typedef struct s_map {
 	float	angle_cam; // entre 0 et 360, 45 degres de chaque cote
 }				t_map;
 
+typedef struct s_dir {
+	float x;
+	float y;
+	float hypo;
+}				t_dir;
+
 typedef struct s_general {
 	t_mlx	mlx;
 	t_map	*map;
-	t_spt	spts[3]; // spt = sprite
+	t_spt	spts[NB_SPRITE]; // spt = sprite
 	int		ceil_color[3];
 	int		floor_color[3];
 	int		map_column;
@@ -86,6 +92,7 @@ void 	hook(t_general *general);
 int		hook_manager(int keycode, t_general *general);
 int 	is_direction(char c);
 void	init_raycasting(t_general *general);
+int 	is_wall(double pos_x, double pos_y, double angle, t_general *general);
 
 // BONUS
 // int		init_minimap(t_map *map);

@@ -1,3 +1,8 @@
+NO ./spt/floor.xpm
+SO ./spt/floor.xpm
+WE ./spt/wall.xpm
+EA ./spt/wall.xpm
+
 111111111
 101010101
 1010N0101

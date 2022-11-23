@@ -6,7 +6,7 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 12:00:56 by gbertin           #+#    #+#             */
-/*   Updated: 2022/11/16 09:23:56 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/11/23 12:01:21 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,13 @@ static void print_player(t_general *general)
 static void	print_tile(char tile, t_general *general, int x, int y)
 {
 	if (tile == '1')
-		mlx_put_image_to_window(general->mlx.ptr, general->mlx.win, general->spts[WALL].ptr, x, y);
+		mlx_put_image_to_window(general->mlx.ptr, general->mlx.win, general->spts[NORD].ptr, x, y);
 	else if (tile == '0')
 		mlx_put_image_to_window(general->mlx.ptr, general->mlx.win, \
-			general->spts[FLOOR].ptr, x, y);
+			general->spts[NORD].ptr, x, y);
 	else if (is_direction(tile))
 		mlx_put_image_to_window(general->mlx.ptr, general->mlx.win, \
-			general->spts[FLOOR].ptr, x, y);
+			general->spts[NORD].ptr, x, y);
 }
 
 int	print_map(t_general *general)
