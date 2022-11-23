@@ -12,7 +12,7 @@
 
 #include "../include/cub3D.h"
 
-static int	count_line(char *filename)
+/*static int	count_line(char *filename)
 {
 	int	nb_line;
 	char *line;
@@ -36,9 +36,9 @@ static int	count_line(char *filename)
 	free(line);
 	close(fd);
 	return (nb_line);
-}
+}*/
 
-static int	fill_matrice(int nb_line, t_map *map, int fd)
+/*static int	fill_matrice(int nb_line, t_map *map, int fd)
 {
 	int i;
 
@@ -51,9 +51,9 @@ static int	fill_matrice(int nb_line, t_map *map, int fd)
 		i++;
 	}
 	return (0);
-}
+}*/
 
-static int fill_map(int nb_line, t_map *map, char *filename)
+/*static int fill_map(int nb_line, t_map *map, char *filename)
 {
 	int fd;
 
@@ -75,7 +75,7 @@ static int fill_map(int nb_line, t_map *map, char *filename)
 	map->matrice[nb_line] = NULL;
 	close(fd);
 	return (0);
-}
+}*/
 
 static int set_color(char *line, int *color)
 {
@@ -115,12 +115,12 @@ static int take_info(t_general *general, char *line, int id)
 		if (general->spts[id].path == NULL)
 		{
 			if (path[0] && path[1])
-				general->spts[id].path = path[1];
-			//free tab
+				general->spts[id].path = ft_strdup(path[1]);
 		}
 		else
 		{
 			ft_putstr_fd("This Path is already set\n", 2);
+			free_tab(path);
 			return (1);
 		}
 	}
@@ -132,6 +132,7 @@ static int take_info(t_general *general, char *line, int id)
 		else
 			set_color(line, general->floor_color);
 	}
+	free_tab(path);
 	return (0);
 }
 
@@ -163,13 +164,20 @@ static int	 found_sprites_colors(t_general *general, char *file_name)
 	if (fd < 0)
 	{
 		strerror(errno);
-		return (-1);
+		return (1);
 	}
 	line = NULL;
 	line = get_next_line(fd);
 	while (line)
 	{
-		fill_infos(general, line);
+		if (fill_infos(general, line))
+		{
+			free(line);
+			close(fd);
+			free_general(general);
+			ft_putstr_fd("Error\n", 2);
+			return (1);
+		}
 		free(line);
 		line = get_next_line(fd);
 	}
@@ -177,10 +185,10 @@ static int	 found_sprites_colors(t_general *general, char *file_name)
 	close(fd);
 	return (0);
 }
-
+//pas oublier de mettre un NULL à la derniere colonne de map->matrice
 int	init_map(t_general *general, char *file_name)
 {
-	int			nb_line;
+	//int			nb_line;
 	t_map	  	*map;
 	//int			start_map;
 	
@@ -188,15 +196,16 @@ int	init_map(t_general *general, char *file_name)
 	if (!map)
 		return (1);
 	ft_memset(map, 0, sizeof(t_map));
-	found_sprites_colors(general, file_name);
+	general->map = map;
+	if (found_sprites_colors(general, file_name))
+		return (1);
 	printf("N %sS %sW %sE %s\n", general->spts[NORD].path, general->spts[SUD].path, general->spts[WEST].path, general->spts[EAST].path);
 	printf("F %d %d %d C %d %d %d\n", general->floor_color[0], general->floor_color[1], general->floor_color[2], general->ceil_color[0], general->ceil_color[1], general->ceil_color[2]);
-	nb_line = count_line(file_name);
+	/*nb_line = count_line(file_name);
 	if (nb_line == -1)
 		return (1);
 	if (fill_map(nb_line, map, file_name))
 		return (1);
-	//init_minimap(map);
-	general->map = map;
+	//init_minimap(map);*/
 	return (0);
 }

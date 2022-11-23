@@ -36,7 +36,10 @@ static int	init_struct_img(t_general *general)
 		general->spts[i].ptr = mlx_xpm_file_to_image(general->mlx.ptr, \
 		general->spts[i].path, &width, &height);
 		if (!general->spts[i].ptr)
+		{
+			free_general(general);
 			return (free_img("Error mlx image failed\n", general));
+		}
 		i++;
 	}
 	return (0);
@@ -93,9 +96,13 @@ static int	init_pos_player(t_general *general)
 int	init_struct(t_general *general, char **argv)
 {
 	ft_memset(general->spts, 0, sizeof(t_spt) * NB_SPRITE);
-	if (init_struct_mlx(&(general->mlx)))
-		return (1);
 	if (init_map(general, argv[1]))
+	{
+		printf("N %sS %sW %sE %s\n", general->spts[NORD].path, general->spts[SUD].path, general->spts[WEST].path, general->spts[EAST].path);
+		printf("F %d %d %d C %d %d %d\n", general->floor_color[0], general->floor_color[1], general->floor_color[2], general->ceil_color[0], general->ceil_color[1], general->ceil_color[2]);
+		return (1);
+	}
+	if (init_struct_mlx(&(general->mlx)))
 		return (1);
 	if (init_struct_img(general))
 		return (1);

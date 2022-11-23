@@ -101,5 +101,6 @@ int 	is_wall(double pos_x, double pos_y, double angle, t_general *general);
 
 // UTILS
 void 	print_matrice(t_map *map);
+void 	free_tab(char **tab);
 
 #endif

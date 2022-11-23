@@ -30,23 +30,38 @@ int	free_img(char *err, t_general *general)
 	return (ft_putstr_fd(err, 2), 1);
 }
 
-int free_general(t_general *general)
+void free_spts(t_general *general)
 {
 	int i;
 
 	i = 0;
-	if (general->map->matrice)
-	{
-		if (general->map->matrice[i])
-		{
-			while (general->map->matrice[i])
-			{
-				free(general->map->matrice[i]);
-				i++;
-			}
-		}
+	while(i < NB_SPRITE)
+	{	
+		if (general->spts[i].path)
+			free(general->spts[i].path);
+		i++;
 	}
-	free(general->map->matrice);
+}
+
+void free_tab(char **tab) //free les tableaux contenant un \0 ou un NULL a la fin
+{
+	int	i;
+
+	i = 0;
+	if (!tab)
+		return ;
+	while (tab[i])
+	{
+		free(tab[i]);
+		i++;
+	}
+	free(tab);
+}
+
+int free_general(t_general *general)
+{
+	free_tab(general->map->matrice);
+	free_spts(general);
 	free(general->map);
 	return 0;
 }
