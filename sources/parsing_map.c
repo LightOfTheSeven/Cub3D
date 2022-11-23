@@ -6,7 +6,7 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 10:09:07 by gbertin           #+#    #+#             */
-/*   Updated: 2022/11/23 11:59:14 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/11/23 19:56:25 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,32 @@ static int fill_map(int nb_line, t_map *map, char *filename)
 	return (0);
 }
 
+static int set_color(char *line, int *color)
+{
+	char **tab;
+	char **colors;
+
+	tab = ft_split(line, ' ');
+	if (!tab)
+		return (1);
+	if (tab[0] && tab[1])
+	{
+		colors = ft_split(tab[1], ',');
+		if (colors[0] && colors[1] && colors[2])
+		{
+			color[0] = ft_atoi(colors[0]);
+			color[1] = ft_atoi(colors[1]);
+			color[2] = ft_atoi(colors[2]);
+		}
+		else
+		{
+			ft_putstr_fd("Error\nBad Format Colors\n", 2);
+			return (1);
+		}
+	}
+	return (0);
+}
+
 static int take_info(t_general *general, char *line, int id)
 {
 	char	**path;
@@ -93,7 +119,18 @@ static int take_info(t_general *general, char *line, int id)
 			//free tab
 		}
 		else
+		{
+			ft_putstr_fd("This Path is already set\n", 2);
 			return (1);
+		}
+	}
+	else
+	{
+		//check deja set color
+		if (!ft_strncmp(line, "C", 1))
+			set_color(line, general->ceil_color);
+		else
+			set_color(line, general->floor_color);
 	}
 	return (0);
 }
@@ -110,6 +147,10 @@ static int	fill_infos(t_general *general, char *line)
 		return(take_info(general, line, WEST));
 	if (!ft_strncmp(line, "EA", 2))
 		return (take_info(general, line, EAST));
+	if (!ft_strncmp(line, "C", 1))
+		return (take_info(general, line, -1));
+	if (!ft_strncmp(line, "F", 1))
+		return (take_info(general, line, -1));
 	return (0);
 }
 //retourne le numéro de ligne de la dernière information trouvé
@@ -149,6 +190,7 @@ int	init_map(t_general *general, char *file_name)
 	ft_memset(map, 0, sizeof(t_map));
 	found_sprites_colors(general, file_name);
 	printf("N %sS %sW %sE %s\n", general->spts[NORD].path, general->spts[SUD].path, general->spts[WEST].path, general->spts[EAST].path);
+	printf("F %d %d %d C %d %d %d\n", general->floor_color[0], general->floor_color[1], general->floor_color[2], general->ceil_color[0], general->ceil_color[1], general->ceil_color[2]);
 	nb_line = count_line(file_name);
 	if (nb_line == -1)
 		return (1);
