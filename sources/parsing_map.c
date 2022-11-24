@@ -6,7 +6,7 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 10:09:07 by gbertin           #+#    #+#             */
-/*   Updated: 2022/11/23 19:56:25 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/11/24 18:42:13 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,89 +77,15 @@
 	return (0);
 }*/
 
-static int set_color(char *line, int *color)
-{
-	char **tab;
-	char **colors;
 
-	tab = ft_split(line, ' ');
-	if (!tab)
-		return (1);
-	if (tab[0] && tab[1])
-	{
-		colors = ft_split(tab[1], ',');
-		if (colors[0] && colors[1] && colors[2])
-		{
-			color[0] = ft_atoi(colors[0]);
-			color[1] = ft_atoi(colors[1]);
-			color[2] = ft_atoi(colors[2]);
-		}
-		else
-		{
-			ft_putstr_fd("Error\nBad Format Colors\n", 2);
-			return (1);
-		}
-	}
-	return (0);
-}
-
-static int take_info(t_general *general, char *line, int id)
-{
-	char	**path;
-
-	path = ft_split(line, ' ');
-	if (!path)
-		return (1);
-	if (id != -1)
-	{
-		if (general->spts[id].path == NULL)
-		{
-			if (path[0] && path[1])
-				general->spts[id].path = ft_strdup(path[1]);
-		}
-		else
-		{
-			ft_putstr_fd("This Path is already set\n", 2);
-			free_tab(path);
-			return (1);
-		}
-	}
-	else
-	{
-		//check deja set color
-		if (!ft_strncmp(line, "C", 1))
-			set_color(line, general->ceil_color);
-		else
-			set_color(line, general->floor_color);
-	}
-	free_tab(path);
-	return (0);
-}
-
-static int	fill_infos(t_general *general, char *line)
-{
-	if (!line)
-		return (0);
-	if (!ft_strncmp(line, "NO", 2))
-		return(take_info(general, line, NORD));
-	if (!ft_strncmp(line, "SO", 2))
-		return(take_info(general, line, SUD));
-	if (!ft_strncmp(line, "WE", 2))
-		return(take_info(general, line, WEST));
-	if (!ft_strncmp(line, "EA", 2))
-		return (take_info(general, line, EAST));
-	if (!ft_strncmp(line, "C", 1))
-		return (take_info(general, line, -1));
-	if (!ft_strncmp(line, "F", 1))
-		return (take_info(general, line, -1));
-	return (0);
-}
 //retourne le numéro de ligne de la dernière information trouvé
 static int	 found_sprites_colors(t_general *general, char *file_name)
 {
 	int fd;
 	char *line;
+	//int	 end_info;
 
+	//end_info = 0;
 	fd = open(file_name, O_RDONLY);
 	if (fd < 0)
 	{
@@ -175,7 +101,6 @@ static int	 found_sprites_colors(t_general *general, char *file_name)
 			free(line);
 			close(fd);
 			free_general(general);
-			ft_putstr_fd("Error\n", 2);
 			return (1);
 		}
 		free(line);
