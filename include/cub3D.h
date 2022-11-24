@@ -101,6 +101,7 @@ int		fill_infos(t_general *general, char *line);
 
 // UTILS
 void 	print_matrice(t_map *map);
+int		count_tab(char **tab);
 void 	free_tab(char **tab);
 
 #endif
