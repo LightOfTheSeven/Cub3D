@@ -93,7 +93,7 @@ int		hook_manager(int keycode, t_general *general);
 int 	is_direction(char c);
 void	init_raycasting(t_general *general);
 int 	is_wall(double pos_x, double pos_y, double angle, t_general *general);
-int		fill_infos(t_general *general, char *line);
+int		fill_infos(t_general *general, char **line);
 // BONUS
 // int		init_minimap(t_map *map);
 // void	change_minimap(t_map *map);
@@ -103,5 +103,7 @@ int		fill_infos(t_general *general, char *line);
 void 	print_matrice(t_map *map);
 int		count_tab(char **tab);
 void 	free_tab(char **tab);
+int		is_space(char *line);
+char	*ft_strndup(const char *s, int n);
 
 #endif

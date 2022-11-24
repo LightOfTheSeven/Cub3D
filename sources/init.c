@@ -37,8 +37,8 @@ static int	init_struct_img(t_general *general)
 		general->spts[i].path, &width, &height);
 		if (!general->spts[i].ptr)
 		{
+			return (free_img("Error\nCub3D : mlx image failed\n", general));
 			free_general(general);
-			return (free_img("Error mlx image failed\n", general));
 		}
 		i++;
 	}
@@ -82,7 +82,7 @@ static int	init_pos_player(t_general *general)
 				}
 				else
 				{
-					write(2, "Error : Too many players\n", 26);
+					ft_putstr_fd("Error\nCub3D : Too many players\n", 2);
 					return (1);
 				}
 			}
@@ -97,11 +97,7 @@ int	init_struct(t_general *general, char **argv)
 {
 	ft_memset(general->spts, 0, sizeof(t_spt) * NB_SPRITE);
 	if (init_map(general, argv[1]))
-	{
-		printf("N %sS %sW %sE %s\n", general->spts[NORD].path, general->spts[SUD].path, general->spts[WEST].path, general->spts[EAST].path);
-		printf("F %d %d %d C %d %d %d\n", general->floor_color[0], general->floor_color[1], general->floor_color[2], general->ceil_color[0], general->ceil_color[1], general->ceil_color[2]);
 		return (1);
-	}
 	if (init_struct_mlx(&(general->mlx)))
 		return (1);
 	if (init_struct_img(general))

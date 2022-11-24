@@ -30,3 +30,38 @@ int count_tab(char **tab)
         i++;
     return (i);
 }
+
+int is_space(char *line)
+{
+    int i;
+
+    i = 0;
+    while (line[i])
+    {
+        if (line[i] != ' ' && line[i] != '\n')
+            return (0);
+        i++;
+    }
+    return (1);
+}
+
+char	*ft_strndup(const char *s, int n)
+{
+	char	*dest;
+	int		size;
+	int		i;
+
+	size = 0;
+	i = 0;
+	size = ft_strlen((char *)s);
+	dest = (char *) malloc ((size + 1) * sizeof(char));
+	if (dest == NULL)
+		return (NULL);
+	while (i < size && i < n)
+	{
+		dest[i] = s[i];
+		i++;
+	}
+	dest[i] = '\0';
+	return (dest);
+}

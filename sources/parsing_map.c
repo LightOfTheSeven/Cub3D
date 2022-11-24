@@ -83,30 +83,45 @@ static int	 found_sprites_colors(t_general *general, char *file_name)
 {
 	int fd;
 	char *line;
+	char **line_split;
 	//int	 end_info;
 
 	//end_info = 0;
 	fd = open(file_name, O_RDONLY);
 	if (fd < 0)
 	{
+		ft_putstr_fd("Error\n", 2);
 		strerror(errno);
+		free_general(general);
 		return (1);
 	}
 	line = NULL;
 	line = get_next_line(fd);
 	while (line)
 	{
-		if (fill_infos(general, line))
+		if (!is_space(line))
 		{
-			free(line);
-			close(fd);
-			free_general(general);
-			return (1);
+			line_split = ft_split(line, ' ');
+			if (!line_split)
+				return (1);
+			if (fill_infos(general, line_split))
+			{
+				printf("N %sS %sW %sE %s\n", general->spts[NORD].path, general->spts[SUD].path, general->spts[WEST].path, general->spts[EAST].path);
+				printf("F %d %d %d C %d %d %d\n", general->floor_color[0], general->floor_color[1], general->floor_color[2], general->ceil_color[0], general->ceil_color[1], general->ceil_color[2]);
+				free_tab(line_split);
+				free(line);
+				close(fd);
+				free_general(general);
+				return (1);
+			}
+			free_tab(line_split);
 		}
+		printf("line = %s", line);
 		free(line);
 		line = get_next_line(fd);
 	}
-	free(line);
+	if (line)
+		free(line);
 	close(fd);
 	return (0);
 }
@@ -124,7 +139,7 @@ int	init_map(t_general *general, char *file_name)
 	general->map = map;
 	if (found_sprites_colors(general, file_name))
 		return (1);
-	printf("N %sS %sW %sE %s\n", general->spts[NORD].path, general->spts[SUD].path, general->spts[WEST].path, general->spts[EAST].path);
+	printf("N %s S %s W %s E %s\n", general->spts[NORD].path, general->spts[SUD].path, general->spts[WEST].path, general->spts[EAST].path);
 	printf("F %d %d %d C %d %d %d\n", general->floor_color[0], general->floor_color[1], general->floor_color[2], general->ceil_color[0], general->ceil_color[1], general->ceil_color[2]);
 	/*nb_line = count_line(file_name);
 	if (nb_line == -1)
