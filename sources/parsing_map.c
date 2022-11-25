@@ -6,7 +6,7 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 10:09:07 by gbertin           #+#    #+#             */
-/*   Updated: 2022/11/25 19:06:04 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/11/25 19:22:37 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,24 @@ static void	end_gnl(int fd)
 	close(fd);
 }
 
+int	check_namefile(char *name)
+{
+	int		i;
+	char	*cub;
+
+	i = 0;
+	cub = ".cub";
+	while (name[i])
+		i++;
+	while (name[i] != '.' && i > 0)
+		i--;
+	if (ft_strncmp(&name[i], cub, 4))
+		return (0);
+	if (name[i + 4] != '\0')
+		return (1);
+	return (0);
+}
+
 //retourne le numéro de ligne de la dernière information trouvé
 static int	 found_sprites_colors(t_general *general, char *file_name)
 {
@@ -144,6 +162,8 @@ int	init_map(t_general *general, char *file_name)
 	t_map	  	*map;
 	//int			start_map;
 	
+	if (check_namefile(file_name))
+		return (1);
 	map = (t_map *) malloc(sizeof(t_map));
 	if (!map)
 		return (1);
