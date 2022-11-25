@@ -6,7 +6,7 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 10:09:07 by gbertin           #+#    #+#             */
-/*   Updated: 2022/11/24 18:42:13 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/11/25 19:06:04 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,18 @@
 	return (0);
 }*/
 
+static void	end_gnl(int fd)
+{
+	char *line;
+
+	line = get_next_line(fd);
+	while (line)
+	{
+		free(line);
+		line = get_next_line(fd);
+	}
+	close(fd);
+}
 
 //retourne le numéro de ligne de la dernière information trouvé
 static int	 found_sprites_colors(t_general *general, char *file_name)
@@ -110,7 +122,7 @@ static int	 found_sprites_colors(t_general *general, char *file_name)
 				printf("F %d %d %d C %d %d %d\n", general->floor_color[0], general->floor_color[1], general->floor_color[2], general->ceil_color[0], general->ceil_color[1], general->ceil_color[2]);
 				free_tab(line_split);
 				free(line);
-				close(fd);
+				end_gnl(fd);
 				free_general(general);
 				return (1);
 			}
