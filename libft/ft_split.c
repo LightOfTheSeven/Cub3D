@@ -6,7 +6,7 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 18:47:16 by gbertin           #+#    #+#             */
-/*   Updated: 2022/11/25 18:47:18 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/11/25 18:54:02 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ char	**ft_split(const char *str, char separator)
 	result = ft_calloc(sizeof(*result), count_words(str, separator) + 1);
 	if (!result)
 		return (NULL);
-	if (!fill_result(result, str, separator))
+	if (fill_result(result, str, separator))
 		return (free_tab(result));
 	return (result);
 }
