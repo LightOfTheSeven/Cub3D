@@ -3,6 +3,9 @@
 
 int main ()
 {
-	printf("%d\n", WIDTH_MINIMAP / 2 + 1);
+	char **tab;
+
+	tab = ft_split("Bonjour la ville", ' ');
+	printf("%s %s %s\n", tab[0],  tab[1],  tab[2]);
 	return (0);
 }

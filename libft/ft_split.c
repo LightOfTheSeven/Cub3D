@@ -5,102 +5,91 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/25 08:59:50 by gbertin           #+#    #+#             */
-/*   Updated: 2021/12/27 14:43:47 by gbertin          ###   ########.fr       */
+/*   Created: 2022/11/25 18:47:16 by gbertin           #+#    #+#             */
+/*   Updated: 2022/11/25 18:47:18 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"libft.h"
+#include "libft.h"
 
-static void	*ft_memalloc(size_t size)
+static char	**free_tab(char **result)
 {
-	void	*new_memory;
+	int	i;
 
-	new_memory = malloc(size);
-	if (new_memory)
+	if (!result)
+		return (NULL);
+	i = 0;
+	while (result[i])
 	{
-		ft_bzero(new_memory, size);
-		return (new_memory);
+		free(result[i]);
+		result[i] = NULL;
+		i++;
 	}
+	free (result);
 	return (NULL);
 }
 
-static int	ft_nbwords(char const *s, char c)
+static int	get_word_end(const char *str, char separator, int i)
 {
-	unsigned int	nb_words;
-	unsigned int	i;
-
-	nb_words = 0;
-	i = 0;
-	while (s[i] != '\0')
-	{
-		while (s[i] != '\0' && s[i] == c)
-			i++;
-		if (s[i] != '\0' && s[i] != c)
-		{
-			while (s[i] != '\0' && s[i] != c)
-				i++;
-			nb_words++;
-		}
-	}
-	return (nb_words);
-}
-
-static int	ft_strlenc(const char *s, char c)
-{
-	unsigned int	i;
-
-	i = 0;
-	if (!s)
-		return (0);
-	while (s[i] != '\0' && s[i] != c)
+	while (str[i] && str[i] != separator)
 		i++;
 	return (i);
 }
 
-static char	*ft_mallocstrc(char *dest, char const *src, char c)
+static int	fill_result(char **result, const char *str, char separator)
 {
-	unsigned int	size;
-	unsigned int	i;
+	int	i;
+	int	word_end;
 
 	i = 0;
-	size = ft_strlenc(src, c);
-	dest = malloc(size + 1);
-	if (!dest)
-		return (NULL);
-	while (src[i] != '\0' && src[i] != c)
+	while (str[i])
 	{
-		dest[i] = src[i];
+		if (str[i] != separator)
+		{
+			word_end = get_word_end(str, separator, i);
+			*result = ft_calloc(sizeof(**result), word_end - i + 1);
+			if (!*result)
+				return (1);
+			ft_memcpy(*result, str + i, word_end - i);
+			result++;
+			i = word_end - 1;
+		}
 		i++;
 	}
-	dest[i] = '\0';
-	return (dest);
+	return (0);
 }
 
-char	**ft_split(char const *s, char c)
+static int	count_words(const char *str, char separator)
 {
-	unsigned int	i;
-	unsigned int	y;
-	char			**new_strs;
+	int	i;
+	int	nb_words;
 
 	i = 0;
-	y = 0;
-	new_strs = ft_memalloc(sizeof(char *) * (ft_nbwords(s, c) + 1));
-	if (!new_strs)
-		return (0);
-	while (s[i] != '\0')
+	nb_words = 0;
+	while (str[i] == separator)
+		i++;
+	while (str[i])
 	{
-		while (s[i] != '\0' && s[i] == c)
-			i++;
-		if (s[i] != c && s[i] != '\0')
+		if (str[i] != separator)
 		{
-			new_strs[y] = ft_mallocstrc(new_strs[y], &s[i], c);
-			if (!new_strs[y])
-				return (NULL);
-			i += ft_strlenc(&s[i], c);
-			y++;
+			nb_words++;
+			while (str[i] && str[i] != separator)
+				i++;
 		}
+		if (str[i])
+			i++;
 	}
-	new_strs[y] = NULL;
-	return (new_strs);
+	return (nb_words);
+}
+
+char	**ft_split(const char *str, char separator)
+{
+	char	**result;
+
+	result = ft_calloc(sizeof(*result), count_words(str, separator) + 1);
+	if (!result)
+		return (NULL);
+	if (!fill_result(result, str, separator))
+		return (free_tab(result));
+	return (result);
 }
