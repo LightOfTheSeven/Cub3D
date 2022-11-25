@@ -93,9 +93,26 @@ static int	init_pos_player(t_general *general)
 	return (0);
 }
 
+void init_general(t_general *general)
+{
+	int i;
+
+	i = 0;
+	general->floor_color[0] = -1;
+	general->ceil_color[0] = -1;
+	while (i < 5)
+	{
+		general->spts[i].path = NULL;
+		i++;
+	}
+	general->map_column = 0;
+	general->map_line = 0;
+}
+
 int	init_struct(t_general *general, char **argv)
 {
 	ft_memset(general->spts, 0, sizeof(t_spt) * NB_SPRITE);
+	init_general(general);
 	if (init_map(general, argv[1]))
 		return (1);
 	if (init_struct_mlx(&(general->mlx)))

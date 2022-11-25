@@ -18,7 +18,7 @@ static int set_color(char *line, int *color)
 	int		err;
 
 	err = 0;
-    if (color[3])
+    if (color[0] != -1)
     {
         ft_putstr_fd("Error\nCub3D : This color is already set\n", 2);
         return (1);
@@ -51,11 +51,14 @@ static int take_info(t_general *general, char **path, int id)
 
     err = 0;
 	if (count_tab(path) != 2)
+	{
+		ft_putstr_fd("Error\nCub3D : Bad syntax in file\n", 2);
 		return (1);
+	}
 	if (id > -1) // c'est un sprite
 	{
 		if (general->spts[id].path == NULL)
-			general->spts[id].path = ft_strndup(path[1], ft_strlen(path[1]) - 1);
+			general->spts[id].path = ft_strdup(path[1]);
 		else
 		{
 			ft_putstr_fd("Error\nCub3D : This Path is already set\n", 2);
@@ -76,7 +79,7 @@ static int take_info(t_general *general, char **path, int id)
 int	fill_infos(t_general *general, char **line_split)
 {
 	if (!line_split)
-		return (0);
+		return (1);
 	if (!ft_strncmp(line_split[0], "NO", 2))
 		return(take_info(general, line_split, NORD));
 	if (!ft_strncmp(line_split[0], "SO", 2))
