@@ -6,7 +6,7 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 09:19:55 by gbertin           #+#    #+#             */
-/*   Updated: 2022/11/15 08:22:43 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/11/28 12:52:05 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ void free_spts(t_general *general)
 	{	
 		if (general->spts[i].path)
 			free(general->spts[i].path);
+		if (general->spts[i].ptr != NULL)
+			mlx_destroy_image(general->mlx.ptr, general->spts[i].ptr);
 		i++;
 	}
 }
@@ -60,7 +62,8 @@ void free_tab(char **tab) //free les tableaux contenant un \0 ou un NULL a la fi
 
 int free_general(t_general *general)
 {
-	free_tab(general->map->matrice);
+	if (general->map->matrice)
+		free_tab(general->map->matrice);
 	free_spts(general);
 	free(general->map);
 	return 0;

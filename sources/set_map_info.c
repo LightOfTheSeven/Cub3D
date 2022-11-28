@@ -6,11 +6,25 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 18:42:47 by gbertin           #+#    #+#             */
-/*   Updated: 2022/11/24 18:42:49 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/11/28 09:09:54 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3D.h"
+static int fill_color(int *color, char **colors)
+{
+	if (only_int(colors[0]) || only_int(colors[1]) || only_int(colors[2]))
+		return (1);
+	color[0] = ft_atoi(colors[0]);
+	color[1] = ft_atoi(colors[1]);
+	color[2] = ft_atoi(colors[2]);
+    color[3] = 1;
+	free_tab(colors);
+	if ((color[0] < 0 || color[0] > 255) || (color[1] < 0 || color[1] > 255)
+		|| (color[2] < 0 || color[2] > 255))
+		return (1);
+	return (0);
+}
 
 static int set_color(char *line, int *color)
 {
@@ -25,16 +39,7 @@ static int set_color(char *line, int *color)
     }
 	colors = ft_split(line, ',');
 	if (count_tab(colors) == 3)
-	{
-		color[0] = ft_atoi(colors[0]);
-		color[1] = ft_atoi(colors[1]);
-		color[2] = ft_atoi(colors[2]);
-        color[3] = 1;
-	    free_tab(colors);
-		if ((color[0] < 0 || color[0] > 255) || (color[1] < 0 || color[1] > 255)
-			|| (color[2] < 0 || color[2] > 255))
-			err = 1;
-	}
+		err = fill_color(color, colors);
 	else
 	{
 		err = 1;

@@ -11,8 +11,9 @@ LIBMLX 	=	libmlx
 INCS	=	$(addprefix $(INC)/, cub3D.h)
 OBJS	=	$(addprefix $(OBJ)/, $(SRCS:.c=.o))
 SRCS 	=	free.c \
+			detect_map.c \
 			init.c \
-			parsing_map.c \
+			parsing_file.c \
 			print_map.c \
 			exit.c \
 			loop.c \

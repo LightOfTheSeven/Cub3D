@@ -6,11 +6,42 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 18:43:15 by gbertin           #+#    #+#             */
-/*   Updated: 2022/11/24 18:43:16 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/11/28 11:54:51 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3D.h"
+
+void 	print_matrice(t_map *map)
+{
+	int i;
+
+	i = 0;
+    if (!map->matrice)
+    {
+        ft_putstr_fd("Matrice not set\n", 2);
+        return ;
+    }
+	while (map->matrice[i])
+	{
+		
+		printf("%s\n", map->matrice[i]);
+		i++;
+	}
+}
+
+void	end_gnl(int fd)
+{
+	char *line;
+
+	line = get_next_line(fd);
+	while (line)
+	{
+		free(line);
+		line = get_next_line(fd);
+	}
+	close(fd);
+}
 
 int is_direction(char c)
 {
@@ -64,4 +95,20 @@ char	*ft_strndup(const char *s, int n)
 	}
 	dest[i] = '\0';
 	return (dest);
+}
+
+int only_int(char *line)
+{
+    int i;
+
+    i = 0;
+    if (!line)
+        return (1);
+    while(line[i])
+    {
+        if (!ft_isdigit(line[i]))
+            return (1);
+        i++;
+    }
+    return (0);
 }

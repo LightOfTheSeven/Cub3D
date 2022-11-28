@@ -6,7 +6,7 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/27 21:48:58 by gbertin           #+#    #+#             */
-/*   Updated: 2022/11/14 20:12:26 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/11/28 08:51:26 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,6 @@ char	*ft_cutline(char *str)
 		return (NULL);
 	i = 0;
 	while (str[i] != '\n' && str[i])
-	{
-		new[i] = str[i];
-		i++;
-	}
-	if (str[i] == '\n')
 	{
 		new[i] = str[i];
 		i++;
