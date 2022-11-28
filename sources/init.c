@@ -104,6 +104,7 @@ static void init_general(t_general *general, char **argv)
 	while (i < NB_SPRITE)
 	{
 		general->spts[i].path = NULL;
+		general->spts[i].ptr = NULL;
 		i++;
 	}
 	general->spts[PLAYER].path = "spt/player.xpm";

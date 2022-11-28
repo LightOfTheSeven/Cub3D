@@ -34,13 +34,13 @@ void free_spts(t_general *general)
 {
 	int i;
 
-	i = 0;
+	i = 1;
 	while(i < NB_SPRITE)
 	{	
 		if (general->spts[i].path)
 			free(general->spts[i].path);
-		if (general->spts[i].ptr != NULL)
-			mlx_destroy_image(general->mlx.ptr, general->spts[i].ptr);
+		//if (general->spts[i].ptr != NULL)
+		//	mlx_destroy_image(general->mlx.ptr, general->spts[i].ptr);
 		i++;
 	}
 }
