@@ -6,7 +6,7 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 08:56:31 by gbertin           #+#    #+#             */
-/*   Updated: 2022/11/29 10:42:07 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/11/29 12:17:54 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,11 @@ static int	init_pos_player(t_general *general)
 					return (1);
 				}
 			}
+			else if (!is_direction(general->map->matrice[y][x]) && general->map->matrice[y][x] != '0' && general->map->matrice[y][x] != '1' && general->map->matrice[y][x] != ' ')
+			{
+				ft_putstr_fd("Error\nCub3D : Invalid caracters\n", 2);
+				return (1);
+			}
 			x++;
 		}
 		y++;
@@ -116,19 +121,15 @@ int	init_struct(t_general *general, char **argv)
 {
 	ft_memset(general->spts, 0, sizeof(t_spt) * NB_SPRITE);
 	init_general(general, argv);
-	printf("after init general\n");
 	if (init_map(general))
 		return (1);
 	if (init_pos_player(general))
 		return (1);
 	if (verif_map(general))
 		return (1);
-	printf("after init map\n");
 	if (init_struct_mlx(&(general->mlx)))
 		return (1);
-	printf("after init mlx\n");
 	if (init_struct_img(general))
 		return (1);
-	printf("after init img\n");
 	return (0);
 }
