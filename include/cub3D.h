@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cub3D.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/11/29 15:04:26 by gbertin           #+#    #+#             */
+/*   Updated: 2022/11/29 15:11:58 by gbertin          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
@@ -6,24 +17,23 @@
 # include <unistd.h>
 # include <fcntl.h>
 # include <errno.h>
-#include <math.h>
+# include <math.h>
 
+# include "../libft/libft.h"
+# include "../libmlx/mlx.h"
 
-#include "../libft/libft.h"
-#include "../libmlx/mlx.h"
+# define DEBUG 0
+# define NB_SPRITE 5
+# define FOV 90
+# define V_X 0
+# define V_Y 1
+# define ANGLE_MIN 0
+# define ANGLE_MAX 1
 
-#define DEBUG 0
-#define NB_SPRITE 5
-#define FOV 90
-#define V_X 0
-#define V_Y 1
-#define ANGLE_MIN 0
-#define ANGLE_MAX 1
-
-#define WIDTH_TILE 64
-#define HEIGHT_TILE 64
-#define WIDTH_MINIMAP 15
-#define HEIGHT_MINIMAP 15
+# define WIDTH_TILE 64
+# define HEIGHT_TILE 64
+# define WIDTH_MINIMAP 15
+# define HEIGHT_MINIMAP 15
 
 # define L_ARW					65361
 # define R_ARW					65363
@@ -36,12 +46,12 @@
 # define ESC					65307
 
 // permet de connaitre l'emplacement de chaque element
-enum sprite {PLAYER, NORD, SUD, WEST, EAST}; // Ajouter N S W E
-enum position {NO, SO, WE, EA};
+enum e_sprite {player, nord, south, west,east}; // Ajouter N S W E
+enum e_position {NO, SO, WE, EA};
 
-typedef struct	s_pos {
+typedef strucs_pos {
 	int				x;
-	int 			y;
+	int				y;
 	struct s_pos	*next;
 }				t_pos;
 
@@ -50,7 +60,7 @@ typedef struct s_mlx {
 	void			*win;
 	int				win_height;
 	int				win_width;
-	struct s_img 	*img;
+	struct s_img	*img;
 	int				len;
 	int				bpp;
 	int				endian;
@@ -72,9 +82,9 @@ typedef struct s_map {
 }				t_map;
 
 typedef struct s_dir {
-	float x;
-	float y;
-	float hypo;
+	float	x;
+	float	y;
+	float	hypo;
 }				t_dir;
 
 typedef struct s_general {
@@ -86,34 +96,28 @@ typedef struct s_general {
 	int		floor_color[3];
 	int		map_column;
 	int		map_line;
-	
 }				t_general;
 
 int		init_struct(t_general *general, char **argv);
 int		init_map(t_general *general);
 int		free_img(char *err, t_general *general);
 int		print_map(t_general *general);
-int 	exit_mlx(t_general *general);
-int 	free_general(t_general *general);
-void 	hook(t_general *general);
+int		exit_mlx(t_general *general);
+int		free_general(t_general *general);
+void	hook(t_general *general);
 int		hook_manager(int keycode, t_general *general);
-int 	is_direction(char c);
+int		is_direction(char c);
 void	init_raycasting(t_general *general);
-int 	is_wall(double pos_x, double pos_y, double angle, t_general *general);
+int		is_wall(double pos_x, double pos_y, double angle, t_general *general);
 int		fill_infos(t_general *general, char **line);
 int		detect_map(t_general *general, int nb_line);
 int		verif_map(t_general *general);
-void 	print_matrice(t_map *map);
-
-// BONUS
-// int		init_minimap(t_map *map);
-// void	change_minimap(t_map *map);
-
+void	print_matrice(t_map *map);
 
 // UTILS
-void 	print_matrice(t_map *map);
+void	print_matrice(t_map *map);
 int		count_tab(char **tab);
-void 	free_tab(char **tab);
+void	free_tab(char **tab);
 int		is_space(char *line);
 int		only_int(char *line);
 char	*ft_strndup(const char *s, int n);

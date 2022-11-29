@@ -6,7 +6,7 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 08:56:31 by gbertin           #+#    #+#             */
-/*   Updated: 2022/11/29 12:17:54 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/11/29 15:08:51 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ static int	init_struct_mlx(t_mlx *mlx)
 		return (1);
 	mlx->win_height = HEIGHT_MINIMAP * HEIGHT_TILE;
 	mlx->win_width = WIDTH_MINIMAP * WIDTH_TILE;
-	mlx->win = mlx_new_window(mlx->ptr, mlx->win_width, mlx->win_height, "Cub3D");
+	mlx->win = mlx_new_window(mlx->ptr, \
+		mlx->win_width, mlx->win_height, "Cub3D");
 	return (0);
 }
 
@@ -30,7 +31,6 @@ static int	init_struct_img(t_general *general)
 	int		i;
 
 	i = 0;
-	// Take path in map file
 	while (i < NB_SPRITE)
 	{
 		printf("PATH TO SPRITE = %s %d\n", general->spts[i].path, i);
@@ -48,14 +48,14 @@ static int	init_struct_img(t_general *general)
 static float	init_cam(char direction)
 {
 	if (direction == 'N')
-		return 90;
+		return (90);
 	else if (direction == 'O')
-		return 180;
+		return (180);
 	else if (direction == 'E')
-		return 0;
+		return (0);
 	else if (direction == 'S')
-		return 270;
-	return 90;
+		return (270);
+	return (90);
 }
 
 static int	init_pos_player(t_general *general)
@@ -98,9 +98,9 @@ static int	init_pos_player(t_general *general)
 	return (0);
 }
 
-static void init_general(t_general *general, char **argv)
+static void	init_general(t_general *general, char **argv)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	general->filename = argv[1];
@@ -112,7 +112,7 @@ static void init_general(t_general *general, char **argv)
 		general->spts[i].ptr = NULL;
 		i++;
 	}
-	general->spts[PLAYER].path = "spt/player.xpm";
+	general->spts[player].path = "spt/player.xpm";
 	general->map_column = 0;
 	general->map_line = 0;
 }

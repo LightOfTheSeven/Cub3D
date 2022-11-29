@@ -6,7 +6,7 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 09:19:55 by gbertin           #+#    #+#             */
-/*   Updated: 2022/11/28 12:52:05 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/11/29 12:37:01 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,22 +30,20 @@ int	free_img(char *err, t_general *general)
 	return (ft_putstr_fd(err, 2), 1);
 }
 
-void free_spts(t_general *general)
+void	free_spts(t_general *general)
 {
-	int i;
+	int	i;
 
 	i = 1;
-	while(i < NB_SPRITE)
+	while (i < NB_SPRITE)
 	{	
 		if (general->spts[i].path)
 			free(general->spts[i].path);
-		//if (general->spts[i].ptr != NULL)
-		//	mlx_destroy_image(general->mlx.ptr, general->spts[i].ptr);
 		i++;
 	}
 }
 
-void free_tab(char **tab) //free les tableaux contenant un \0 ou un NULL a la fin
+void	free_tab(char **tab)
 {
 	int	i;
 
@@ -60,11 +58,11 @@ void free_tab(char **tab) //free les tableaux contenant un \0 ou un NULL a la fi
 	free(tab);
 }
 
-int free_general(t_general *general)
+int	free_general(t_general *general)
 {
 	if (general->map->matrice)
 		free_tab(general->map->matrice);
 	free_spts(general);
 	free(general->map);
-	return 0;
+	return (0);
 }

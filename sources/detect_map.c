@@ -6,7 +6,7 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 09:24:17 by gbertin           #+#    #+#             */
-/*   Updated: 2022/11/29 09:23:53 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/11/29 12:34:36 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static int	check_end_of_file(int fd)
 {
 	char	*line;
 	int		err;
-	
+
 	err = 0;
 	line = get_next_line(fd);
 	if (line && !is_space(line))
@@ -40,7 +40,7 @@ static int	check_end_of_file(int fd)
 static int	goto_map(t_general *general, int *fd, int nb_line, char **line)
 {
 	int		i;
-	
+
 	i = 0;
 	*fd = open(general->filename, O_RDONLY);
 	if (*fd < 0)
@@ -52,7 +52,7 @@ static int	goto_map(t_general *general, int *fd, int nb_line, char **line)
 	}
 	*line = NULL;
 	*line = get_next_line(*fd);
-	while(line && (i < nb_line || is_space(*line)))
+	while (line && (i < nb_line || is_space(*line)))
 	{
 		free(*line);
 		*line = get_next_line(*fd);
@@ -63,36 +63,35 @@ static int	goto_map(t_general *general, int *fd, int nb_line, char **line)
 	return (i);
 }
 
-static void	set_size_of_matrice(t_general *general, int fd, int begin_line, char *line)
+static void	set_size_of_matrice(t_general *gnrl, int fd, int begin, char *line)
 {
 	int		i;
-	
-	i = begin_line;
-	while(line)
+
+	i = begin;
+	while (line)
 	{
-		//printf("i = %d line = >%s\n>", i, line);
 		if (is_space(line))
 		{
 			free(line);
 			break ;
 		}
-		if ((int)ft_strlen(line) > general->map_column)
-			general->map_column = ft_strlen(line);
+		if ((int)ft_strlen(line) > gnrl->map_column)
+			gnrl->map_column = ft_strlen(line);
 		free(line);
 		line = get_next_line(fd);
 		i++;
 	}
-	general->map_line = i - begin_line;
+	gnrl->map_line = i - begin;
 }
 
-static int malloc_matrice(t_general *general, int fd, int begin_line, char *line)
+static int	malloc_matrice(t_general *general, int fd, int begin, char *line)
 {
 	int		i;
 	int		index;
 	size_t	x;
 	char	**matrice;
-	
-	i = begin_line;
+
+	i = begin;
 	index = 0;
 	matrice = (char **)malloc(sizeof(char *) * (general->map_line + 1));
 	if (!matrice)
@@ -135,7 +134,6 @@ int	detect_map(t_general *general, int begin_line)
 {
 	int		fd;
 	char	*line;
-	//char	**matrice;
 
 	line = NULL;
 	begin_line = goto_map(general, &fd, begin_line, &line);
@@ -151,7 +149,5 @@ int	detect_map(t_general *general, int begin_line)
 		return (1);
 	end_gnl(fd);
 	print_matrice(general->map);
-	printf("num fd = %d\n", fd);
-	printf("map column = %d, map line = %d, index = %d\n", general->map_column, general->map_line, begin_line);
 	return (0);
 }
