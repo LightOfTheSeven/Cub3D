@@ -6,7 +6,7 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 08:56:31 by gbertin           #+#    #+#             */
-/*   Updated: 2022/11/28 13:12:56 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/11/29 10:42:07 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,10 @@ int	init_struct(t_general *general, char **argv)
 	printf("after init general\n");
 	if (init_map(general))
 		return (1);
+	if (init_pos_player(general))
+		return (1);
+	if (verif_map(general))
+		return (1);
 	printf("after init map\n");
 	if (init_struct_mlx(&(general->mlx)))
 		return (1);
@@ -126,8 +130,5 @@ int	init_struct(t_general *general, char **argv)
 	if (init_struct_img(general))
 		return (1);
 	printf("after init img\n");
-	if (init_pos_player(general))
-		return (1);
-	printf("after init player\n");
 	return (0);
 }

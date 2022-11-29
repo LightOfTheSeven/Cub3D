@@ -6,7 +6,7 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 10:09:07 by gbertin           #+#    #+#             */
-/*   Updated: 2022/11/28 12:18:25 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/11/29 09:25:20 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,6 @@ static int	 found_sprites_colors(t_general *general)
 	{
 		ft_putstr_fd("Error\n", 2);
 		strerror(errno);
-		free_general(general);
 		close(fd);
 		return (1);
 	}
@@ -150,7 +149,6 @@ static int	 found_sprites_colors(t_general *general)
 				free_tab(line_split);
 				free(line);
 				end_gnl(fd);
-				free_general(general);
 				close(fd);
 				return (1);
 			}
@@ -169,7 +167,6 @@ static int	 found_sprites_colors(t_general *general)
 	close(fd);
 	return (nb_line);
 }
-
 
 //pas oublier de mettre un NULL à la derniere colonne de map->matrice
 int	init_map(t_general *general)
@@ -190,7 +187,6 @@ int	init_map(t_general *general)
 	if (!control_parsing(general))
 	{
 		ft_putstr_fd("Error\n", 2);
-		free_general(general);
 		return (1);
 	}
 	if (detect_map(general, nb_line))

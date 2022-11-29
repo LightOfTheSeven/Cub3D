@@ -39,6 +39,12 @@
 enum sprite {PLAYER, NORD, SUD, WEST, EAST}; // Ajouter N S W E
 enum position {NO, SO, WE, EA};
 
+typedef struct	s_pos {
+	int				x;
+	int 			y;
+	struct s_pos	*next;
+}				t_pos;
+
 typedef struct s_mlx {
 	void			*ptr;
 	void			*win;
@@ -96,6 +102,7 @@ void	init_raycasting(t_general *general);
 int 	is_wall(double pos_x, double pos_y, double angle, t_general *general);
 int		fill_infos(t_general *general, char **line);
 int		detect_map(t_general *general, int nb_line);
+int		verif_map(t_general *general);
 void 	print_matrice(t_map *map);
 
 // BONUS

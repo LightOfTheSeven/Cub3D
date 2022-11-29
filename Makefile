@@ -22,6 +22,7 @@ SRCS 	=	free.c \
 			main.c \
 			is_wall.c \
 			set_map_info.c \
+			verif_map.c \
 			init_minimap_bonus.c
 
 all: bonus $(NAME)

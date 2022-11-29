@@ -6,7 +6,7 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 18:42:47 by gbertin           #+#    #+#             */
-/*   Updated: 2022/11/28 09:09:54 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/11/29 09:26:25 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ static int fill_color(int *color, char **colors)
 	color[1] = ft_atoi(colors[1]);
 	color[2] = ft_atoi(colors[2]);
     color[3] = 1;
-	free_tab(colors);
 	if ((color[0] < 0 || color[0] > 255) || (color[1] < 0 || color[1] > 255)
 		|| (color[2] < 0 || color[2] > 255))
 		return (1);
@@ -41,12 +40,10 @@ static int set_color(char *line, int *color)
 	if (count_tab(colors) == 3)
 		err = fill_color(color, colors);
 	else
-	{
 		err = 1;
-		free_tab(colors);
-	}
 	if (err)
 		ft_putstr_fd("Error\nCub3D : Bad Format Colors\n", 2);
+	free_tab(colors);
 	return (err);
 }
 
@@ -72,7 +69,6 @@ static int take_info(t_general *general, char **path, int id)
 	}
 	else // c'est une couleur
 	{
-		//check deja set color
 		if (id == -1)
 			err = set_color(path[1], general->ceil_color);
 		else
@@ -98,6 +94,5 @@ int	fill_infos(t_general *general, char **line_split)
 	if (!ft_strncmp(line_split[0], "F", 1))
 		return (take_info(general, line_split, -2));
 	ft_putstr_fd("Error\nCub3D : Bad syntax in file\n", 2);
-	//printf("= .%s.\n", line_split[0]);
 	return (1);
 }

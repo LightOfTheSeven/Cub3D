@@ -6,7 +6,7 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 09:24:17 by gbertin           #+#    #+#             */
-/*   Updated: 2022/11/28 12:59:07 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/11/29 09:23:53 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ static int	goto_map(t_general *general, int *fd, int nb_line, char **line)
 	{
 		ft_putstr_fd("Error\n", 2);
 		strerror(errno);
-		free_general(general);
 		close(*fd);
 		return (0);
 	}
@@ -95,14 +94,14 @@ static int malloc_matrice(t_general *general, int fd, int begin_line, char *line
 	
 	i = begin_line;
 	index = 0;
-	matrice = malloc(sizeof(char *) * general->map_line + 1);
+	matrice = (char **)malloc(sizeof(char *) * (general->map_line + 1));
 	if (!matrice)
 		return (1);
 	ft_memset(matrice, 0, sizeof(char **));
 	while (line)
 	{
 		x = 0;
-		matrice[index] = malloc(sizeof(char) * general->map_column + 1);
+		matrice[index] = malloc(sizeof(char) * (general->map_column + 1));
 		if (!matrice[index])
 		{
 			free_tab(matrice);
@@ -127,7 +126,7 @@ static int malloc_matrice(t_general *general, int fd, int begin_line, char *line
 		i++;
 		index++;
 	}
-	matrice[index] = NULL;
+	matrice[general->map_line] = NULL;
 	general->map->matrice = matrice;
 	return (0);
 }
