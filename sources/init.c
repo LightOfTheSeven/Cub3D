@@ -17,8 +17,8 @@ static int	init_struct_mlx(t_mlx *mlx)
 	mlx->ptr = mlx_init();
 	if (!mlx->ptr)
 		return (1);
-	mlx->win_height = HEIGHT_MINIMAP * HEIGHT_TILE;
-	mlx->win_width = WIDTH_MINIMAP * WIDTH_TILE;
+	mlx->win_height = YPIXEL;
+	mlx->win_width = XPIXEL;
 	mlx->win = mlx_new_window(mlx->ptr, mlx->win_width, mlx->win_height, "Cub3D");
 	return (0);
 }
@@ -97,5 +97,6 @@ int	init_struct(t_general *general, char **argv)
 		return (1);
 	if (init_pos_player(general))
 		return (1);
+	init_raycasting(general);
 	return (0);
 }

@@ -22,8 +22,10 @@
 
 #define WIDTH_TILE 64
 #define HEIGHT_TILE 64
-#define WIDTH_MINIMAP 14
+#define WIDTH_MINIMAP 8
 #define HEIGHT_MINIMAP 8
+#define XPIXEL 700.0
+#define YPIXEL 500.0
 
 # define L_ARW					65361
 # define R_ARW					65363
@@ -42,7 +44,7 @@ typedef struct s_mlx {
 	void			*ptr;
 	void			*win;
 	int				win_height;
-	int				win_width;
+	int				win_width; //largeur
 	struct s_img 	*img;
 	int				len;
 	int				bpp;
@@ -89,6 +91,9 @@ int		hook_manager(int keycode, t_general *general);
 int 	is_direction(char c);
 void	init_raycasting(t_general *general);
 int 	is_wall(double pos_x, double pos_y, double angle, t_general *general);
+void	pixel_draw(t_general *general, int x, int y, int color);
+void	init_image(t_general *general);
+void	print_a_column(t_general *general, float distance, int i);
 
 // BONUS
 // int		init_minimap(t_map *map);
@@ -97,5 +102,6 @@ int 	is_wall(double pos_x, double pos_y, double angle, t_general *general);
 
 // UTILS
 void 	print_matrice(t_map *map);
+float	conversion_radian(float f);
 
 #endif

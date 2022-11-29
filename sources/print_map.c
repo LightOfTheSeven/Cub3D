@@ -12,7 +12,7 @@
 
 #include "../include/cub3D.h"
 
-static void print_player(t_general *general)
+/*static void print_player(t_general *general)
 {
 	int x;
 	int y;
@@ -24,9 +24,9 @@ static void print_player(t_general *general)
 	//printf("%d, %d\n", x, y);
 	mlx_put_image_to_window(general->mlx.ptr, general->mlx.win, \
 			general->spts[PLAYER].ptr, x, y);
-}
+}*/
 
-static void	print_tile(char tile, t_general *general, int x, int y)
+/*static void	print_tile(char tile, t_general *general, int x, int y)
 {
 	if (tile == '1')
 		mlx_put_image_to_window(general->mlx.ptr, general->mlx.win, general->spts[WALL].ptr, x, y);
@@ -36,11 +36,11 @@ static void	print_tile(char tile, t_general *general, int x, int y)
 	else if (is_direction(tile))
 		mlx_put_image_to_window(general->mlx.ptr, general->mlx.win, \
 			general->spts[FLOOR].ptr, x, y);
-}
+}*/
 
 int	print_map(t_general *general)
 {
-	int	row;
+	/*int	row;
 	int	col;
 	int	x;
 	int	y;
@@ -60,7 +60,8 @@ int	print_map(t_general *general)
 		y += HEIGHT_TILE;
 		row++;
 	}
-	print_player(general);
+	print_player(general);*/
+	mlx_destroy_image(general->mlx.ptr, general->mlx.img);
 	init_raycasting(general);
 	return (0);
 }

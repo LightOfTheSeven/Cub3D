@@ -20,7 +20,8 @@ SRCS 	=	free.c \
 			raycasting.c \
 			main.c \
 			is_wall.c \
-			init_minimap_bonus.c
+			init_minimap_bonus.c \
+			3D.c
 
 all: bonus $(NAME)
 

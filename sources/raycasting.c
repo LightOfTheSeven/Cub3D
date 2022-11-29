@@ -173,16 +173,19 @@ static float print_collision(t_general *general, float pos_x, float pos_y, float
 	return (distance);
 }
 
-static void	print_raycasting(float origin_x, float origin_y, float v_angle[2], t_general *general)
+float	fisheye(float distance, float angle, float angle_cam)
 {
-	float	v_dir[2];
+	return (distance * cos(conversion_radian(angle - angle_cam)));
+}
+
+static void	print_raycasting(float origin_x, float origin_y, double v_angle[2], t_general *general)
+{
+	//float	v_dir[2];
 	int		i;
-	float	x;
-	float	y;
 	float distance;
 
 	int angle = 0;
-
+	i = 0;
 	while (v_angle[ANGLE_MIN] < v_angle[ANGLE_MAX])
 	{
 		if (v_angle[ANGLE_MIN] < 0)
@@ -192,54 +195,26 @@ static void	print_raycasting(float origin_x, float origin_y, float v_angle[2], t
 		else
 			angle = v_angle[ANGLE_MIN];
 		//printf("\nv_angle = %d\n", angle);
-		i = 0;
-		x = origin_x * 64;
-		y = origin_y * 64;
-		v_dir[V_X] = cos(conversion_radian(angle));
-		v_dir[V_Y] = sin(conversion_radian(angle * -1));
+		i++;
+		printf("i = %d\n", i);
+		//v_dir[V_X] = cos(conversion_radian(angle));
+		//v_dir[V_Y] = sin(conversion_radian(angle * -1));
 		distance = print_collision(general, origin_x, origin_y, angle);
-		while (i < distance * 64)
-		{
-			mlx_pixel_put(general->mlx.ptr, general->mlx.win, (int)x, (int)y, 0x00FF00);
-			x += v_dir[V_X];
-			y += v_dir[V_Y];
-			i++;
-		}
-		v_angle[ANGLE_MIN] += 1;
+		print_a_column(general, fisheye(distance, angle, general->map->angle_cam), i);
+		v_angle[ANGLE_MIN] += FOV / XPIXEL;
 	}
+	mlx_put_image_to_window(general->mlx.ptr, general->mlx.win, general->mlx.img, 0, 0);
 }
 
 
 void	init_raycasting(t_general *general)
 {
 
-	float	v_angle[2];
-	//float	x;
-	//float	y;
-	//float 	tmp;
-	
-	// init position x et y
-	/*x = floor(general->map->pos_x) * HEIGHT_TILE;
-	y = floor(general->map->pos_y) * WIDTH_TILE;
-	x += (general->map->pos_x - floor(general->map->pos_x)) * HEIGHT_TILE + 4;
-	y += (general->map->pos_y - floor(general->map->pos_y)) * WIDTH_TILE + 4;*/
-	// init angle min et angle max du FOV
-	//v_angle[ANGLE_MIN] = get_ray_min(general->map->angle_cam);
-	//v_angle[ANGLE_MAX] = get_ray_max(general->map->angle_cam);
-	// SI angle_cam + 45 est superieur a 360 alors ANGLE MAX devient plus petit que ANGLE MIN
-	// OU SI angle_cam - 45 est inferieur a 0 alors ANGLE MIN devient plus grand que ANGLE MIN
+	double	v_angle[2];
+
 	v_angle[ANGLE_MIN] = general->map->angle_cam - FOV/2;
 	v_angle[ANGLE_MAX] = general->map->angle_cam + FOV/2;
-	/*if (v_angle[ANGLE_MAX] < 0)
-		v_angle[ANGLE_MAX] += 360;
-	if (v_angle[ANGLE_MIN] < 0)
-		v_angle[ANGLE_MIN] += 360;*/
-	/*if (v_angle[ANGLE_MIN] > v_angle[ANGLE_MAX])
-	{
-		tmp = v_angle[ANGLE_MIN];
-		v_angle[ANGLE_MIN] = v_angle[ANGLE_MAX];
-		v_angle[ANGLE_MAX] = tmp;
-	}*/
-	printf("ANGLE : min:%f max:%f\n", v_angle[ANGLE_MIN], v_angle[ANGLE_MAX]);
+	//printf("ANGLE : min:%f max:%f\n", v_angle[ANGLE_MIN], v_angle[ANGLE_MAX]);
+	init_image(general);
 	print_raycasting(general->map->pos_x, general->map->pos_y, v_angle, general);
 }
