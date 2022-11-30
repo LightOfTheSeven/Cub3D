@@ -1,5 +1,15 @@
+NO ./spt/floor.xpm
+SO ./spt/floor.xpm
+WE ./spt/wall.xpm
+EA ./spt/wall.xpm
+
+F 220,100,0
+C 225,30,9
+
 111111111
 101010101
-1010N0101
-010101010
+1011N0101
+010110001
 111111111
+
+

@@ -11,8 +11,9 @@ LIBMLX 	=	libmlx
 INCS	=	$(addprefix $(INC)/, cub3D.h)
 OBJS	=	$(addprefix $(OBJ)/, $(SRCS:.c=.o))
 SRCS 	=	free.c \
+			detect_map.c \
 			init.c \
-			parsing_map.c \
+			parsing_file.c \
 			print_map.c \
 			exit.c \
 			loop.c \
@@ -20,8 +21,11 @@ SRCS 	=	free.c \
 			raycasting.c \
 			main.c \
 			is_wall.c \
-			init_minimap_bonus.c \
-			3D.c
+			3D.c \
+			set_map_info.c \
+			verif_map.c \
+			utils_direction.c \
+			init_minimap_bonus.c
 
 all: bonus $(NAME)
 

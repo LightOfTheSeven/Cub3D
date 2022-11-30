@@ -6,7 +6,7 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 12:00:56 by gbertin           #+#    #+#             */
-/*   Updated: 2022/11/16 09:23:56 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/11/30 10:02:17 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,13 @@
 
 /*static void print_player(t_general *general)
 {
-	int x;
-	int y;
+	int	x;
+	int	y;
 
 	x = floor(general->map->pos_x) * HEIGHT_TILE;
 	y = floor(general->map->pos_y) * WIDTH_TILE;
-	x += (general->map->pos_x - floor(general->map->pos_x)) * HEIGHT_TILE; // 4 = moitie du personnage pour centrer sur sa position
+	x += (general->map->pos_x - floor(general->map->pos_x)) * HEIGHT_TILE;
 	y += (general->map->pos_y - floor(general->map->pos_y)) * HEIGHT_TILE;
-	//printf("%d, %d\n", x, y);
 	mlx_put_image_to_window(general->mlx.ptr, general->mlx.win, \
 			general->spts[PLAYER].ptr, x, y);
 }*/
@@ -29,10 +28,11 @@
 /*static void	print_tile(char tile, t_general *general, int x, int y)
 {
 	if (tile == '1')
-		mlx_put_image_to_window(general->mlx.ptr, general->mlx.win, general->spts[WALL].ptr, x, y);
+		mlx_put_image_to_window(general->mlx.ptr, \
+			general->mlx.win, general->spts[east].ptr, x, y);
 	else if (tile == '0')
 		mlx_put_image_to_window(general->mlx.ptr, general->mlx.win, \
-			general->spts[FLOOR].ptr, x, y);
+			general->spts[nord].ptr, x, y);
 	else if (is_direction(tile))
 		mlx_put_image_to_window(general->mlx.ptr, general->mlx.win, \
 			general->spts[FLOOR].ptr, x, y);
