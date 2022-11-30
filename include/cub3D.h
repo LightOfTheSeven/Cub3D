@@ -6,7 +6,7 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 15:04:26 by gbertin           #+#    #+#             */
-/*   Updated: 2022/11/29 15:11:58 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/11/30 11:38:26 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,6 @@
 // permet de connaitre l'emplacement de chaque element
 enum e_sprite {player, nord, south, west,east}; // Ajouter N S W E
 enum e_position {NO, SO, WE, EA};
-
-typedef strucs_pos {
-	int				x;
-	int				y;
-	struct s_pos	*next;
-}				t_pos;
 
 typedef struct s_mlx {
 	void			*ptr;
