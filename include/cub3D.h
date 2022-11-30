@@ -107,6 +107,15 @@ int		fill_infos(t_general *general, char **line);
 int		detect_map(t_general *general, int nb_line);
 int		verif_map(t_general *general);
 void	print_matrice(t_map *map);
+t_dir	first_horizon_wall(float pos_x, float pos_y, double angle);
+t_dir	first_vertical_wall(float pos_x, float pos_y, double angle);
+t_dir	next_horizon_wall(float pos_x, float pos_y, double angle);
+t_dir	next_vertical_wall(float pos_x, float pos_y, double angle);
+float	conversion_radian(float f);
+double	get_ray_min(double angle);
+double	get_ray_max(double angle);
+float	horiz_bigger(int *remember, float *pos_x, float *pos_y, t_dir horiz);
+float	verti_bigger(int *remember, float *pos_x, float *pos_y, t_dir verti);
 
 // UTILS
 void	print_matrice(t_map *map);
@@ -116,5 +125,6 @@ int		is_space(char *line);
 int		only_int(char *line);
 char	*ft_strndup(const char *s, int n);
 void	end_gnl(int fd);
+float	conversion_radian(float f);
 
 #endif
