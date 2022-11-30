@@ -6,7 +6,7 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 14:45:45 by gbertin           #+#    #+#             */
-/*   Updated: 2022/11/30 10:24:53 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/11/30 11:06:03 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,9 +98,9 @@ static int	key_hook(int keycode, t_general *general)
     else if (keycode == R_ARW || keycode == L_ARW)
     {
 		if (keycode == R_ARW)
-			general->map->angle_cam += 1;
+			general->map->angle_cam += 2.5;
 		else
-			 general->map->angle_cam -= 1;
+			 general->map->angle_cam -= 2.5;
         if (general->map->angle_cam < 0)
             general->map->angle_cam = general->map->angle_cam + 360;
         if (general->map->angle_cam > 360)
