@@ -32,11 +32,11 @@ void    print_a_column(t_general *general, float distance, int i)
     ceil = (YPIXEL  - projection) / 2;
     printf("ceil = %f\n", ceil);
     index = 0;
-    while (index < YPIXEL && index < ceil)
-        pixel_draw(general, i, index++, 0x00FF00);
+   while (index < YPIXEL && index < ceil)
+        pixel_draw(general, i, index++, 0x5DADE2);
     while (index < YPIXEL && index < (ceil + projection))
-        pixel_draw(general, i, index++, 0x0000FF);
+        pixel_draw(general, i, index++, 0x45B39D);
     while (index < YPIXEL)
-        pixel_draw(general, i, index++, 0xFF0000);
+        pixel_draw(general, i, index++, 0xF7DC6F);
     return ;
 }

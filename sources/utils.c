@@ -6,7 +6,7 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 18:43:15 by gbertin           #+#    #+#             */
-/*   Updated: 2022/11/29 15:02:11 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/11/30 10:59:20 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,6 @@ void	end_gnl(int fd)
 		line = get_next_line(fd);
 	}
 	close(fd);
-}
-
-int	is_direction(char c)
-{
-	if (c == 'N' || c == 'O' || c == 'S' || c == 'E')
-		return (1);
-	return (0);
 }
 
 int	count_tab(char **tab)
