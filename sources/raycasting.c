@@ -6,7 +6,7 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 08:52:48 by gbertin           #+#    #+#             */
-/*   Updated: 2022/12/01 08:35:53 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/12/01 16:59:57 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -205,6 +205,7 @@ static void	print_raycasting(float origin_x, float origin_y, double v_angle[2], 
 	}
 	mlx_put_image_to_window(general->mlx.ptr, general->mlx.win, general->mlx.img, 0, 0);
 }
+
 
 
 void	init_raycasting(t_general *general)

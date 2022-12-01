@@ -6,7 +6,7 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 15:04:26 by gbertin           #+#    #+#             */
-/*   Updated: 2022/12/01 09:19:13 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/12/01 16:55:59 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@
 #define HEIGHT_TILE 64
 #define WIDTH_MINIMAP 8
 #define HEIGHT_MINIMAP 8
-#define XPIXEL 700.0
-#define YPIXEL 500.0
+#define XPIXEL 700
+#define YPIXEL 500
 
 # define L_ARW					65361
 # define R_ARW					65363
@@ -56,12 +56,6 @@
 // permet de connaitre l'emplacement de chaque element
 enum e_sprite {player, nord, south, west,east}; // Ajouter N S W E
 
-typedef struct s_pos {
-	int				x;
-	int				y;
-	struct s_pos	*next;
-}				t_pos;
-
 typedef struct s_mlx {
 	void			*ptr;
 	void			*win;
@@ -72,12 +66,16 @@ typedef struct s_mlx {
 	int				bpp;
 	int				endian;
 	char			*addr;
-
 }				t_mlx;
 
 typedef struct s_spt {
 	char	*path;
 	void	*ptr;
+	struct s_img 	*img;
+	int				len;
+	int				bpp;
+	int				endian;
+	char			*data;
 }				t_spt;
 
 typedef struct s_map {
@@ -93,6 +91,12 @@ typedef struct s_dir {
 	float	y;
 	float	hypo;
 }				t_dir;
+
+typedef struct s_hitpoint {
+	float	x;
+	float	y;
+	float	distance;
+}				t_hitpoint;
 
 typedef struct s_general {
 	char	*filename;
@@ -119,7 +123,7 @@ void	init_raycasting(t_general *general);
 int 	is_wall(double pos_x, double pos_y, double angle, t_general *general);
 void	pixel_draw(t_general *general, int x, int y, int color);
 void	init_image(t_general *general);
-void	print_a_column(t_general *general, float distance, int i);
+void    print_a_column(t_general *general, float distance, int i);
 
 // BONUS
 // int		init_minimap(t_map *map);
@@ -127,10 +131,18 @@ void	print_a_column(t_general *general, float distance, int i);
 
 
 // UTILS
-float	conversion_radian(float f);
 int		fill_infos(t_general *general, char **line);
 int		detect_map(t_general *general, int nb_line);
 int		verif_map(t_general *general);
+void	print_matrice(t_map *map);
+t_dir	first_horizon_wall(float pos_x, float pos_y, double angle);
+t_dir	first_vertical_wall(float pos_x, float pos_y, double angle);
+t_dir	next_horizon_wall(float pos_x, float pos_y, double angle);
+t_dir	next_vertical_wall(float pos_x, float pos_y, double angle);
+double	get_ray_min(double angle);
+double	get_ray_max(double angle);
+float	horiz_bigger(int *remember, float *pos_x, float *pos_y, t_dir horiz);
+float	verti_bigger(int *remember, float *pos_x, float *pos_y, t_dir verti);
 
 // UTILS
 void	print_matrice(t_map *map);
@@ -141,5 +153,6 @@ int		only_int(char *line);
 char	*ft_strndup(const char *s, int n);
 void	end_gnl(int fd);
 void 	change_direction(t_general *general, double angle);
+float	conversion_radian(float f);
 
 #endif

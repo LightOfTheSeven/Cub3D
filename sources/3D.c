@@ -1,5 +1,19 @@
 #include "../include/cub3D.h"
 
+static int convert_color(int color[3])
+{
+    int     ret_v;
+
+    ret_v = 0;
+    ret_v += color[2] % 16;
+    ret_v += (color[2] / 16) * pow(1,16);
+    ret_v += (color[1] % 16) * pow(1,32);
+    ret_v += (color[1] / 16) * pow(1,64);
+    ret_v += (color[0] % 16) * pow(1,128);
+    ret_v += (color[0] / 16) * pow(1,256);
+    return (ret_v);
+}
+
 void	pixel_draw(t_general *general, int x, int y, int color)
 {
 	char	*dst;
@@ -16,6 +30,34 @@ void    init_image(t_general *general)
 }
 
 //    mlx_put_image_to_window(general->mlx.ptr, general->mlx.win, general->mlx.img, 0, 0);
+// void print_pixel_from_xpm(t_general *general, t_hitpoint hitpoint, int i, int index, int size_wall)
+// {
+//     int     color;
+//     // int     abs;
+//     // int     ord;
+//     // float   ratio;
+//     (void)size_wall;
+
+//     if (hitpoint.x - floor(hitpoint.x) != 0) //horizontal
+//     {
+//         // ratio = hitpoint.x - floor(hitpoint.x);
+//         // abs = (int)round(WIDTH_TILE * ratio);
+//         // abs = abs;
+
+//         // ratio = index / size_wall;
+//         // ord = (int)round(HEIGHT_TILE * ratio);
+//         // ord = general->spts[1].len * ord;
+//         // color = (int)general->spts[nord].data[ord + abs];
+//         color = 0x000000;
+//     }
+//     else // vertical
+//     {
+//         //ratio = hitpoint.x - floor(hitpoint.x);
+//         color = 0xFFFFFF;
+       
+//     }
+//     pixel_draw(general, i, index, color);
+// }
 
 void    print_a_column(t_general *general, float distance, int i)
 {
@@ -33,10 +75,10 @@ void    print_a_column(t_general *general, float distance, int i)
     //printf("ceil = %f\n", ceil);
     index = 0;
    while (index < YPIXEL && index < ceil)
-        pixel_draw(general, i, index++, 0x5DADE2);
+        pixel_draw(general, i, index++, convert_color(general->ceil_color));
     while (index < YPIXEL && index < (ceil + projection))
         pixel_draw(general, i, index++, 0x45B39D);
     while (index < YPIXEL)
-        pixel_draw(general, i, index++, 0xF7DC6F);
+        pixel_draw(general, i, index++, convert_color(general->floor_color));
     return ;
 }

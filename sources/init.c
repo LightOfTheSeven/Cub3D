@@ -6,7 +6,7 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 08:56:31 by gbertin           #+#    #+#             */
-/*   Updated: 2022/11/30 10:06:58 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/12/01 13:33:30 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ static int	init_struct_img(t_general *general)
 		{
 			return (free_img("Error\nCub3D : mlx image failed\n", general));
 		}
+		general->spts[i].data = mlx_get_data_addr(general->spts[i].ptr, &general->spts[i].bpp, &general->spts[i].len, &general->spts[i].endian);
 		i++;
 	}
 	return (0);
