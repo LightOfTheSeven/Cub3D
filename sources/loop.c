@@ -6,7 +6,7 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 14:45:45 by gbertin           #+#    #+#             */
-/*   Updated: 2022/11/30 11:06:03 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/12/01 09:12:43 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,9 @@ static void down(t_general *general)
 static void left(t_general *general)
 {
 	if (general->direction == NO)
-		update_pos_x(general, -0.04);
-	else if (general->direction == SO)
 		update_pos_x(general, 0.04);
+	else if (general->direction == SO)
+		update_pos_x(general, -0.04);
 	else if (general->direction == WE)
 		update_pos_y(general, -0.04);
 	else if (general->direction == EA)
@@ -76,13 +76,13 @@ static void left(t_general *general)
 static void right(t_general *general)
 {
 	if (general->direction == NO)
-		update_pos_y(general, -0.04);
-	else if (general->direction == SO)
-		update_pos_y(general, 0.04);
-	else if (general->direction == WE)
 		update_pos_x(general, -0.04);
-	else if (general->direction == EA)
+	else if (general->direction == SO)
 		update_pos_x(general, 0.04);
+	else if (general->direction == WE)
+		update_pos_y(general, 0.04);
+	else if (general->direction == EA)
+		update_pos_y(general, -0.04);
 }
 
 static int	key_hook(int keycode, t_general *general)

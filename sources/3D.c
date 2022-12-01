@@ -25,12 +25,12 @@ void    print_a_column(t_general *general, float distance, int i)
     float projection;
     float dst_to_proj;
 
-    printf("distance = %f\n", distance);
+   // printf("distance = %f\n", distance);
     dst_to_proj = ((XPIXEL / 2.0) / tan (conversion_radian(32)));
-    printf("dst_to_proj = %f\n", dst_to_proj);
+    //printf("dst_to_proj = %f\n", dst_to_proj);
     projection = (1 / distance) * dst_to_proj;
     ceil = (YPIXEL  - projection) / 2;
-    printf("ceil = %f\n", ceil);
+    //printf("ceil = %f\n", ceil);
     index = 0;
    while (index < YPIXEL && index < ceil)
         pixel_draw(general, i, index++, 0x5DADE2);

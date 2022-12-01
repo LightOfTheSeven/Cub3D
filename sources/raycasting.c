@@ -6,7 +6,7 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 08:52:48 by gbertin           #+#    #+#             */
-/*   Updated: 2022/11/20 08:25:31 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/12/01 08:35:53 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,7 +196,7 @@ static void	print_raycasting(float origin_x, float origin_y, double v_angle[2], 
 			angle = v_angle[ANGLE_MIN];
 		//printf("\nv_angle = %d\n", angle);
 		i++;
-		printf("i = %d\n", i);
+		//printf("i = %d\n", i);
 		//v_dir[V_X] = cos(conversion_radian(angle));
 		//v_dir[V_Y] = sin(conversion_radian(angle * -1));
 		distance = print_collision(general, origin_x, origin_y, angle);

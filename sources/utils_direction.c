@@ -6,7 +6,7 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 10:03:48 by gbertin           #+#    #+#             */
-/*   Updated: 2022/11/30 10:25:11 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/12/01 08:38:15 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,4 +29,5 @@ void change_direction(t_general *general, double angle)
 		general->direction = WE;
 	else if ((angle >= 315 && angle <= 360) || (angle >= 0 && angle <= 45))
 		general->direction = EA;
+	printf("%d\n", general->direction);
 }
