@@ -34,6 +34,8 @@
 # define HEIGHT_TILE 64
 # define WIDTH_MINIMAP 15
 # define HEIGHT_MINIMAP 15
+# define XPIXEL 700.0
+# define YPIXEL 500.0
 
 # define L_ARW					65361
 # define R_ARW					65363
@@ -69,16 +71,16 @@ typedef struct s_spt {
 
 typedef struct s_map {
 	char	**matrice;
-	float	pos_x;
-	float	pos_y;
+	double	pos_x;
+	double	pos_y;
 	int		ray_length;
-	float	angle_cam; // entre 0 et 360, 45 degres de chaque cote
+	double	angle_cam; // entre 0 et 360, 45 degres de chaque cote
 }				t_map;
 
 typedef struct s_dir {
-	float	x;
-	float	y;
-	float	hypo;
+	double	x;
+	double	y;
+	double	hypo;
 }				t_dir;
 
 typedef struct s_general {
@@ -90,6 +92,7 @@ typedef struct s_general {
 	int		floor_color[3];
 	int		map_column;
 	int		map_line;
+	int		direction;
 }				t_general;
 
 int		init_struct(t_general *general, char **argv);
@@ -107,15 +110,18 @@ int		fill_infos(t_general *general, char **line);
 int		detect_map(t_general *general, int nb_line);
 int		verif_map(t_general *general);
 void	print_matrice(t_map *map);
-t_dir	first_horizon_wall(float pos_x, float pos_y, double angle);
-t_dir	first_vertical_wall(float pos_x, float pos_y, double angle);
-t_dir	next_horizon_wall(float pos_x, float pos_y, double angle);
-t_dir	next_vertical_wall(float pos_x, float pos_y, double angle);
-float	conversion_radian(float f);
+t_dir	first_horizon_wall(double pos_x, double pos_y, double angle);
+t_dir	first_vertical_wall(double pos_x, double pos_y, double angle);
+t_dir	next_horizon_wall(double pos_x, double pos_y, double angle);
+t_dir	next_vertical_wall(double pos_x, double pos_y, double angle);
+double	conversion_radian(double f);
 double	get_ray_min(double angle);
 double	get_ray_max(double angle);
-float	horiz_bigger(int *remember, float *pos_x, float *pos_y, t_dir horiz);
-float	verti_bigger(int *remember, float *pos_x, float *pos_y, t_dir verti);
+double	horiz_bigger(int *remember, double *pos_x, double *pos_y, t_dir horiz);
+double	verti_bigger(int *remember, double *pos_x, double *pos_y, t_dir verti);
+void    init_image(t_general *general);
+void    print_a_column(t_general *general, double distance, int i);
+void	change_direction(t_general *general, double angle);
 
 // UTILS
 void	print_matrice(t_map *map);
@@ -125,6 +131,6 @@ int		is_space(char *line);
 int		only_int(char *line);
 char	*ft_strndup(const char *s, int n);
 void	end_gnl(int fd);
-float	conversion_radian(float f);
+double	conversion_radian(double f);
 
 #endif

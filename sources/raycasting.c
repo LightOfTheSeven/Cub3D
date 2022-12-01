@@ -12,11 +12,16 @@
 
 #include "../include/cub3D.h"
 
-float	print_collision(t_general *g, float pos_x, float pos_y, float angle)
+double	fisheye(double distance, double angle, double angle_cam)
+{
+	return (distance * cos(conversion_radian(angle - angle_cam)));
+}
+
+double	print_collision(t_general *g, double pos_x, double pos_y, double angle)
 {
 	t_dir	horiz;
 	t_dir	verti;
-	float	distance;
+	double	distance;
 	int		remember;
 
 	distance = 0;
@@ -41,46 +46,38 @@ float	print_collision(t_general *g, float pos_x, float pos_y, float angle)
 	return (distance);
 }
 
-void	print_raycasting(float orig_x, float orig_y, float a[2], t_general *g)
+void	print_raycasting(double orig_x, double orig_y, double a[2], t_general *g)
 {
-	float	v_dir[2];
 	int		i;
-	float	x;
-	float	y;
-	float	distance;
-	int		angle;
+	double	distance;
+	double	angle;
 
 	angle = 0;
+	i = 0;
 	while (a[ANGLE_MIN] < a[ANGLE_MAX])
 	{
-		if (a[ANGLE_MIN] < 0)
-			angle = a[ANGLE_MIN] + 360;
-		else if (a[ANGLE_MIN] > 360)
-			angle = a[ANGLE_MIN] - 360;
+		if (a[ANGLE_MIN] < 0.0)
+			angle = a[ANGLE_MIN] + 360.0;
+		else if (a[ANGLE_MIN] > 360.0)
+			angle = a[ANGLE_MIN] - 360.0;
 		else
 			angle = a[ANGLE_MIN];
-		i = 0;
-		x = orig_x * 64;
-		y = orig_y * 64;
-		v_dir[V_X] = cos(conversion_radian(angle));
-		v_dir[V_Y] = sin(conversion_radian(angle * -1));
+		printf("angle = %f\n", angle);
+		i++;
+		printf("i = %d\n", i);
 		distance = print_collision(g, orig_x, orig_y, angle);
-		while (i < distance * 64)
-		{
-			mlx_pixel_put(g->mlx.ptr, g->mlx.win, (int)x, (int)y, 0x00FF00);
-			x += v_dir[V_X];
-			y += v_dir[V_Y];
-			i++;
-		}
-		a[ANGLE_MIN] += 1;
+		print_a_column(g, fisheye(distance, angle, g->map->angle_cam), i);
+		a[ANGLE_MIN] += FOV / XPIXEL;
 	}
+	mlx_put_image_to_window(g->mlx.ptr, g->mlx.win, g->mlx.img, 0, 0);
 }
 
 void	init_raycasting(t_general *g)
 {
-	float	v_angle[2];
+	double	v_angle[2];
 
 	v_angle[ANGLE_MIN] = g->map->angle_cam - FOV / 2;
 	v_angle[ANGLE_MAX] = g->map->angle_cam + FOV / 2;
+	init_image(g);
 	print_raycasting(g->map->pos_x, g->map->pos_y, v_angle, g);
 }

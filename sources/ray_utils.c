@@ -1,8 +1,8 @@
 #include "../include/cub3D.h"
 
-float	conversion_radian(float f)
+double	conversion_radian(double f)
 {
-	f = f * (3.141592 / 180.0);
+	f = f * (3.1415926535 / 180.0);
 	return (f);
 }
 
@@ -22,7 +22,7 @@ double	get_ray_max(double angle)
 	return (angle + half_fov);
 }
 
-float	horiz_bigger(int *remember, float *pos_x, float *pos_y, t_dir horiz)
+double	horiz_bigger(int *remember, double *pos_x, double *pos_y, t_dir horiz)
 {
 	if (*remember == 1)
 	{
@@ -38,7 +38,7 @@ float	horiz_bigger(int *remember, float *pos_x, float *pos_y, t_dir horiz)
     return (horiz.hypo);
 }
 
-float	verti_bigger(int *remember, float *pos_x, float *pos_y, t_dir verti)
+double	verti_bigger(int *remember, double *pos_x, double *pos_y, t_dir verti)
 {
 	if (*remember == 2)
 	{

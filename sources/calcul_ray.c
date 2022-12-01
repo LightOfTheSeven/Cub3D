@@ -1,12 +1,12 @@
 #include "../include/cub3D.h"
 
-t_dir	first_horizon_wall(float pos_x, float pos_y, double angle)
+t_dir	first_horizon_wall(double pos_x, double pos_y, double angle)
 {
 	t_dir	horiz;
-	float	a;
-	float	b;
+	double	a;
+	double	b;
 
-	if (angle < 180)
+	if (angle < 180.0)
 		horiz.y = floor(pos_y) - pos_y;
 	else
 		horiz.y = ceil(pos_y) - pos_y;
@@ -17,11 +17,11 @@ t_dir	first_horizon_wall(float pos_x, float pos_y, double angle)
 	return (horiz);
 }
 
-t_dir	first_vertical_wall(float pos_x, float pos_y, double angle)
+t_dir	first_vertical_wall(double pos_x, double pos_y, double angle)
 {
 	t_dir	verti;
-	float	a;
-	float	b;
+	double	a;
+	double	b;
 
 	if (angle > 90 && angle < 270)
 		verti.x = floor(pos_x) - pos_x;
@@ -34,11 +34,11 @@ t_dir	first_vertical_wall(float pos_x, float pos_y, double angle)
 	return (verti);
 }
 
-t_dir	next_horizon_wall(float pos_x, float pos_y, double angle)
+t_dir	next_horizon_wall(double pos_x, double pos_y, double angle)
 {
 	t_dir	horiz;
-	float	a;
-	float	b;
+	double	a;
+	double	b;
 
 	if (angle < 180)
 		horiz.y = -1;
@@ -51,11 +51,11 @@ t_dir	next_horizon_wall(float pos_x, float pos_y, double angle)
 	return (horiz);
 }
 
-t_dir	next_vertical_wall(float pos_x, float pos_y, double angle)
+t_dir	next_vertical_wall(double pos_x, double pos_y, double angle)
 {
 	t_dir	verti;
-	float	a;
-	float	b;
+	double	a;
+	double	b;
 
 	if (angle > 90 && angle < 270)
 		verti.x = -1;

@@ -25,7 +25,9 @@ SRCS 	=	free.c \
 			verif_map.c \
 			init_minimap_bonus.c \
 			calcul_ray.c \
-			ray_utils.c
+			ray_utils.c \
+			3D.c \
+			utils_direction.c
 
 all: bonus $(NAME)
 
