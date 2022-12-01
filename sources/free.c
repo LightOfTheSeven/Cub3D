@@ -6,7 +6,7 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 09:19:55 by gbertin           #+#    #+#             */
-/*   Updated: 2022/11/29 12:37:01 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/12/01 09:22:11 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ int	free_general(t_general *general)
 	if (general->map->matrice)
 		free_tab(general->map->matrice);
 	free_spts(general);
+	if (general->mlx.img)
+		mlx_destroy_image(general->mlx.ptr, general->mlx.img);
 	free(general->map);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 15:04:26 by gbertin           #+#    #+#             */
-/*   Updated: 2022/11/30 10:24:20 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/12/01 09:19:13 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ typedef struct s_mlx {
 	void			*ptr;
 	void			*win;
 	int				win_height;
-	int				win_width; //largeur
+	int				win_width;
 	struct s_img 	*img;
 	int				len;
 	int				bpp;
