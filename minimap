@@ -1,5 +1,5 @@
-NO ./spt/floor.xpm
-SO ./spt/floor.xpm
+NO ./spt/wall.xpm
+SO ./spt/wall.xpm
 WE ./spt/wall.xpm
 EA ./spt/wall.xpm
 
