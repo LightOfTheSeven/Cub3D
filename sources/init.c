@@ -6,7 +6,7 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 08:56:31 by gbertin           #+#    #+#             */
-/*   Updated: 2022/11/29 15:08:51 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/12/02 15:48:18 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,9 @@ static int	init_struct_img(t_general *general)
 		{
 			return (free_img("Error\nCub3D : mlx image failed\n", general));
 		}
+		general->spts[i].data = (int *)mlx_get_data_addr(general->spts[i].ptr, &general->spts[i].bpp, &general->spts[i].len, &general->spts[i].endian);
+		general->spts[i].len /= 4;
+		//printf("color = %d\n", general->spts[i].data[1]);
 		i++;
 	}
 	return (0);

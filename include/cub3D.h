@@ -6,7 +6,7 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 15:04:26 by gbertin           #+#    #+#             */
-/*   Updated: 2022/12/02 08:39:30 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/12/02 09:03:57 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,8 @@ typedef struct s_mlx {
 }				t_mlx;
 
 typedef struct s_hitpoint {
-	int		x;
-	int		y;
+	double	x;
+	double	y;
 	double	dist;
 	int		dir;
 }				t_hitpoint;
@@ -132,7 +132,7 @@ double	get_ray_max(double angle);
 double	horiz_bigger(int *remember, double *pos_x, double *pos_y, t_dir horiz);
 double	verti_bigger(int *remember, double *pos_x, double *pos_y, t_dir verti);
 void    init_image(t_general *general);
-void    print_a_column(t_general *general, double distance, int i);
+void    print_a_column(t_general *general, t_hitpoint hitpoint, int i);
 void	change_direction(t_general *general, double angle);
 
 // UTILS
