@@ -6,7 +6,7 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 15:04:26 by gbertin           #+#    #+#             */
-/*   Updated: 2022/11/30 11:38:26 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/12/02 08:39:30 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,12 +61,24 @@ typedef struct s_mlx {
 	int				bpp;
 	int				endian;
 	char			*addr;
-
 }				t_mlx;
+
+typedef struct s_hitpoint {
+	int		x;
+	int		y;
+	double	dist;
+	int		dir;
+}				t_hitpoint;
 
 typedef struct s_spt {
 	char	*path;
 	void	*ptr;
+	struct s_img	*img;
+	int				len;
+	int				bpp;
+	int				endian;
+	char			*addr;
+	int				*data;
 }				t_spt;
 
 typedef struct s_map {

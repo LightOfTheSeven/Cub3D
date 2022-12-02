@@ -6,7 +6,7 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 08:52:48 by gbertin           #+#    #+#             */
-/*   Updated: 2022/11/20 08:25:31 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/12/02 08:41:29 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,7 @@ void	print_raycasting(double orig_x, double orig_y, double a[2], t_general *g)
 			angle = a[ANGLE_MIN] - 360.0;
 		else
 			angle = a[ANGLE_MIN];
-		printf("angle = %f\n", angle);
 		i++;
-		printf("i = %d\n", i);
 		distance = print_collision(g, orig_x, orig_y, angle);
 		print_a_column(g, fisheye(distance, angle, g->map->angle_cam), i);
 		a[ANGLE_MIN] += FOV / XPIXEL;
