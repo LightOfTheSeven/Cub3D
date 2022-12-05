@@ -1,6 +1,6 @@
-EA ./spt/wall.xpm
-SO ./spt/wall.xpm
-WE ./spt/wall.xpm
+EA ./spt/red.xpm
+SO ./spt/green.xpm
+WE ./spt/floor.xpm
 NO ./spt/wall.xpm
 
 F 2,5,200

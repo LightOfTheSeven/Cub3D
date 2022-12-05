@@ -6,11 +6,29 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 08:52:48 by gbertin           #+#    #+#             */
-/*   Updated: 2022/12/02 15:04:32 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/12/05 11:28:17 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3D.h"
+
+static	int	get_wall(t_general *general, t_hitpoint hitpoint)
+{
+	if (hitpoint.x - floor(hitpoint.x) == 0) // vertical
+	{
+		if (hitpoint.x > general->map->pos_x)
+			return (WE);
+		else
+			return (EA);
+	}
+	else // horizontal
+	{
+		if (hitpoint.y > general->map->pos_y)
+			return (SO);
+		else
+			return (NO);
+	}
+}
 
 double	fisheye(double distance, double angle, double angle_cam)
 {
@@ -67,6 +85,7 @@ void	print_raycasting(double orig_x, double orig_y, double a[2], t_general *g)
 		num_ray++;
 		hitpoint = print_collision(g, orig_x, orig_y, angle);
 		hitpoint.dist = fisheye(hitpoint.dist, angle, g->map->angle_cam);
+		hitpoint.dir = get_wall(g, hitpoint);
 		print_a_column(g, hitpoint, num_ray);
 		a[ANGLE_MIN] += FOV / XPIXEL;
 	}

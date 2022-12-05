@@ -6,7 +6,7 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 15:04:26 by gbertin           #+#    #+#             */
-/*   Updated: 2022/12/02 09:03:57 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/12/05 10:43:04 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 # include "../libmlx/mlx.h"
 
 # define DEBUG 0
-# define NB_SPRITE 5
+# define NB_SPRITE 4
 # define FOV 90
 # define V_X 0
 # define V_Y 1
@@ -48,7 +48,7 @@
 # define ESC					65307
 
 // permet de connaitre l'emplacement de chaque element
-enum e_sprite {player, nord, south, west,east}; // Ajouter N S W E
+enum e_sprite {nord, south, west, east}; // Ajouter N S W E
 enum e_position {NO, SO, WE, EA};
 
 typedef struct s_mlx {

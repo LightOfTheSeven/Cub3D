@@ -6,7 +6,7 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 08:36:08 by gbertin           #+#    #+#             */
-/*   Updated: 2022/12/05 09:53:48 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/12/05 10:41:53 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void    init_image(t_general *general)
         ratio = hitpoint.x - floor(hitpoint.x);
         x = round(64 * ratio);
     }
-    color = general->spts[1].data[(y * general->spts[1].len + x)];
+    color = general->spts[hitpoint.dir].data[(y * general->spts[hitpoint.dir].len + x)];
     pixel_draw(general, num_ray, index, color);
 }
 

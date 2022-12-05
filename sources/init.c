@@ -6,7 +6,7 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 08:56:31 by gbertin           #+#    #+#             */
-/*   Updated: 2022/12/02 15:48:18 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/12/05 10:43:31 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,6 @@ static void	init_general(t_general *general, char **argv)
 		general->spts[i].ptr = NULL;
 		i++;
 	}
-	general->spts[player].path = "spt/player.xpm";
 	general->map_column = 0;
 	general->map_line = 0;
 }
