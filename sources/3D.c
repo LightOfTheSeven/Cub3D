@@ -6,11 +6,25 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 08:36:08 by gbertin           #+#    #+#             */
-/*   Updated: 2022/12/02 15:58:18 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/12/05 09:53:48 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3D.h"
+
+static int     convert_color(int color[3])
+{
+    int ret_v;
+
+    ret_v = 0;
+    ret_v += (color[2] % 16) * pow(16, 1);
+    ret_v += (color[2] / 16) * pow(16, 2);
+    ret_v += (color[1] % 16) * pow(16, 3);
+    ret_v += (color[1] / 16) * pow(16, 4);
+    ret_v += (color[0] % 16) * pow(16, 5);
+    ret_v += (color[0] / 16) * pow(16, 6);
+    return (ret_v); 
+}
 
 void	pixel_draw(t_general *general, int x, int y, int color)
 {
@@ -58,8 +72,6 @@ void    init_image(t_general *general)
         x = round(64 * ratio);
     }
     color = general->spts[1].data[(y * general->spts[1].len + x)];
-    if (num_ray == 350)
-        printf("x = %d y = %d index = %d color %d len =%d\n", x, y, index, color, general->spts[1].len);
     pixel_draw(general, num_ray, index, color);
 }
 
@@ -69,17 +81,20 @@ void    print_a_column(t_general *general, t_hitpoint hitpoint, int num_ray)
     double ceil;
     double projection;
     double dst_to_proj;
-
+    int     color[2];
+    
+    color[0] = convert_color(general->ceil_color);
+    color[1] = convert_color(general->floor_color);
     dst_to_proj = ((XPIXEL / 2.0) / tan (conversion_radian(32)));
     projection = (1 / hitpoint.dist) * dst_to_proj;
     ceil = (YPIXEL  - projection) / 2;
     lign = 0;
    while (lign < YPIXEL && lign < ceil)
-        pixel_draw(general, num_ray, lign++, 0x5DADE2);
+        pixel_draw(general, num_ray, lign++, color[0]);
     while (lign < YPIXEL && lign < (ceil + projection))
         draw_pixel_from_xpm(general, hitpoint, num_ray, lign++, projection);
         //pixel_draw(general, num_ray, lign++, 0x5DADE2);
     while (lign < YPIXEL)
-        pixel_draw(general, num_ray, lign++, 0xF7DC6F);
+        pixel_draw(general, num_ray, lign++, color[1]);
     return ;
 }

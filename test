@@ -1,7 +1,7 @@
 EA ./spt/wall.xpm
 SO ./spt/wall.xpm
-WE ./spt/floor.xpm
-NO ./spt/floor.xpm
+WE ./spt/wall.xpm
+NO ./spt/wall.xpm
 
 F 2,5,200
 C 19,3,200
