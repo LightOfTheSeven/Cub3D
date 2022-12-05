@@ -6,7 +6,7 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 18:42:47 by gbertin           #+#    #+#             */
-/*   Updated: 2022/11/29 15:08:34 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/12/05 15:10:58 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,11 @@ static int	take_info(t_general *general, char **path, int id)
 	if (id > -1)
 	{
 		if (general->spts[id].path == NULL)
+		{
 			general->spts[id].path = ft_strdup(path[1]);
+			if (!general->spts[id].path)
+				return (1);
+		}
 		else
 		{
 			ft_putstr_fd("Error\nCub3D : This Path is already set\n", 2);

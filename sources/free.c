@@ -6,7 +6,7 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 09:19:55 by gbertin           #+#    #+#             */
-/*   Updated: 2022/12/02 08:45:01 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/12/05 15:11:09 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	free_spts(t_general *general)
 {
 	int	i;
 
-	i = 1;
+	i = 0;
 	while (i < NB_SPRITE)
 	{	
 		if (general->spts[i].path)
