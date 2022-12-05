@@ -12,78 +12,54 @@
 
 #include "../include/cub3D.h"
 
-void update_pos_x(t_general *general, double val)
+double calcul_x(double angle)
 {
-	double	x;
+	double x;
 
-	x = general->map->pos_x + val;
-	if (x <= 1)
-		return ;
-	if (x >= general->map_column - 1)
-		return ;
-	general->map->pos_x = x;
+	if (angle > 360)
+		angle -= 360;
+	if (angle < 0)
+		angle += 360;
+	x = cos(conversion_radian(angle)) * 0.04;
+	return (x);
 }
 
-void update_pos_y(t_general *general, double val)
+double calcul_y(double angle)
 {
-	double	y;
+	double y;
 
-	y = general->map->pos_y + val;
-	if (y <= 1)
-		return ;
-	if (y >= general->map_line - 1)
-		return ;
-	general->map->pos_y = y;
-
+	if (angle > 360)
+		angle -= 360;
+	if (angle < 0)
+		angle += 360;
+	y = sin(conversion_radian(angle * -1)) * 0.04;
+	return (y);
 }
 
 static void	up(t_general *general)
 {
-	if (general->direction == NO)
-		update_pos_y(general, -0.04);
-	else if (general->direction == SO)
-		update_pos_y(general, 0.04);
-	else if (general->direction == WE)
-		update_pos_x(general, -0.04);
-	else if (general->direction == EA)
-		update_pos_x(general, 0.04);
+	general->map->pos_x += calcul_x(general->map->angle_cam);
+	general->map->pos_y += calcul_y(general->map->angle_cam);
 }
 
 static void down(t_general *general)
 {
-	if (general->direction == NO)
-		update_pos_y(general, 0.04);
-	else if (general->direction == SO)
-		update_pos_y(general, -0.04);
-	else if (general->direction == WE)
-		update_pos_x(general, 0.04);
-	else if (general->direction == EA)
-		update_pos_x(general, -0.04);
+	general->map->pos_x -= calcul_x(general->map->angle_cam);
+	general->map->pos_y -= calcul_y(general->map->angle_cam);
 }
 
 static void left(t_general *general)
 {
-	if (general->direction == NO)
-		update_pos_x(general, 0.04);
-	else if (general->direction == SO)
-		update_pos_x(general, -0.04);
-	else if (general->direction == WE)
-		update_pos_y(general, -0.04);
-	else if (general->direction == EA)
-		update_pos_y(general, 0.04);
+	general->map->pos_x += calcul_x(general->map->angle_cam + 90);
+	general->map->pos_y += calcul_y(general->map->angle_cam + 90);
 }
 
 static void right(t_general *general)
 {
-	if (general->direction == NO)
-		update_pos_x(general, -0.04);
-	else if (general->direction == SO)
-		update_pos_x(general, 0.04);
-	else if (general->direction == WE)
-		update_pos_y(general, 0.04);
-	else if (general->direction == EA)
-		update_pos_y(general, -0.04);
+	general->map->pos_x += calcul_x(general->map->angle_cam - 90);
+	general->map->pos_y += calcul_y(general->map->angle_cam - 90);
 }
+
 
 static int	key_hook(int keycode, t_general *general)
 {
@@ -143,7 +119,7 @@ int	onkeypress(t_general *general)
             general->map->angle_cam = general->map->angle_cam + 360;
         if (general->map->angle_cam > 360)
             general->map->angle_cam = general->map->angle_cam - 360;
-		change_direction(general, general->map->angle_cam);
+		//change_direction(general, general->map->angle_cam);
 	}
 	//printf ("HOOK %d %d %d %d %d %d\n", general->hook.left, general->hook.right, general->hook.up, general->hook.down,general->hook.rotate_left, general->hook.rotate_right);
 	if (general->hook.left || general->hook.right || general->hook.up || general->hook.down || general->hook.rotate_left || general->hook.rotate_right)

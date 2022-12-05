@@ -69,6 +69,7 @@ typedef struct s_hitpoint {
 	double	y;
 	double	dist;
 	int		dir;
+	double	angle;
 }				t_hitpoint;
 
 typedef struct	s_hook {
@@ -115,7 +116,7 @@ typedef struct s_general {
 	int		floor_color[3];
 	int		map_column;
 	int		map_line;
-	int		direction;
+	//double	direction;
 }				t_general;
 
 int		init_struct(t_general *general, char **argv);
@@ -144,7 +145,7 @@ double	horiz_bigger(int *remember, double *pos_x, double *pos_y, t_dir horiz);
 double	verti_bigger(int *remember, double *pos_x, double *pos_y, t_dir verti);
 void    init_image(t_general *general);
 void    print_a_column(t_general *general, t_hitpoint hitpoint, int i);
-void	change_direction(t_general *general, double angle);
+//void	change_direction(t_general *general, double angle);
 
 // UTILS
 void	print_matrice(t_map *map);

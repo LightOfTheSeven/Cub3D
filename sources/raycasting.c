@@ -44,6 +44,7 @@ t_hitpoint	print_collision(t_general *g, double pos_x, double pos_y, double angl
 
 	remember = 0;
 	hitpoint.dist = 0;
+	hitpoint.angle = angle;
 	verti = first_vertical_wall(pos_x, pos_y, angle);
 	horiz = first_horizon_wall(pos_x, pos_y, angle);
 	while (remember == 0 || !is_wall(pos_x, pos_y, angle, g))

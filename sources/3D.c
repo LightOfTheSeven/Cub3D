@@ -61,6 +61,8 @@ void    init_image(t_general *general)
     lign = lign - ((YPIXEL - projection) / 2);
     ratio = lign / (double)projection;
     y = (64 * ratio);
+    //hitpoint.x = cos(conversion_radian(hitpoint.angle));
+    //hitpoint.y = sin(conversion_radian(hitpoint.angle));
     if (hitpoint.x - floor(hitpoint.x) == 0) // vertical
     {
         ratio = hitpoint.y - floor(hitpoint.y);
