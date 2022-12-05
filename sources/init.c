@@ -6,7 +6,7 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 08:56:31 by gbertin           #+#    #+#             */
-/*   Updated: 2022/12/05 10:43:31 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/12/05 14:43:14 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ static int	init_pos_player(t_general *general)
 
 static void	init_general(t_general *general, char **argv)
 {
-	int	i;
+	int		i;
 
 	i = 0;
 	general->filename = argv[1];
@@ -122,6 +122,7 @@ static void	init_general(t_general *general, char **argv)
 int	init_struct(t_general *general, char **argv)
 {
 	ft_memset(general->spts, 0, sizeof(t_spt) * NB_SPRITE);
+	
 	init_general(general, argv);
 	if (init_map(general))
 		return (1);

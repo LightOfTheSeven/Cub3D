@@ -6,7 +6,7 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 15:04:26 by gbertin           #+#    #+#             */
-/*   Updated: 2022/12/05 10:43:04 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/12/05 14:52:45 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <fcntl.h>
 # include <errno.h>
 # include <math.h>
+#include <X11/X.h>
 
 # include "../libft/libft.h"
 # include "../libmlx/mlx.h"
@@ -70,6 +71,15 @@ typedef struct s_hitpoint {
 	int		dir;
 }				t_hitpoint;
 
+typedef struct	s_hook {
+	int		up;
+	int		down;
+	int		left;
+	int		right;
+	int		rotate_left;
+	int		rotate_right;
+}				t_hook;
+
 typedef struct s_spt {
 	char	*path;
 	void	*ptr;
@@ -99,6 +109,7 @@ typedef struct s_general {
 	char	*filename;
 	t_mlx	mlx;
 	t_map	*map;
+	t_hook 	hook;
 	t_spt	spts[NB_SPRITE]; // spt = sprite
 	int		ceil_color[3];
 	int		floor_color[3];

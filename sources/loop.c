@@ -6,7 +6,7 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 14:45:45 by gbertin           #+#    #+#             */
-/*   Updated: 2022/11/29 14:49:48 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/12/05 14:57:50 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,16 +88,54 @@ static void right(t_general *general)
 static int	key_hook(int keycode, t_general *general)
 {
     if (keycode == A_KEY)
+	{
+    	general->hook.left = 1;
+	}
+	if (keycode == D_KEY)
+    	general->hook.right = 1;
+	if (keycode == W_KEY)
+		general->hook.up = 1;
+	if (keycode == S_KEY)
+        general->hook.down = 1;
+    if (keycode == R_ARW)
+		general->hook.rotate_right = 1;
+	if (keycode == L_ARW)
+		general->hook.rotate_left = 1;
+	if (keycode == ESC)
+		exit_mlx(general); 
+	return (0);
+}
+
+int	key_release(int keycode, t_general *general)
+{
+	 if (keycode == A_KEY)
+    	general->hook.left = 0;
+	if (keycode == D_KEY)
+    	general->hook.right = 0;
+	if (keycode == W_KEY)
+		general->hook.up = 0;
+	if (keycode == S_KEY)
+        general->hook.down = 0;
+    if (keycode == R_ARW)
+		general->hook.rotate_right = 0;
+	if (keycode == L_ARW)
+		general->hook.rotate_left = 0;
+	return (0);
+}
+
+int	onkeypress(t_general *general)
+{
+	if (general->hook.left)
        left(general);
-	else if (keycode == D_KEY)
+	if (general->hook.right)
        right(general);
-	else if (keycode == W_KEY)
+	if (general->hook.up)
 		up(general);
-	else if (keycode == S_KEY)
+	if (general->hook.down)
         down(general);
-    else if (keycode == R_ARW || keycode == L_ARW)
-    {
-		if (keycode == R_ARW)
+	if (general->hook.rotate_left || general->hook.rotate_right)
+	{
+		if (general->hook.rotate_right)
 			general->map->angle_cam += 2.5;
 		else
 			 general->map->angle_cam -= 2.5;
@@ -106,18 +144,23 @@ static int	key_hook(int keycode, t_general *general)
         if (general->map->angle_cam > 360)
             general->map->angle_cam = general->map->angle_cam - 360;
 		change_direction(general, general->map->angle_cam);
-    }
-	else if (keycode == ESC)
-		exit_mlx(general); 
-	if (!print_map(general))
-		return (1);
+	}
+	//printf ("HOOK %d %d %d %d %d %d\n", general->hook.left, general->hook.right, general->hook.up, general->hook.down,general->hook.rotate_left, general->hook.rotate_right);
+	if (general->hook.left || general->hook.right || general->hook.up || general->hook.down || general->hook.rotate_left || general->hook.rotate_right)
+	{
+		if (!print_map(general))
+			return (1);
+	}
 	return (0);
 }
 
 void	hook(t_general *general)
 {
-	mlx_hook(general->mlx.win, 33, 1L << 17, exit_mlx, general); //si on ferme avec la souris
-	mlx_hook(general->mlx.win, 2, 1L << 0, key_hook, general); //tant que la touche est appuyé
-	//mlx_key_hook(general->mlx.win, hook_manager, general) --> pas bon parce que la touche doit etre relevé
+	// printf ("HOOK %d %d %d %d\n", general->hook.down, general->hook.up, general->hook.left, general->hook.right);
+	mlx_loop_hook(general->mlx.ptr, &onkeypress, general); // make direction
+	
+	mlx_hook(general->mlx.win, KeyPress, KeyPressMask, key_hook, general); // set direction
+    mlx_hook(general->mlx.win, KeyRelease, KeyReleaseMask, &key_release, general); // unset direction
+	mlx_hook(general->mlx.win, DestroyNotify, 0, exit_mlx, general); // exit
 	mlx_loop(general->mlx.ptr);
 }
