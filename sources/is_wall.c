@@ -6,7 +6,7 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/20 08:27:04 by gbertin           #+#    #+#             */
-/*   Updated: 2022/11/29 14:44:59 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/12/06 08:39:33 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ int	is_wall(double pos_x, double pos_y, double angle, t_general *general)
 	t_map	*map;
 
 	map = general->map;
+	if ((pos_x <= 0 || pos_x > general->map_column) || (pos_y <= 0 || pos_y > general->map_line))
+		return (1);
 	if ((pos_x - floor(pos_x)) > 0)
 		return (check_horizontal_wall(pos_x, pos_y, angle, map));
 	else
