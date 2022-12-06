@@ -5,119 +5,115 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/14 10:09:07 by gbertin           #+#    #+#             */
-/*   Updated: 2022/11/29 14:53:56 by gbertin          ###   ########.fr       */
+/*   Created: 2022/11/16 08:52:48 by gbertin           #+#    #+#             */
+/*   Updated: 2022/12/06 14:28:43 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3D.h"
 
-int	control_parsing(t_general *general)
+static	int	get_wall(t_general *general, t_hitpoint hitpoint)
 {
-	int	i;
-
-	i = 1;
-	while (i < NB_SPRITE)
+	if (hitpoint.x - floor(hitpoint.x) == 0) // vertical
 	{
-		if (general->spts[i].path == NULL)
-			return (0);
-		i++;
-	}
-	if (general->ceil_color[0] == -1 || general->floor_color[0] == -1)
-		return (0);
-	return (1);
-}
-
-int	check_namefile(char *name)
-{
-	int		i;
-	char	*cub;
-
-	i = 0;
-	cub = ".cub";
-	while (name[i])
-		i++;
-	while (name[i] != '.' && i > 0)
-		i--;
-	if (ft_strncmp(&name[i], cub, 4))
-		return (0);
-	if (name[i + 4] != '\0')
-		return (1);
-	return (0);
-}
-
-//retourne le numéro de ligne de la dernière information trouvé
-static int	found_sprites_colors(t_general *general)
-{
-	int		fd;
-	char	*line;
-	char	**line_split;
-	int		nb_line;
-
-	nb_line = 0;
-	fd = open(general->filename, O_RDONLY);
-	if (fd < 0)
-	{
-		ft_putstr_fd("Error\n", 2);
-		strerror(errno);
-		close(fd);
-		return (1);
-	}
-	line = NULL;
-	line = get_next_line(fd);
-	while (line && !control_parsing(general))
-	{
-		nb_line++;
-		if (!is_space(line))
-		{
-			line_split = ft_split(line, ' ');
-			if (!line_split)
-				return (1);
-			if (fill_infos(general, line_split))
-			{
-				free_tab(line_split);
-				free(line);
-				end_gnl(fd);
-				close(fd);
-				return (1);
-			}
-			free_tab(line_split);
-		}
-		free(line);
-		if (!control_parsing(general))
-			line = get_next_line(fd);
+		if (hitpoint.x > general->map->pos_x)
+			return (WE);
 		else
-			line = NULL;
+			return (EA);
 	}
-	if (line)
-		free(line);
-	end_gnl(fd);
-	close(fd);
-	return (nb_line);
+	else // horizontal
+	{
+		if (hitpoint.y > general->map->pos_y)
+			return (SO);
+		else
+			return (NO);
+	}
 }
 
-//pas oublier de mettre un NULL à la derniere colonne de map->matrice
-int	init_map(t_general *general)
+double	fisheye(double distance, double angle, double angle_cam)
 {
-	int		nb_line;
-	t_map	*map;
+	return (distance * cos(conversion_radian(angle - angle_cam)));
+}
 
-	if (check_namefile(general->filename))
-		return (1);
-	map = (t_map *) malloc(sizeof(t_map));
-	if (!map)
-		return (1);
-	ft_memset(map, 0, sizeof(t_map));
-	general->map = map;
-	nb_line = found_sprites_colors(general);
-	if (nb_line == 1)
-		return (1);
-	if (!control_parsing(general))
+t_hitpoint	print_collision(t_general *g, double pos_x, double pos_y, double angle)
+{
+	t_dir		horiz;
+	t_dir		verti;
+	t_hitpoint	hitpoint;
+	int			remember;
+	int print = 1;
+
+	remember = 0;
+	hitpoint.dist = 0;
+	hitpoint.angle = angle;
+	verti = first_vertical_wall(pos_x, pos_y, angle);
+	horiz = first_horizon_wall(pos_x, pos_y, angle);
+	while (remember == 0 || !is_wall(pos_x, pos_y, angle, g))
 	{
-		ft_putstr_fd("Error\n", 2);
-		return (1);
+		if (horiz.hypo < verti.hypo)
+		{
+			hitpoint.dist += horiz_bigger(&remember, &pos_x, &pos_y, horiz);
+			if (print)
+			{
+				// if (floor(angle) == floor(g->map->angle_cam))
+				// 	printf(" HORIZ pos x %f y %f pos player x %f y %f ANGLE %f\n", pos_x, pos_y, g->map->pos_x, g->map->pos_y, angle);
+				print = 0;
+			}
+			verti = first_vertical_wall(pos_x, pos_y, angle);
+			horiz = next_horizon_wall(pos_x, pos_y, angle);
+		}
+		else
+		{
+			hitpoint.dist += verti_bigger(&remember, &pos_x, &pos_y, verti);
+			
+			horiz = first_horizon_wall(pos_x, pos_y, angle);
+			verti = next_vertical_wall(pos_x, pos_y, angle);
+		}
 	}
-	if (detect_map(general, nb_line))
-		return (1);
-	return (0);
+	hitpoint.x = pos_x;
+	hitpoint.y = pos_y;
+	if (floor(angle) == g->map->angle_cam)
+		printf("VERTI pos x %f y %f pos player x %f y %f ANGLE %f\n", pos_x, pos_y, g->map->pos_x, g->map->pos_y, angle);
+	return (hitpoint);
+}
+
+void	print_raycasting(double orig_x, double orig_y, double a[2], t_general *g)
+{
+	int			num_ray;
+	t_hitpoint 	hitpoint;
+	double		angle;
+
+	angle = 0;
+	num_ray = 0;
+	while (a[ANGLE_MIN] < a[ANGLE_MAX])
+	{
+		if (a[ANGLE_MAX] < 0.0)
+			angle = a[ANGLE_MAX] + 360.0;
+		else if (a[ANGLE_MAX] > 360.0)
+			angle = a[ANGLE_MAX] - 360.0;
+		else
+			angle = a[ANGLE_MAX];
+		num_ray++;
+		if (num_ray == XPIXEL)
+			break ;
+		hitpoint = print_collision(g, orig_x, orig_y, angle);
+		hitpoint.dist = fisheye(hitpoint.dist, angle, g->map->angle_cam);
+		hitpoint.dir = get_wall(g, hitpoint);
+		if (num_ray == 350)
+			printf("hitpoint %f %f %f\n", hitpoint.x, hitpoint.y, angle);
+		print_a_column(g, hitpoint, num_ray);
+		a[ANGLE_MAX] -= FOV / XPIXEL;
+	}
+	mlx_put_image_to_window(g->mlx.ptr, g->mlx.win, g->mlx.img, 0, 0);
+}
+
+void	init_raycasting(t_general *g)
+{
+	double	v_angle[2];
+
+	printf("angle cam %f\n", g->map->angle_cam);
+	v_angle[ANGLE_MIN] = g->map->angle_cam - FOV / 2;
+	v_angle[ANGLE_MAX] = g->map->angle_cam + FOV / 2;
+	init_image(g);
+	print_raycasting(g->map->pos_x, g->map->pos_y, v_angle, g);
 }

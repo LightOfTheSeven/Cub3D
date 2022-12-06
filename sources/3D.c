@@ -6,7 +6,7 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 08:36:08 by gbertin           #+#    #+#             */
-/*   Updated: 2022/12/05 10:41:53 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/12/06 14:27:59 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,11 +91,19 @@ void    print_a_column(t_general *general, t_hitpoint hitpoint, int num_ray)
     projection = (1 / hitpoint.dist) * dst_to_proj;
     ceil = (YPIXEL  - projection) / 2;
     lign = 0;
-   while (lign < YPIXEL && lign < ceil)
+    while (lign < YPIXEL && lign < ceil)
+    {
         pixel_draw(general, num_ray, lign++, color[0]);
+    }
+	// if ((hitpoint.x <= 0 || hitpoint.x > general->map_column) || (hitpoint.y <= 0 || hitpoint.y > general->map_line - 1))
+    // {
+    //     while (lign - ceil < projection / 2)
+    //         pixel_draw(general, num_ray, lign++, color[0]);
+    //     while(lign - ceil < projection)
+    //         pixel_draw(general, num_ray, lign++, color[1]);
+    // }
     while (lign < YPIXEL && lign < (ceil + projection))
         draw_pixel_from_xpm(general, hitpoint, num_ray, lign++, projection);
-        //pixel_draw(general, num_ray, lign++, 0x5DADE2);
     while (lign < YPIXEL)
         pixel_draw(general, num_ray, lign++, color[1]);
     return ;
