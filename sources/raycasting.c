@@ -6,7 +6,7 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 08:52:48 by gbertin           #+#    #+#             */
-/*   Updated: 2022/12/05 11:28:17 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/12/06 14:35:21 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,18 +77,18 @@ void	print_raycasting(double orig_x, double orig_y, double a[2], t_general *g)
 	num_ray = 0;
 	while (a[ANGLE_MIN] < a[ANGLE_MAX])
 	{
-		if (a[ANGLE_MIN] < 0.0)
-			angle = a[ANGLE_MIN] + 360.0;
-		else if (a[ANGLE_MIN] > 360.0)
-			angle = a[ANGLE_MIN] - 360.0;
+		if (a[ANGLE_MAX] < 0.0)
+			angle = a[ANGLE_MAX] + 360.0;
+		else if (a[ANGLE_MAX] > 360.0)
+			angle = a[ANGLE_MAX] - 360.0;
 		else
-			angle = a[ANGLE_MIN];
+			angle = a[ANGLE_MAX];
 		num_ray++;
 		hitpoint = print_collision(g, orig_x, orig_y, angle);
 		hitpoint.dist = fisheye(hitpoint.dist, angle, g->map->angle_cam);
 		hitpoint.dir = get_wall(g, hitpoint);
 		print_a_column(g, hitpoint, num_ray);
-		a[ANGLE_MIN] += FOV / XPIXEL;
+		a[ANGLE_MAX] -= FOV / XPIXEL;
 	}
 	mlx_put_image_to_window(g->mlx.ptr, g->mlx.win, g->mlx.img, 0, 0);
 }
