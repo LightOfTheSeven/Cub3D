@@ -6,7 +6,7 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 08:52:48 by gbertin           #+#    #+#             */
-/*   Updated: 2022/12/06 14:35:21 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/12/06 22:38:32 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,8 @@ void	print_raycasting(double orig_x, double orig_y, double a[2], t_general *g)
 		else
 			angle = a[ANGLE_MAX];
 		num_ray++;
+		if (num_ray == XPIXEL)
+			break ;
 		hitpoint = print_collision(g, orig_x, orig_y, angle);
 		hitpoint.dist = fisheye(hitpoint.dist, angle, g->map->angle_cam);
 		hitpoint.dir = get_wall(g, hitpoint);
