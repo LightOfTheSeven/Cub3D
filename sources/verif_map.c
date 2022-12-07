@@ -6,7 +6,7 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 09:31:50 by gbertin           #+#    #+#             */
-/*   Updated: 2022/11/30 11:40:28 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/12/07 21:54:42 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,7 @@ static int check_map(t_general *general)
 		while (map[y][x])
 		{
 			if (check_tile(general, map, x, y))
-			{
-				ft_putstr_fd("Error\nCub3D : map not close\n", 2);
 				return (1);
-			}
 			x++;
 		}
 		y++;

@@ -6,7 +6,7 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 10:09:07 by gbertin           #+#    #+#             */
-/*   Updated: 2022/12/06 14:31:54 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/12/07 21:55:04 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	control_parsing(t_general *general)
 {
 	int	i;
 
-	i = 1;
+	i = 0;
 	while (i < NB_SPRITE)
 	{
 		if (general->spts[i].path == NULL)
