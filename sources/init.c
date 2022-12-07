@@ -24,7 +24,7 @@ static int	init_struct_mlx(t_mlx *mlx)
 	return (0);
 }
 
-static int	init_struct_img(t_general *general)
+static int	init_struct_img(t_general *g)
 {
 	int		width;
 	int		height;
@@ -33,22 +33,20 @@ static int	init_struct_img(t_general *general)
 	i = 0;
 	while (i < NB_SPRITE)
 	{
-		printf("PATH TO SPRITE = %s %d\n", general->spts[i].path, i);
-		general->spts[i].ptr = mlx_xpm_file_to_image(general->mlx.ptr, \
-		general->spts[i].path, &width, &height);
-		if (!general->spts[i].ptr)
-		{
-			return (free_img("Error\nCub3D : mlx image failed\n", general));
-		}
-		general->spts[i].data = (int *)mlx_get_data_addr(general->spts[i].ptr, &general->spts[i].bpp, &general->spts[i].len, &general->spts[i].endian);
-		general->spts[i].len /= 4;
-		//printf("color = %d\n", general->spts[i].data[1]);
+		printf("PATH TO SPRITE = %s %d\n", g->spts[i].path, i);
+		g->spts[i].ptr = mlx_xpm_file_to_image(g->mlx.ptr, \
+		g->spts[i].path, &width, &height);
+		if (!g->spts[i].ptr)
+			return (free_img("Error\nCub3D : mlx image failed\n", g));
+		g->spts[i].data = (int *)mlx_get_data_addr(g->spts[i].ptr,
+				&g->spts[i].bpp, &g->spts[i].len, &g->spts[i].endian);
+		g->spts[i].len /= 4;
 		i++;
 	}
 	return (0);
 }
 
-static double	init_cam(char direction)
+double	init_cam(char direction)
 {
 	if (direction == 'N')
 		return (90);
@@ -59,46 +57,6 @@ static double	init_cam(char direction)
 	else if (direction == 'S')
 		return (270);
 	return (90);
-}
-
-static int	init_pos_player(t_general *general)
-{
-	int	x;
-	int	y;
-	int	have_player;
-
-	y = 0;
-	have_player = 1;
-	while (general->map->matrice[y])
-	{
-		x = 0;
-		while (general->map->matrice[y][x])
-		{
-			if (is_direction(general->map->matrice[y][x]))
-			{
-				if (have_player)
-				{
-					general->map->pos_x = (double) x + 0.5;
-					general->map->pos_y = (double) y + 0.5;
-					general->map->angle_cam = init_cam(general->map->matrice[y][x]);
-					have_player = 0;
-				}
-				else
-				{
-					ft_putstr_fd("Error\nCub3D : Too many players\n", 2);
-					return (1);
-				}
-			}
-			else if (!is_direction(general->map->matrice[y][x]) && general->map->matrice[y][x] != '0' && general->map->matrice[y][x] != '1' && general->map->matrice[y][x] != ' ')
-			{
-				ft_putstr_fd("Error\nCub3D : Invalid caracters\n", 2);
-				return (1);
-			}
-			x++;
-		}
-		y++;
-	}
-	return (0);
 }
 
 static void	init_general(t_general *general, char **argv)
@@ -122,7 +80,6 @@ static void	init_general(t_general *general, char **argv)
 int	init_struct(t_general *general, char **argv)
 {
 	ft_memset(general->spts, 0, sizeof(t_spt) * NB_SPRITE);
-	
 	init_general(general, argv);
 	if (init_map(general))
 		return (1);

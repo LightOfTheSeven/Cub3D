@@ -12,38 +12,35 @@
 
 #include "../include/cub3D.h"
 
-static int	check_vertical_wall(double pos_x, double pos_y, double angle, t_map *map, t_general *general)
+static int	check_vertical_wall(double x, double y, double angle, t_general *g)
 {
 	if (angle > 90 && angle < 270)
-		pos_x--;
-	if ((pos_x <= 0 || pos_x > general->map_column) || (pos_y <= 0 || pos_y > general->map_line - 1))
+		x--;
+	if ((x <= 0 || x > g->map_column) || (y <= 0 || y > g->map_line - 1))
 		return (1);
-	if (map->matrice[(int)floor(pos_y)][(int)floor(pos_x)] == '1')
-		return (1);
-	return (0);
-}
-
-static int	check_horizontal_wall(double pos_x, double pos_y, double angle, t_map *map, t_general *general)
-{
-	if (angle < 180 && angle > 0)
-		pos_y--;
-	if ((pos_x <= 0 || pos_x > general->map_column) || (pos_y <= 0 || pos_y > general->map_line - 1))
-		return (1);
-	if (map->matrice[(int)floor(pos_y)][(int)floor(pos_x)] == '1')
+	if (g->map->matrice[(int)floor(y)][(int)floor(x)] == '1')
 		return (1);
 	return (0);
 }
 
-int	is_wall(double pos_x, double pos_y, double angle, t_general *general)
+static int	check_horizontal_wall(double x, double y, double a, t_general *g)
 {
-	t_map	*map;
-
-	map = general->map;
-	if ((pos_x <= 0 || pos_x > general->map_column) || (pos_y <= 0 || pos_y > general->map_line))
+	if (a < 180 && a > 0)
+		y--;
+	if ((x <= 0 || x > g->map_column) || (y <= 0 || y > g->map_line - 1))
 		return (1);
-	if ((pos_x - floor(pos_x)) > 0)
-		return (check_horizontal_wall(pos_x, pos_y, angle, map, general));
+	if (g->map->matrice[(int)floor(y)][(int)floor(x)] == '1')
+		return (1);
+	return (0);
+}
+
+int	is_wall(double x, double y, double angle, t_general *g)
+{
+	if ((x <= 0 || x > g->map_column) || (y <= 0 || y > g->map_line))
+		return (1);
+	if ((x - floor(x)) > 0)
+		return (check_horizontal_wall(x, y, angle, g));
 	else
-		return (check_vertical_wall(pos_x, pos_y, angle, map, general));
+		return (check_vertical_wall(x, y, angle, g));
 	return (0);
 }

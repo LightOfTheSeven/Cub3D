@@ -70,6 +70,7 @@ typedef struct s_hitpoint {
 	double	dist;
 	int		dir;
 	double	angle;
+	int		num_ray;
 }				t_hitpoint;
 
 typedef struct	s_hook {
@@ -145,7 +146,14 @@ double	horiz_bigger(int *remember, double *pos_x, double *pos_y, t_dir horiz);
 double	verti_bigger(int *remember, double *pos_x, double *pos_y, t_dir verti);
 void    init_image(t_general *general);
 void    print_a_column(t_general *general, t_hitpoint hitpoint, int i);
-//void	change_direction(t_general *general, double angle);
+int		init_pos_player(t_general *general);
+double	init_cam(char direction);
+void	up(t_general *general);
+void	down(t_general *general);
+void	left(t_general *general);
+void	right(t_general *general);
+double	calcul_x(double angle, t_general *general);
+double	calcul_y(double angle, t_general *general);
 
 // UTILS
 void	print_matrice(t_map *map);

@@ -12,141 +12,79 @@
 
 #include "../include/cub3D.h"
 
-double calcul_x(double angle, t_general *general)
-{
-	double	x;
-	double	new_x;
-
-	if (angle > 360)
-		angle -= 360;
-	if (angle < 0)
-		angle += 360;
-	x = cos(conversion_radian(angle)) * 0.04;
-	new_x = general->map->pos_x + x;
-	printf("%f %f\n", x, new_x);
-	if (new_x <= 1 || new_x >= general->map_column - 1)
-		return (0);
-	return (x);
-}
-
-double calcul_y(double angle, t_general *general)
-{
-	double y;
-	double new_y;
-
-	if (angle > 360)
-		angle -= 360;
-	if (angle < 0)
-		angle += 360;
-	y = sin(conversion_radian(angle * -1)) * 0.04;
-	new_y = general->map->pos_y + y;
-	if (new_y <= 1 || new_y >= general->map_line - 1)
-		return (0);
-	return (y);
-}
-
-static void	up(t_general *general)
-{
-	general->map->pos_x += calcul_x(general->map->angle_cam, general);
-	general->map->pos_y += calcul_y(general->map->angle_cam, general);
-}
-
-static void down(t_general *general)
-{
-	general->map->pos_x -= calcul_x(general->map->angle_cam, general);
-	general->map->pos_y -= calcul_y(general->map->angle_cam, general);
-}
-
-static void left(t_general *general)
-{
-	general->map->pos_y += calcul_y(general->map->angle_cam + 90, general);
-	general->map->pos_x += calcul_x(general->map->angle_cam + 90, general);
-}
-
-static void right(t_general *general)
-{
-	general->map->pos_x += calcul_x(general->map->angle_cam - 90, general);
-	general->map->pos_y += calcul_y(general->map->angle_cam - 90, general);
-}
-
-
 static int	key_hook(int keycode, t_general *general)
 {
-    if (keycode == A_KEY)
+	if (keycode == A_KEY)
 	{
-    	general->hook.left = 1;
+		general->hook.left = 1;
 	}
 	if (keycode == D_KEY)
-    	general->hook.right = 1;
+		general->hook.right = 1;
 	if (keycode == W_KEY)
 		general->hook.up = 1;
 	if (keycode == S_KEY)
-        general->hook.down = 1;
-    if (keycode == R_ARW)
+		general->hook.down = 1;
+	if (keycode == R_ARW)
 		general->hook.rotate_right = 1;
 	if (keycode == L_ARW)
 		general->hook.rotate_left = 1;
 	if (keycode == ESC)
-		exit_mlx(general); 
+		exit_mlx(general);
 	return (0);
 }
 
 int	key_release(int keycode, t_general *general)
 {
-	 if (keycode == A_KEY)
-    	general->hook.left = 0;
+	if (keycode == A_KEY)
+		general->hook.left = 0;
 	if (keycode == D_KEY)
-    	general->hook.right = 0;
+		general->hook.right = 0;
 	if (keycode == W_KEY)
 		general->hook.up = 0;
 	if (keycode == S_KEY)
-        general->hook.down = 0;
-    if (keycode == R_ARW)
+		general->hook.down = 0;
+	if (keycode == R_ARW)
 		general->hook.rotate_right = 0;
 	if (keycode == L_ARW)
 		general->hook.rotate_left = 0;
 	return (0);
 }
 
-int	onkeypress(t_general *general)
+int	onkeypress(t_general *g)
 {
-	if (general->hook.left)
-       left(general);
-	if (general->hook.right)
-       right(general);
-	if (general->hook.up)
-		up(general);
-	if (general->hook.down)
-        down(general);
-	if (general->hook.rotate_left || general->hook.rotate_right)
+	if (g->hook.left)
+		left(g);
+	if (g->hook.right)
+		right(g);
+	if (g->hook.up)
+		up(g);
+	if (g->hook.down)
+		down(g);
+	if (g->hook.rotate_left || g->hook.rotate_right)
 	{
-		if (general->hook.rotate_right)
-			general->map->angle_cam -= 1;
+		if (g->hook.rotate_right)
+			g->map->angle_cam -= 1;
 		else
-			 general->map->angle_cam += 1;
-        if (general->map->angle_cam < 0)
-            general->map->angle_cam = general->map->angle_cam + 360;
-        if (general->map->angle_cam > 360)
-            general->map->angle_cam = general->map->angle_cam - 360;
-		//change_direction(general, general->map->angle_cam);
+			g->map->angle_cam += 1;
+		if (g->map->angle_cam < 0)
+			g->map->angle_cam = g->map->angle_cam + 360;
+		if (g->map->angle_cam > 360)
+			g->map->angle_cam = g->map->angle_cam - 360;
 	}
-	//printf ("HOOK %d %d %d %d %d %d\n", general->hook.left, general->hook.right, general->hook.up, general->hook.down,general->hook.rotate_left, general->hook.rotate_right);
-	if (general->hook.left || general->hook.right || general->hook.up || general->hook.down || general->hook.rotate_left || general->hook.rotate_right)
+	if (g->hook.left || g->hook.right || g->hook.up || g->hook.down
+		|| g->hook.rotate_left || g->hook.rotate_right)
 	{
-		printf("x: %f y: %f %d %d\n", general->map->pos_x, general->map->pos_y, general->map_column, general->map_line);
-		if (!print_map(general))
+		if (!print_map(g))
 			return (1);
 	}
 	return (0);
 }
 
-void	hook(t_general *general)
+void	hook(t_general *g)
 {
-	// printf ("HOOK %d %d %d %d\n", general->hook.down, general->hook.up, general->hook.left, general->hook.right);
-	mlx_loop_hook(general->mlx.ptr, &onkeypress, general); // make direction
-	
-	mlx_hook(general->mlx.win, KeyPress, KeyPressMask, key_hook, general); // set direction
-    mlx_hook(general->mlx.win, KeyRelease, KeyReleaseMask, &key_release, general); // unset direction
-	mlx_hook(general->mlx.win, DestroyNotify, 0, exit_mlx, general); // exit
-	mlx_loop(general->mlx.ptr);
+	mlx_loop_hook(g->mlx.ptr, &onkeypress, g);
+	mlx_hook(g->mlx.win, KeyPress, KeyPressMask, key_hook, g);
+	mlx_hook(g->mlx.win, KeyRelease, KeyReleaseMask, &key_release, g);
+	mlx_hook(g->mlx.win, DestroyNotify, 0, exit_mlx, g);
+	mlx_loop(g->mlx.ptr);
 }

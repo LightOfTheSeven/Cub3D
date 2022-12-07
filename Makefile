@@ -27,7 +27,10 @@ SRCS 	=	free.c \
 			calcul_ray.c \
 			ray_utils.c \
 			3D.c \
-			utils_direction.c
+			utils_direction.c \
+			init_player.c \
+			key_direction.c \
+			key_calcul.c
 
 all: bonus $(NAME)
 
