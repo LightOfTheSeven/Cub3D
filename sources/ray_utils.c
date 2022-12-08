@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ray_utils.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/12/08 12:17:19 by gbertin           #+#    #+#             */
+/*   Updated: 2022/12/08 12:19:48 by gbertin          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/cub3D.h"
 
 double	conversion_radian(double f)
@@ -35,7 +47,7 @@ double	horiz_bigger(int *remember, double *pos_x, double *pos_y, t_dir horiz)
 		*pos_y = *pos_y + horiz.y;
 	}
 	*remember = 1;
-    return (horiz.hypo);
+	return (horiz.hypo);
 }
 
 double	verti_bigger(int *remember, double *pos_x, double *pos_y, t_dir verti)
@@ -51,5 +63,5 @@ double	verti_bigger(int *remember, double *pos_x, double *pos_y, t_dir verti)
 		*pos_y = *pos_y - verti.y;
 	}
 	*remember = 2;
-    return (verti.hypo);
+	return (verti.hypo);
 }

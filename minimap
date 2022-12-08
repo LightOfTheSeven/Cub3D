@@ -14,3 +14,8 @@ C 25,30,9
 
 
 
+if (is_space(line))
+		{
+			free(line);
+			break ;
+		}

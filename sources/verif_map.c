@@ -6,7 +6,7 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 09:31:50 by gbertin           #+#    #+#             */
-/*   Updated: 2022/12/07 21:54:42 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/12/08 12:20:26 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,18 @@
 
 static int	check_diagonal(char **map, int x, int y)
 {
-	if (map[y][x + 1] == ' ' || map[y][x - 1] == ' ' 
+	if (map[y][x + 1] == ' ' || map[y][x - 1] == ' '
 		|| map[y + 1][x] == ' ' || map[y - 1][x] == ' ')
 		return (1);
-	return (0);	
+	return (0);
 }
 
 static int	check_direction(char **map, int x, int y)
 {
-	if (map[y + 1][x + 1] == ' ' || map[y - 1][x + 1] == ' ' 
+	if (map[y + 1][x + 1] == ' ' || map[y - 1][x + 1] == ' '
 		|| map[y + 1][x - 1] == ' ' || map[y - 1][x - 1] == ' ')
 		return (1);
-	return (0);	
+	return (0);
 }
 
 static int	check_tile(t_general *general, char **map, int x, int y)
@@ -44,7 +44,7 @@ static int	check_tile(t_general *general, char **map, int x, int y)
 	return (0);
 }
 
-static int check_map(t_general *general)
+static int	check_map(t_general *general)
 {
 	int		x;
 	int		y;
