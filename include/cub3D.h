@@ -6,7 +6,7 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 15:04:26 by gbertin           #+#    #+#             */
-/*   Updated: 2022/12/08 09:21:47 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/12/08 10:12:00 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,8 +152,8 @@ void	up(t_general *general);
 void	down(t_general *general);
 void	left(t_general *general);
 void	right(t_general *general);
-double	calcul_x(double angle, t_general *general);
-double	calcul_y(double angle, t_general *general);
+double	calcul_x(double angle, t_general *general, int neg);
+double	calcul_y(double angle, t_general *general, int neg);
 
 // UTILS
 void	print_matrice(t_map *map);

@@ -6,7 +6,7 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 09:24:17 by gbertin           #+#    #+#             */
-/*   Updated: 2022/12/05 15:59:31 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/12/08 11:47:50 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ static int	malloc_matrice(t_general *general, int fd, int begin, char *line)
 
 	i = begin;
 	index = 0;
+	printf("len matrice %d\n", general->map_line);
 	matrice = (char **)malloc(sizeof(char *) * (general->map_line + 1));
 	if (!matrice)
 		return (1);

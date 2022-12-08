@@ -6,7 +6,7 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 14:45:45 by gbertin           #+#    #+#             */
-/*   Updated: 2022/12/06 14:28:27 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/12/08 11:41:43 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,9 @@ int	onkeypress(t_general *g)
 	if (g->hook.rotate_left || g->hook.rotate_right)
 	{
 		if (g->hook.rotate_right)
-			g->map->angle_cam -= 1;
+			g->map->angle_cam -= 2;
 		else
-			g->map->angle_cam += 1;
+			g->map->angle_cam += 2;
 		if (g->map->angle_cam < 0)
 			g->map->angle_cam = g->map->angle_cam + 360;
 		if (g->map->angle_cam > 360)
