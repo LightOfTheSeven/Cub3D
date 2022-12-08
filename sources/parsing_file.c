@@ -6,7 +6,7 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 10:09:07 by gbertin           #+#    #+#             */
-/*   Updated: 2022/12/07 21:55:04 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/12/08 11:53:17 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static int	found_sprites_colors(t_general *general)
 	fd = open(general->filename, O_RDONLY);
 	if (fd < 0)
 	{
-		ft_putstr_fd("Error\n", 2);
+		ft_putstr_fd("Error\nCub3D : ", 2);
 		strerror(errno);
 		close(fd);
 		return (1);
@@ -114,7 +114,7 @@ int	init_map(t_general *general)
 		return (1);
 	if (!control_parsing(general))
 	{
-		ft_putstr_fd("Error\n", 2);
+		ft_putstr_fd("Error\nCub3D : Elements are missing\n", 2);
 		return (1);
 	}
 	if (detect_map(general, nb_line))

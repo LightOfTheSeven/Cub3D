@@ -6,7 +6,7 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 09:24:17 by gbertin           #+#    #+#             */
-/*   Updated: 2022/12/08 11:47:50 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/12/08 12:00:59 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,17 +100,18 @@ static int	malloc_matrice(t_general *general, int fd, int begin, char *line)
 	ft_memset(matrice, 0, sizeof(char **));
 	while (line)
 	{
+		
 		x = 0;
+		if (is_space(line))
+		{
+			free(line);
+			break ;
+		}
 		matrice[index] = malloc(sizeof(char) * (general->map_column + 1));
 		if (!matrice[index])
 		{
 			free_tab(matrice);
 			return (0);
-		}
-		if (is_space(line))
-		{
-			free(line);
-			break ;
 		}
 		while ((int)x < general->map_column)
 		{
