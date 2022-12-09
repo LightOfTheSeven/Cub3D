@@ -6,7 +6,7 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 08:52:48 by gbertin           #+#    #+#             */
-/*   Updated: 2022/12/09 11:58:40 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/12/09 14:53:32 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ static	int	get_wall(t_general *general, t_hitpoint hitpoint)
 	if (hitpoint.x - floor(hitpoint.x) == 0)
 	{
 		if (hitpoint.x > general->map->pos_x)
-			return (west);
-		else
 			return (east);
+		else
+			return (west);
 	}
 	else
 	{
