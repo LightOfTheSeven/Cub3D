@@ -6,7 +6,7 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 15:04:26 by gbertin           #+#    #+#             */
-/*   Updated: 2022/12/09 12:39:49 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/12/09 12:51:06 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 
 # define DEBUG 0
 # define NB_SPRITE 4
-# define FOV 90
+# define FOV 60
 # define V_X 0
 # define V_Y 1
 # define ANGLE_MIN 0

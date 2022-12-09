@@ -6,7 +6,7 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 08:36:08 by gbertin           #+#    #+#             */
-/*   Updated: 2022/12/09 12:48:30 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/12/09 12:51:28 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,6 @@ void	print_a_column(t_general *general, t_hitpoint hitpoint, int num_ray)
 	int		color[2];
 
 	color[0] = convert_color(general->ceil_color);
-	printf("COLOR CEIL %d\n", color[0]);
 	color[1] = convert_color(general->floor_color);
 	dst_to_proj = ((XPIXEL / 2.0) / tan (conversion_radian(32)));
 	projection = (1 / hitpoint.dist) * dst_to_proj;

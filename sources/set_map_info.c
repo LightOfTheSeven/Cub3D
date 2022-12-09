@@ -6,7 +6,7 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 18:42:47 by gbertin           #+#    #+#             */
-/*   Updated: 2022/12/09 09:56:49 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/12/09 13:11:57 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ static int	fill_color(int *color, char **colors)
 	color[0] = ft_atoi(colors[0]);
 	color[1] = ft_atoi(colors[1]);
 	color[2] = ft_atoi(colors[2]);
-	color[3] = 1;
 	if ((color[0] < 0 || color[0] > 255) || (color[1] < 0 || color[1] > 255)
 		|| (color[2] < 0 || color[2] > 255))
 		return (1);
