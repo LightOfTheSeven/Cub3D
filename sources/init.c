@@ -6,7 +6,7 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 08:56:31 by gbertin           #+#    #+#             */
-/*   Updated: 2022/12/05 14:43:14 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/12/09 15:41:20 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,6 @@ static int	init_struct_mlx(t_mlx *mlx)
 
 static int	init_struct_img(t_general *g)
 {
-	int		width;
-	int		height;
 	int		i;
 
 	i = 0;
@@ -35,12 +33,14 @@ static int	init_struct_img(t_general *g)
 	{
 		printf("PATH TO SPRITE = %s %d\n", g->spts[i].path, i);
 		g->spts[i].ptr = mlx_xpm_file_to_image(g->mlx.ptr, \
-		g->spts[i].path, &width, &height);
+		g->spts[i].path, &g->spts[i].width, &g->spts[i].height);
 		if (!g->spts[i].ptr)
 			return (free_img("Error\nCub3D : mlx image failed\n", g));
 		g->spts[i].data = (int *)mlx_get_data_addr(g->spts[i].ptr,
 				&g->spts[i].bpp, &g->spts[i].len, &g->spts[i].endian);
 		g->spts[i].len /= 4;
+		if (g->spts[i].width != g->spts[i].height)
+			return (free_img("Error\nCub3D : Sprite is not Square\n", g));
 		i++;
 	}
 	return (0);

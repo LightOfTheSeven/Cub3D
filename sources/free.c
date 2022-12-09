@@ -6,7 +6,7 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 09:19:55 by gbertin           #+#    #+#             */
-/*   Updated: 2022/12/05 15:57:22 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/12/09 15:29:55 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	free_tab(char **tab)
 
 int	free_general(t_general *general)
 {
-	if (general->map->matrice)
+	if (general->map && general->map->matrice)
 		free_tab(general->map->matrice);
 	if (general->mlx.img)
 		mlx_destroy_image(general->mlx.ptr, general->mlx.img);

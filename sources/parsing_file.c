@@ -6,7 +6,7 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 10:09:07 by gbertin           #+#    #+#             */
-/*   Updated: 2022/12/09 13:09:30 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/12/09 15:22:31 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,18 +33,22 @@ int	check_namefile(char *name)
 {
 	int		i;
 	char	*cub;
+	int		err;
 
 	i = 0;
+	err = 0;
 	cub = ".cub";
 	while (name[i])
 		i++;
 	while (name[i] != '.' && i > 0)
 		i--;
 	if (ft_strncmp(&name[i], cub, 4))
-		return (0);
+		err = 0;
 	if (name[i + 4] != '\0')
-		return (1);
-	return (0);
+		err = 1;
+	if (err)
+		ft_putstr_fd("Error\nCub3D : Not .cub file\n", 2);
+	return (err);
 }
 
 static int	check_line(t_general *general, char **line, int fd)

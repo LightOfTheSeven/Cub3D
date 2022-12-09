@@ -1,7 +1,7 @@
 NO ./spt/Square_1.xpm
 SO ./spt/Square_3.xpm
 WE ./spt/Spirale_2.xpm
-EA ./spt/Spirale_1.xpm
+EA ./spt/wall.xpm
 
 C 255,252,207
 F 214,140,3

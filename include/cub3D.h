@@ -6,7 +6,7 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 15:04:26 by gbertin           #+#    #+#             */
-/*   Updated: 2022/12/09 12:51:06 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/12/09 15:44:08 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,8 @@ typedef struct s_spt {
 	int				endian;
 	char			*addr;
 	int				*data;
+	int				width;
+	int				height;
 }				t_spt;
 
 typedef struct s_map {

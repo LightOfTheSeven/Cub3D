@@ -6,7 +6,7 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 08:36:08 by gbertin           #+#    #+#             */
-/*   Updated: 2022/12/09 12:51:28 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/12/09 15:38:07 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,11 @@ void	draw_pixel_from_xpm(t_general *g, t_hitpoint hit, int lign, int proj)
 	y = 0;
 	index = lign;
 	lign = lign - ((YPIXEL - proj) / 2);
-	y = (HEIGHT_TILE * (lign / (double)proj));
+	y = (g->spts[hit.dir].height * (lign / (double)proj));
 	if (hit.x - floor(hit.x) == 0)
-		x = round(HEIGHT_TILE * (hit.y - floor(hit.y)));
+		x = round(g->spts[hit.dir].height * (hit.y - floor(hit.y)));
 	else
-		x = round(HEIGHT_TILE * (hit.x - floor(hit.x)));
+		x = round(g->spts[hit.dir].width * (hit.x - floor(hit.x)));
 	color = g->spts[hit.dir].data[(y * g->spts[hit.dir].len + x)];
 	pixel_draw(g, hit.num_ray, index, color);
 }
