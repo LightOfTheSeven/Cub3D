@@ -6,7 +6,7 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 08:26:44 by gbertin           #+#    #+#             */
-/*   Updated: 2021/12/01 10:24:25 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/12/09 12:06:17 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,3 @@ int	ft_atoi(const char *str)
 	}
 	return (val * negative);
 }
-
-// int main()
-// {
-//     char *val = "123";
-
-//     printf("%d", ft_atoi(val));
-//     return (0);
-// }

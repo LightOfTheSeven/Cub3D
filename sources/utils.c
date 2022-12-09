@@ -6,28 +6,11 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 18:43:15 by gbertin           #+#    #+#             */
-/*   Updated: 2022/12/08 12:10:50 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/12/09 09:38:37 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3D.h"
-
-void	print_matrice(t_map *map)
-{
-	int	i;
-
-	i = 0;
-	if (!map->matrice)
-	{
-		ft_putstr_fd("Matrice not set\n", 2);
-		return ;
-	}
-	while (map->matrice[i])
-	{
-		printf("%s\n", map->matrice[i]);
-		i++;
-	}
-}
 
 void	end_gnl(int fd)
 {
@@ -73,27 +56,6 @@ int	is_space(char *line)
 		i++;
 	}
 	return (1);
-}
-
-char	*ft_strndup(const char *s, int n)
-{
-	char	*dest;
-	int		size;
-	int		i;
-
-	size = 0;
-	i = 0;
-	size = ft_strlen((char *)s);
-	dest = (char *) malloc ((size + 1) * sizeof(char));
-	if (dest == NULL)
-		return (NULL);
-	while (i < size && i < n)
-	{
-		dest[i] = s[i];
-		i++;
-	}
-	dest[i] = '\0';
-	return (dest);
 }
 
 int	only_int(char *line)

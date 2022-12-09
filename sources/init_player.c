@@ -6,7 +6,7 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 12:03:00 by gbertin           #+#    #+#             */
-/*   Updated: 2022/12/08 12:03:57 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/12/09 10:33:24 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,11 @@ int	init_pos_player(t_general *general)
 			x++;
 		}
 		y++;
+	}
+	if (have_player)
+	{
+		ft_putstr_fd("Error\nCub3D : missing a player\n", 2);
+		return (1);
 	}
 	return (0);
 }

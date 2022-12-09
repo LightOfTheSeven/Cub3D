@@ -6,7 +6,7 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 10:09:07 by gbertin           #+#    #+#             */
-/*   Updated: 2022/12/08 12:09:41 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/12/09 10:35:18 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,20 +46,44 @@ int	check_namefile(char *name)
 	return (0);
 }
 
-//retourne le numéro de ligne de la dernière information trouvé
+static int	check_line(t_general *general, char **line, int fd)
+{
+	char	**line_split;
+
+	if (!is_space(*line))
+	{
+		line_split = ft_split(*line, ' ');
+		if (!line_split)
+			return (1);
+		if (fill_infos(general, line_split))
+		{
+			free_tab(line_split);
+			free(*line);
+			end_gnl(fd);
+			close(fd);
+			return (1);
+		}
+		free_tab(line_split);
+	}
+	free(*line);
+	if (!control_parsing(general))
+		*line = get_next_line(fd);
+	else
+		*line = NULL;
+	return (0);
+}
+
 static int	found_sprites_colors(t_general *general)
 {
 	int		fd;
 	char	*line;
-	char	**line_split;
 	int		nb_line;
 
 	nb_line = 0;
 	fd = open(general->filename, O_RDONLY);
 	if (fd < 0)
 	{
-		ft_putstr_fd("Error\nCub3D : ", 2);
-		strerror(errno);
+		ft_putstr_fd("Error\nCub3D : Can't open file map", 2);
 		close(fd);
 		return (1);
 	}
@@ -68,26 +92,8 @@ static int	found_sprites_colors(t_general *general)
 	while (line && !control_parsing(general))
 	{
 		nb_line++;
-		if (!is_space(line))
-		{
-			line_split = ft_split(line, ' ');
-			if (!line_split)
-				return (1);
-			if (fill_infos(general, line_split))
-			{
-				free_tab(line_split);
-				free(line);
-				end_gnl(fd);
-				close(fd);
-				return (1);
-			}
-			free_tab(line_split);
-		}
-		free(line);
-		if (!control_parsing(general))
-			line = get_next_line(fd);
-		else
-			line = NULL;
+		if (check_line(general, &line, fd))
+			return (1);
 	}
 	if (line)
 		free(line);
@@ -96,7 +102,6 @@ static int	found_sprites_colors(t_general *general)
 	return (nb_line);
 }
 
-//pas oublier de mettre un NULL à la derniere colonne de map->matrice
 int	init_map(t_general *general)
 {
 	int		nb_line;

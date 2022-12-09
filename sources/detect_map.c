@@ -6,7 +6,7 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 09:24:17 by gbertin           #+#    #+#             */
-/*   Updated: 2022/12/08 12:00:59 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/12/09 10:02:50 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,54 +84,6 @@ static void	set_size_of_matrice(t_general *gnrl, int fd, int begin, char *line)
 	gnrl->map_line = i - begin;
 }
 
-static int	malloc_matrice(t_general *general, int fd, int begin, char *line)
-{
-	int		i;
-	int		index;
-	size_t	x;
-	char	**matrice;
-
-	i = begin;
-	index = 0;
-	printf("len matrice %d\n", general->map_line);
-	matrice = (char **)malloc(sizeof(char *) * (general->map_line + 1));
-	if (!matrice)
-		return (1);
-	ft_memset(matrice, 0, sizeof(char **));
-	while (line)
-	{
-		
-		x = 0;
-		if (is_space(line))
-		{
-			free(line);
-			break ;
-		}
-		matrice[index] = malloc(sizeof(char) * (general->map_column + 1));
-		if (!matrice[index])
-		{
-			free_tab(matrice);
-			return (0);
-		}
-		while ((int)x < general->map_column)
-		{
-			if (x < ft_strlen(line))
-				matrice[index][x] = line[x];
-			else
-				matrice[index][x] = ' ';
-			x++;
-		}
-		free(line);
-		line = get_next_line(fd);
-		matrice[index][general->map_column] = '\0';
-		i++;
-		index++;
-	}
-	matrice[general->map_line] = NULL;
-	general->map->matrice = matrice;
-	return (0);
-}
-
 int	detect_map(t_general *general, int begin_line)
 {
 	int		fd;
@@ -150,6 +102,5 @@ int	detect_map(t_general *general, int begin_line)
 	if (malloc_matrice(general, fd, begin_line, line))
 		return (1);
 	end_gnl(fd);
-	print_matrice(general->map);
 	return (0);
 }

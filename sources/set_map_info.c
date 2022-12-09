@@ -6,7 +6,7 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 18:42:47 by gbertin           #+#    #+#             */
-/*   Updated: 2022/12/05 15:10:58 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/12/09 09:56:49 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,18 @@ static int	set_color(char *line, int *color)
 	return (err);
 }
 
+static int	check_color(t_general *general, int id, char **path)
+{
+	int	err;
+
+	err = 0;
+	if (id == -1)
+		err = set_color(path[1], general->ceil_color);
+	else
+		err = set_color(path[1], general->floor_color);
+	return (err);
+}
+
 static int	take_info(t_general *general, char **path, int id)
 {
 	int	err;
@@ -73,12 +85,7 @@ static int	take_info(t_general *general, char **path, int id)
 		}
 	}
 	else
-	{
-		if (id == -1)
-			err = set_color(path[1], general->ceil_color);
-		else
-			err = set_color(path[1], general->floor_color);
-	}
+		err = check_color(general, id, path);
 	return (err);
 }
 

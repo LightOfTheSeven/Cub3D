@@ -6,7 +6,7 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 15:04:26 by gbertin           #+#    #+#             */
-/*   Updated: 2022/12/08 10:12:00 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/12/09 12:39:49 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,21 +18,21 @@
 # include <fcntl.h>
 # include <errno.h>
 # include <math.h>
-#include <X11/X.h>
+# include <X11/X.h>
 
 # include "../libft/libft.h"
 # include "../libmlx/mlx.h"
 
 # define DEBUG 0
 # define NB_SPRITE 4
-# define FOV 60
+# define FOV 90
 # define V_X 0
 # define V_Y 1
 # define ANGLE_MIN 0
 # define ANGLE_MAX 1
 
-# define WIDTH_TILE 64
-# define HEIGHT_TILE 64
+# define WIDTH_TILE 128
+# define HEIGHT_TILE 128
 # define WIDTH_MINIMAP 15
 # define HEIGHT_MINIMAP 15
 # define XPIXEL 700.0
@@ -48,9 +48,7 @@
 # define D_KEY					100
 # define ESC					65307
 
-// permet de connaitre l'emplacement de chaque element
-enum e_sprite {nord, south, west, east}; // Ajouter N S W E
-enum e_position {NO, SO, WE, EA};
+enum e_sprite {nord, south, west, east};
 
 typedef struct s_mlx {
 	void			*ptr;
@@ -73,7 +71,7 @@ typedef struct s_hitpoint {
 	int		num_ray;
 }				t_hitpoint;
 
-typedef struct	s_hook {
+typedef struct s_hook {
 	int		up;
 	int		down;
 	int		left;
@@ -83,8 +81,8 @@ typedef struct	s_hook {
 }				t_hook;
 
 typedef struct s_spt {
-	char	*path;
-	void	*ptr;
+	char			*path;
+	void			*ptr;
 	struct s_img	*img;
 	int				len;
 	int				bpp;
@@ -98,7 +96,7 @@ typedef struct s_map {
 	double	pos_x;
 	double	pos_y;
 	int		ray_length;
-	double	angle_cam; // entre 0 et 360, 45 degres de chaque cote
+	double	angle_cam;
 }				t_map;
 
 typedef struct s_dir {
@@ -111,13 +109,12 @@ typedef struct s_general {
 	char	*filename;
 	t_mlx	mlx;
 	t_map	*map;
-	t_hook 	hook;
-	t_spt	spts[NB_SPRITE]; // spt = sprite
+	t_hook	hook;
+	t_spt	spts[NB_SPRITE];
 	int		ceil_color[3];
 	int		floor_color[3];
 	int		map_column;
 	int		map_line;
-	//double	direction;
 }				t_general;
 
 int		init_struct(t_general *general, char **argv);
@@ -129,6 +126,7 @@ int		free_general(t_general *general);
 void	hook(t_general *general);
 int		hook_manager(int keycode, t_general *general);
 int		is_direction(char c);
+int		malloc_matrice(t_general *general, int fd, int begin, char *line);
 void	init_raycasting(t_general *general);
 int		is_wall(double pos_x, double pos_y, double angle, t_general *general);
 int		fill_infos(t_general *general, char **line);
@@ -144,8 +142,8 @@ double	get_ray_min(double angle);
 double	get_ray_max(double angle);
 double	horiz_bigger(int *remember, double *pos_x, double *pos_y, t_dir horiz);
 double	verti_bigger(int *remember, double *pos_x, double *pos_y, t_dir verti);
-void    init_image(t_general *general);
-void    print_a_column(t_general *general, t_hitpoint hitpoint, int i);
+void	init_image(t_general *general);
+void	print_a_column(t_general *general, t_hitpoint hitpoint, int i);
 int		init_pos_player(t_general *general);
 double	init_cam(char direction);
 void	up(t_general *general);

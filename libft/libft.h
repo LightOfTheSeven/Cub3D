@@ -6,7 +6,7 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 08:50:37 by gbertin           #+#    #+#             */
-/*   Updated: 2022/11/14 20:10:14 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/12/09 09:35:47 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,5 @@ char		*get_next_line(int fd);
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 42
 # endif
-
 
 #endif
