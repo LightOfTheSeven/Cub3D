@@ -6,7 +6,7 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 08:56:31 by gbertin           #+#    #+#             */
-/*   Updated: 2022/12/09 15:41:20 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/12/09 16:00:00 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ static int	init_struct_img(t_general *g)
 	i = 0;
 	while (i < NB_SPRITE)
 	{
-		printf("PATH TO SPRITE = %s %d\n", g->spts[i].path, i);
 		g->spts[i].ptr = mlx_xpm_file_to_image(g->mlx.ptr, \
 		g->spts[i].path, &g->spts[i].width, &g->spts[i].height);
 		if (!g->spts[i].ptr)

@@ -6,7 +6,7 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 10:09:07 by gbertin           #+#    #+#             */
-/*   Updated: 2022/12/09 15:22:31 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/12/09 16:01:07 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ int	control_parsing(t_general *general)
 			return (0);
 		i++;
 	}
-	printf("col %d %d\n", general->ceil_color[0], general->floor_color[0]);
 	if (general->ceil_color[0] == -1 || general->floor_color[0] == -1)
 		return (0);
 	return (1);
@@ -75,7 +74,6 @@ static int	check_line(t_general *general, char **line, int fd)
 		*line = get_next_line(fd);
 	else
 		*line = NULL;
-	printf("lign %s\n", *line);
 	return (0);
 }
 
