@@ -30,9 +30,11 @@ static	int	get_wall(t_general *general, t_hitpoint hitpoint)
 	}
 }
 
-double	fisheye(double distance, double angle, double angle_cam)
+t_hitpoint	finish_hitpoint(t_hitpoint hitpoint, double x, double y)
 {
-	return (distance * cos(conversion_radian(angle - angle_cam)));
+	hitpoint.x = x;
+	hitpoint.y = y;
+	return (hitpoint);
 }
 
 t_hitpoint	print_collision(t_general *g, double x, double y, double angle)
@@ -40,30 +42,27 @@ t_hitpoint	print_collision(t_general *g, double x, double y, double angle)
 	t_dir		horiz;
 	t_dir		verti;
 	t_hitpoint	hitpoint;
-	int			remember;
 
-	remember = 0;
+	hitpoint.remember = 0;
 	hitpoint.dist = 0;
 	verti = first_vertical_wall(x, y, angle);
 	horiz = first_horizon_wall(x, y, angle);
-	while (remember == 0 || !is_wall(x, y, angle, g))
+	while (hitpoint.remember == 0 || !is_wall(x, y, angle, g))
 	{
 		if (horiz.hypo < verti.hypo)
 		{
-			hitpoint.dist += horiz_bigger(&remember, &x, &y, horiz);
+			hitpoint.dist += horiz_bigger(&hitpoint.remember, &x, &y, horiz);
 			verti = first_vertical_wall(x, y, angle);
 			horiz = next_horizon_wall(x, y, angle);
 		}
 		else
 		{
-			hitpoint.dist += verti_bigger(&remember, &x, &y, verti);
+			hitpoint.dist += verti_bigger(&hitpoint.remember, &x, &y, verti);
 			horiz = first_horizon_wall(x, y, angle);
 			verti = next_vertical_wall(x, y, angle);
 		}
 	}
-	hitpoint.x = x;
-	hitpoint.y = y;
-	return (hitpoint);
+	return (finish_hitpoint(hitpoint, x, y));
 }
 
 void	print_raycasting(double x, double y, double a[2], t_general *g)

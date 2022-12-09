@@ -79,3 +79,8 @@ t_dir	next_vertical_wall(double pos_x, double pos_y, double angle)
 	verti.hypo = sqrt(a * a + b * b);
 	return (verti);
 }
+
+double	fisheye(double distance, double angle, double angle_cam)
+{
+	return (distance * cos(conversion_radian(angle - angle_cam)));
+}

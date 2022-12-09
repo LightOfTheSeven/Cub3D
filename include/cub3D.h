@@ -35,8 +35,8 @@
 # define HEIGHT_TILE 128
 # define WIDTH_MINIMAP 15
 # define HEIGHT_MINIMAP 15
-# define XPIXEL 700.0
-# define YPIXEL 500.0
+# define XPIXEL 1050.0
+# define YPIXEL 750.0
 
 # define L_ARW					65361
 # define R_ARW					65363
@@ -62,6 +62,12 @@ typedef struct s_mlx {
 	char			*addr;
 }				t_mlx;
 
+typedef struct s_dir {
+	double	x;
+	double	y;
+	double	hypo;
+}				t_dir;
+
 typedef struct s_hitpoint {
 	double	x;
 	double	y;
@@ -69,6 +75,9 @@ typedef struct s_hitpoint {
 	int		dir;
 	double	angle;
 	int		num_ray;
+	int		remember;
+	t_dir	horiz;
+	t_dir	verti;
 }				t_hitpoint;
 
 typedef struct s_hook {
@@ -101,12 +110,6 @@ typedef struct s_map {
 	double	angle_cam;
 }				t_map;
 
-typedef struct s_dir {
-	double	x;
-	double	y;
-	double	hypo;
-}				t_dir;
-
 typedef struct s_general {
 	char	*filename;
 	t_mlx	mlx;
@@ -117,6 +120,8 @@ typedef struct s_general {
 	int		floor_color[3];
 	int		map_column;
 	int		map_line;
+	double	temp_x;
+	double	temp_y;
 }				t_general;
 
 int		init_struct(t_general *general, char **argv);
@@ -154,6 +159,7 @@ void	left(t_general *general);
 void	right(t_general *general);
 double	calcul_x(double angle, t_general *general, int neg);
 double	calcul_y(double angle, t_general *general, int neg);
+double	fisheye(double distance, double angle, double angle_cam);
 
 // UTILS
 void	print_matrice(t_map *map);
