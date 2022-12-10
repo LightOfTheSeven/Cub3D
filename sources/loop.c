@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   loop.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abourrel <abourrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 14:45:45 by gbertin           #+#    #+#             */
-/*   Updated: 2022/12/08 12:13:02 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/12/10 11:43:31 by abourrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,6 @@ void	hook(t_general *g)
 	mlx_loop_hook(g->mlx.ptr, &onkeypress, g);
 	mlx_hook(g->mlx.win, KeyPress, KeyPressMask, key_hook, g);
 	mlx_hook(g->mlx.win, KeyRelease, KeyReleaseMask, &key_release, g);
-	mlx_hook(g->mlx.win, DestroyNotify, 0, exit_mlx, g);
+	mlx_hook(g->mlx.win, 33, 1L << 17, exit_mlx, g);
 	mlx_loop(g->mlx.ptr);
 }

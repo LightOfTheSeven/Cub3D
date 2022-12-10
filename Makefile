@@ -23,7 +23,6 @@ SRCS 	=	free.c \
 			is_wall.c \
 			set_map_info.c \
 			verif_map.c \
-			init_minimap_bonus.c \
 			calcul_ray.c \
 			ray_utils.c \
 			3D.c \
