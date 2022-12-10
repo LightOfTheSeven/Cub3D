@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_player.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: abourrel <abourrel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 12:03:00 by gbertin           #+#    #+#             */
-/*   Updated: 2022/12/09 10:33:24 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/12/10 12:50:02 by abourrel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,11 @@ static int	loop_init_player(t_general *general, int *have_player, int x, int y)
 {
 	if (is_direction(general->map->matrice[y][x]))
 	{
-		if (have_player)
+		if (*have_player == 0)
+		{
 			init_player_position(general, have_player, x, y);
+			*have_player = 1;
+		}
 		else
 		{
 			ft_putstr_fd("Error\nCub3D : Too many players\n", 2);
@@ -49,7 +52,7 @@ int	init_pos_player(t_general *general)
 	int	have_player;
 
 	y = 0;
-	have_player = 1;
+	have_player = 0;
 	while (general->map->matrice[y])
 	{
 		x = 0;
@@ -61,7 +64,7 @@ int	init_pos_player(t_general *general)
 		}
 		y++;
 	}
-	if (have_player)
+	if (have_player == 0)
 	{
 		ft_putstr_fd("Error\nCub3D : missing a player\n", 2);
 		return (1);
