@@ -6,13 +6,13 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/28 09:24:17 by gbertin           #+#    #+#             */
-/*   Updated: 2022/12/09 10:02:50 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/12/10 14:35:01 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3D.h"
 
-static int	check_end_of_file(int fd)
+int	check_end_of_file(int fd)
 {
 	char	*line;
 	int		err;

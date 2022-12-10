@@ -6,7 +6,7 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 15:04:26 by gbertin           #+#    #+#             */
-/*   Updated: 2022/12/09 15:44:08 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/12/10 15:08:49 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,7 +168,7 @@ void	free_tab(char **tab);
 int		is_space(char *line);
 int		only_int(char *line);
 char	*ft_strndup(const char *s, int n);
-void	end_gnl(int fd);
+int		end_gnl(int fd);
 double	conversion_radian(double f);
 
 #endif

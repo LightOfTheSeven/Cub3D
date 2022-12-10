@@ -1,7 +1,7 @@
 NO ./spt/N.xpm
 SO ./spt/S.xpm
 WE ./spt/W.xpm
-EA ./spt/E.xpm
+A ./spt/E.xpm
 
 C 0,0,0
 F 40,0,20

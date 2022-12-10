@@ -6,23 +6,28 @@
 /*   By: gbertin <gbertin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 18:43:15 by gbertin           #+#    #+#             */
-/*   Updated: 2022/12/09 09:38:37 by gbertin          ###   ########.fr       */
+/*   Updated: 2022/12/10 15:06:43 by gbertin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3D.h"
 
-void	end_gnl(int fd)
+int	end_gnl(int fd)
 {
 	char	*line;
-
+	int		err;
+	
+	err = 0;
 	line = get_next_line(fd);
 	while (line)
 	{
+		if (!is_space(line))
+			err = 1;
 		free(line);
 		line = get_next_line(fd);
 	}
 	close(fd);
+	return (err);
 }
 
 int	is_direction(char c)
@@ -49,9 +54,11 @@ int	is_space(char *line)
 	int	i;
 
 	i = 0;
+	if (!line)
+		return (0);
 	while (line[i])
 	{
-		if (line[i] != ' ' && line[i] != '\n')
+		if (line[i] != ' ')
 			return (0);
 		i++;
 	}
